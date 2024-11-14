@@ -1,12 +1,27 @@
 import express from "express";
+import type { Express, Request, Response } from "express";
+import dotenv from "dotenv";
 
-const app = express();
-const port = process.env.PORT || 8080;
+import { routes } from './routes'
+import bodyParser from "body-parser";
 
-app.get("/", (req, res) => {
-    res.json({ message: "Hello World!" });
-});
+dotenv.config();
+
+const app: Express = express();
+const port = process.env.PORT || 3000;
+
+app.use(express.urlencoded({ extended: true }));
+
+// Register the `bodyParser` middleware here
+app.use(bodyParser.json());
+app.use(
+    bodyParser.urlencoded({
+        extended: true,
+    }),
+);
+
+app.use('/api', routes);
 
 app.listen(port, () => {
-    console.log(`Listening on port ${port}...`);
+    console.log(`[server]: Server is running at http://localhost:${port}`);
 });
