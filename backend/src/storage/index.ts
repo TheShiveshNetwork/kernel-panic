@@ -1,4 +1,4 @@
-import { MongoDBClient } from "../db";
+import { MongoDBClient } from "@/db";
 
 export let mongoClient = new MongoDBClient();
 let db = mongoClient.getDb();

@@ -1,7 +1,7 @@
 import { type Request, type Response, Router } from "express";
-import Controllers from "../../controllers";
-import { validateData } from "../../middlewares/validationMiddleware";
-import { getQuestionStatusByUserIdSchema, submitAnswerSchema } from "../../schemas";
+import Controllers from "@/controllers";
+import { validateData } from "@/middlewares/validationMiddleware";
+import { getQuestionStatusByUserIdSchema, submitAnswerSchema } from "@/schemas";
 
 export const questionStatusRoutes = Router();
 

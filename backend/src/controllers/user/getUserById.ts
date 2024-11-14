@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import type { ControllerClass } from "..";
-import { userCollection } from "../../storage";
+import { userCollection } from "@/storage";
 import { ObjectId } from "mongodb";
 
 export async function getUserById(this: ControllerClass, request:Request, response:Response) {

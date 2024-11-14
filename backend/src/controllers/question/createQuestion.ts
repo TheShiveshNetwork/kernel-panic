@@ -1,8 +1,6 @@
 import type { Request, Response } from "express";
-import bcrypt from "bcryptjs";
-import type { ControllerClass } from "../index.js";
-import { questionsCollection } from "../../storage/index.js";
-import { createQuestionSchema } from "../../schemas/index.js";
+import { questionsCollection } from "@/storage/index.js";
+import type { ControllerClass } from "@/controllers";
 
 export async function createQuestion(this: ControllerClass, request:Request, response:Response) {
     const requestBody = request.body;

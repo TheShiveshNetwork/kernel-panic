@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import type { ControllerClass } from "..";
-import { questionsCollection } from "../../storage";
+import type { ControllerClass } from "@/controllers";
+import { questionsCollection } from "@/storage";
 import { ObjectId } from "mongodb";
 
 export async function getQuestionById(this: ControllerClass, request:Request, response:Response) {

@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { MongoDBClient } from "../db";
+import { MongoDBClient } from "@/db";
 import { createUser } from "./user/createUser";
 import { getUserById } from "./user/getUserById";
 import { createQuestion } from "./question/createQuestion";

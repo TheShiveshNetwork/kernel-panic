@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import type { ControllerClass } from "..";
-import { questionStatusCollection } from "../../storage";
+import type { ControllerClass } from "@/controllers";
+import { questionStatusCollection } from "@/storage";
 
 export async function getQuestionStatusByUserId(this: ControllerClass, request: Request, response: Response) {
     const { id } = request.params;

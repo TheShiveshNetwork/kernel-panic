@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { questionStatusCollection } from "../../storage";
-import type { ControllerClass } from "..";
+import { questionStatusCollection } from "@/storage";
+import type { ControllerClass } from "@/controllers";
 
 export async function submitAnswer(this: ControllerClass, request:Request, response:Response) {
     const requestBody = request.body;

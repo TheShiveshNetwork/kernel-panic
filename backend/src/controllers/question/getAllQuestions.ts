@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import type { ControllerClass } from "..";
-import { questionsCollection } from "../../storage";
+import type { ControllerClass } from "@/controllers";
+import { questionsCollection } from "@/storage";
 
 export async function getAllQuestions(this: ControllerClass, request:Request, response:Response) {
     try {

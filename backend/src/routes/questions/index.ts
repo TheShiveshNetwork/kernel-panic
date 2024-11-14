@@ -1,7 +1,7 @@
 import { type Request, type Response, Router } from "express";
-import Controllers from "../../controllers";
-import { validateData } from "../../middlewares/validationMiddleware";
-import { createQuestionSchema, getQuestionByIdSchema } from "../../schemas";
+import Controllers from "@/controllers";
+import { validateData } from "@/middlewares/validationMiddleware";
+import { createQuestionSchema, getQuestionByIdSchema } from "@/schemas";
 
 export const questionRoutes = Router();
 

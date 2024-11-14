@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-import type { ControllerClass } from "../index.js";
-import { userCollection } from "../../storage/index.js";
+import type { ControllerClass } from "@/controllers";
+import { userCollection } from "@/storage/index.js";
 
 export async function createUser(this: ControllerClass, request:Request, response:Response) {
     const { email, password } = request.body;
