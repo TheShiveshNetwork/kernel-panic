@@ -1,5 +1,5 @@
 import express from "express";
-import type { Express, Request, Response } from "express";
+import type { Express } from "express";
 import dotenv from "dotenv";
 
 import { routes } from './routes'
