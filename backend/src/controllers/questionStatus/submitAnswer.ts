@@ -1,35 +1,111 @@
 import type { Request, Response } from "express";
-import { questionStatusCollection } from "@/storage";
+import { questionStatusCollection, questionsCollection } from "@/storage";
 import type { ControllerClass } from "@/controllers";
+import { ObjectId } from "mongodb";
 
-export async function submitAnswer(this: ControllerClass, request:Request, response:Response) {
-    const requestBody = request.body;
-    // calculate total points internally
+export async function submitAnswer(
+  this: ControllerClass,
+  request: Request,
+  response: Response
+) {
+  const requestBody = request.body;
+  const { userId, currentQuestion, answeredQuestion } = requestBody;
+  const { questionId, selectedOption } = answeredQuestion;
+
+  const question = await questionsCollection.findOne({
+    _id: new ObjectId(questionId),
+  });
+
+  if (!question) {
+    return response.status(404).json({ message: "Question not found" });
+  }
+
+  const selectedOptionData = question.options[parseInt(selectedOption)];
+
+  if (!selectedOptionData) {
+    return response.status(400).json({ message: "Invalid option selected" });
+  }
+
+  const points = selectedOptionData.points;
+
+  const existingUser = await questionStatusCollection.findOne({ userId });
+
+  if (existingUser) {
+    const updatedAnsweredQuestions = [
+      ...existingUser.answeredQuestions,
+      answeredQuestion,
+    ];
+
     let totalHealthPoints = 0;
     let totalWealthPoints = 0;
     let totalHappinessPoints = 0;
-    requestBody.answeredQuestions.forEach((answer: typeof requestBody.answeredQuestions) => {
-        totalHealthPoints += answer.points.healthPoints;
-        totalWealthPoints += answer.points.wealthPoints;
-        totalHappinessPoints += answer.points.happinessPoints;
+
+    updatedAnsweredQuestions.forEach((answer) => {
+      const { points } = answer;
+      if (points !== undefined) {
+        totalHealthPoints += points.health || 0;
+        totalWealthPoints += points.wealth || 0;
+        totalHappinessPoints += points.happiness || 0;
+      }
     });
-    // Save the answer to the database
-    const result = await questionStatusCollection.insertOne({
-        userId: requestBody.userId,
-        answeredQuestions: requestBody.answeredQuestions,
-        currentQuestion: requestBody.currentQuestion,
-        points: {
+
+    const accumulatedPoints =
+      totalHealthPoints + totalWealthPoints + totalHappinessPoints;
+
+    const result = await questionStatusCollection.updateOne(
+      { userId },
+      {
+        $set: {
+          currentQuestion: updatedAnsweredQuestions.length + 1,
+          points: {
             health: totalHealthPoints,
             wealth: totalWealthPoints,
             happiness: totalHappinessPoints,
+          },
+          accumulatedPoints,
         },
-        accumulatedPoints: totalHappinessPoints + totalHealthPoints + totalWealthPoints,
-    });
-    // check if the answer was submitted successfully
-    if (result.acknowledged) {
-        console.log("New answer submitted successfully");
-        return response.status(201).json({ message: "Answer submitted successfully" });
+        $push: {
+          answeredQuestions: {
+            ...answeredQuestion,
+            points,
+          },
+        },
+      }
+    );
+
+    if (result.modifiedCount > 0) {
+        const nextQuestionNumber = updatedAnsweredQuestions.length + 1;
+      return response
+        .status(200)
+        .json({
+          message: "Answer updated successfully",
+          nextQuestion: nextQuestionNumber,
+        });
+    } else {
+      return response
+        .status(500)
+        .json({ message: "An error occurred while updating the answer" });
     }
-    console.error("Error occured at submitAnswer: An unhandled error occured");
-    return response.status(500).json({ message: "An unhandled error occured" });
+  } else {
+    const result = await questionStatusCollection.insertOne({
+      userId,
+      answeredQuestions: [
+        {
+          ...answeredQuestion,
+          points,
+        },
+      ],
+      currentQuestion : 2,
+      points,
+      accumulatedPoints: points.health + points.wealth + points.happiness,
+    });
+
+    if (result.acknowledged) {
+      return response
+        .status(201)
+        .json({ message: "Answer submitted successfully", nextQuestion: 2 });
+    } else {
+      return response.status(500).json({ message: "An error occurred" });
+    }
+  }
 }
