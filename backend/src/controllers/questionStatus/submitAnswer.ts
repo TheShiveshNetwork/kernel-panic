@@ -30,6 +30,10 @@ export async function submitAnswer(
 
   const existingUser = await questionStatusCollection.findOne({ userId });
 
+  const timestamp = new Date().toLocaleString("en-IN", {
+    timeZone: "Asia/Kolkata",
+  });
+
   if (existingUser) {
     const updatedAnsweredQuestions = [
       ...existingUser.answeredQuestions,
@@ -63,24 +67,24 @@ export async function submitAnswer(
             happiness: totalHappinessPoints,
           },
           accumulatedPoints,
+          timestamp, 
         },
         $push: {
           answeredQuestions: {
             ...answeredQuestion,
             points,
+            timestamp, 
           },
         },
       }
     );
 
     if (result.modifiedCount > 0) {
-        const nextQuestionNumber = updatedAnsweredQuestions.length + 1;
-      return response
-        .status(200)
-        .json({
-          message: "Answer updated successfully",
-          nextQuestion: nextQuestionNumber,
-        });
+      const nextQuestionNumber = updatedAnsweredQuestions.length + 1;
+      return response.status(200).json({
+        message: "Answer updated successfully",
+        nextQuestion: nextQuestionNumber,
+      });
     } else {
       return response
         .status(500)
@@ -93,11 +97,13 @@ export async function submitAnswer(
         {
           ...answeredQuestion,
           points,
+          timestamp, 
         },
       ],
-      currentQuestion : 2,
+      currentQuestion: 2,
       points,
       accumulatedPoints: points.health + points.wealth + points.happiness,
+      timestamp, 
     });
 
     if (result.acknowledged) {
