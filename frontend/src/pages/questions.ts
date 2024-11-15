@@ -1,207 +1,175 @@
 export interface QuizQuestion {
     question: string;
-    options: { text: string; impact: { health: number; happiness: number; money: number } }[];
+    options: { text: string; impact: { health: number; happiness: number; money: number } }[]; 
 }
 
 export const quizQuestions: QuizQuestion[] = [
     {
-        question: "You skipped breakfast to save time for work. How do you proceed?",
+        question: "You're waking up on a typical weekday morning. How do you feel about the day ahead?",
         options: [
-            { text: "1. Grab a quick snack later.", impact: { health: 5, happiness: 0, money: -5 } },
-            { text: "2. Work through hunger.", impact: { health: -10, happiness: -5, money: 0 } },
-            { text: "3. Take time to eat a proper meal.", impact: { health: 10, happiness: 5, money: -15 } },
+            { text: "1. Excited for the opportunities!", impact: { health: 0, happiness: 5, money: 0 } },
+            { text: "2. Feeling a bit overwhelmed but determined.", impact: { health: -5, happiness: -5, money: 0 } },
+            { text: "3. Dreading the work ahead.", impact: { health: -10, happiness: -10, money: 0 } },
         ],
     },
     {
-        question: "You receive an unexpected bonus at work. What do you do?",
+        question: "You’ve just arrived at work and are assigned a team project. What’s your approach to this task?",
         options: [
-            { text: "1. Save it for the future.", impact: { health: 0, happiness: 5, money: 20 } },
-            { text: "2. Splurge on a vacation.", impact: { health: 5, happiness: 15, money: -30 } },
-            { text: "3. Donate part of it to charity.", impact: { health: 0, happiness: 10, money: -10 } },
+            { text: "1. Take charge and lead the team.", impact: { health: 0, happiness: 5, money: 0 } },
+            { text: "2. Collaborate and share the work equally.", impact: { health: 5, happiness: 10, money: 0 } },
+            { text: "3. Let someone else take charge.", impact: { health: 0, happiness: 0, money: 0 } },
         ],
     },
     {
-        question: "A gym membership costs $50 a month. How do you proceed?",
+        question: "During a break, you spot a colleague struggling with a personal issue. What do you do?",
         options: [
-            { text: "1. Invest in the membership.", impact: { health: 10, happiness: 5, money: -50 } },
-            { text: "2. Work out at home for free.", impact: { health: 5, happiness: 2, money: 0 } },
-            { text: "3. Skip exercising altogether.", impact: { health: -10, happiness: -5, money: 0 } },
+            { text: "1. Offer support and listen to them.", impact: { health: 5, happiness: 10, money: 0 } },
+            { text: "2. Ignore and focus on your own task.", impact: { health: 0, happiness: -5, money: 0 } },
+            { text: "3. Politely acknowledge and move on.", impact: { health: 0, happiness: 0, money: 0 } },
         ],
     },
     {
-        question: "You have been invited to a party but feel tired. What do you do?",
+        question: "After work, you get a gift card worth $100. How do you spend it?",
         options: [
-            { text: "1. Go to the party.", impact: { health: -5, happiness: 10, money: -10 } },
-            { text: "2. Stay home and rest.", impact: { health: 10, happiness: -5, money: 0 } },
-            { text: "3. Join for a short while.", impact: { health: 5, happiness: 5, money: -5 } },
+            { text: "1. Buy something you need.", impact: { health: 0, happiness: 5, money: -20 } },
+            { text: "2. Save it for a rainy day.", impact: { health: 0, happiness: 0, money: 20 } },
+            { text: "3. Treat yourself to something you want.", impact: { health: 0, happiness: 10, money: -30 } },
         ],
     },
     {
-        question: "You feel unwell but have an important deadline. What do you do?",
+        question: "You get invited to an expensive restaurant. How do you respond?",
         options: [
-            { text: "1. Push through and meet the deadline.", impact: { health: -15, happiness: -5, money: 20 } },
-            { text: "2. Take a sick day to recover.", impact: { health: 15, happiness: 5, money: -10 } },
-            { text: "3. Delegate the work.", impact: { health: 10, happiness: 0, money: -5 } },
+            { text: "1. Go and enjoy the experience.", impact: { health: 0, happiness: 10, money: -25 } },
+            { text: "2. Politely decline and suggest a cheaper alternative.", impact: { health: 0, happiness: 5, money: 0 } },
+            { text: "3. Go but keep the spending minimal.", impact: { health: 0, happiness: 5, money: -15 } },
         ],
     },
     {
-        question: "Your friend needs financial help. How much do you offer?",
+        question: "Later that evening, you’re feeling stressed and overwhelmed. What’s your coping strategy?",
         options: [
-            { text: "1. Lend a significant amount.", impact: { health: 0, happiness: 15, money: -30 } },
-            { text: "2. Lend a small amount.", impact: { health: 0, happiness: 5, money: -10 } },
-            { text: "3. Decline to lend money.", impact: { health: 0, happiness: -5, money: 0 } },
-        ],
-    },
-    {
-        question: "You are feeling bored at home. What do you do?",
-        options: [
-            { text: "1. Go for a hike.", impact: { health: 10, happiness: 10, money: -10 } },
-            { text: "2. Watch TV at home.", impact: { health: 0, happiness: 5, money: 0 } },
-            { text: "3. Go shopping.", impact: { health: 0, happiness: 10, money: -20 } },
-        ],
-    },
-    {
-        question: "You missed your morning workout. How do you compensate?",
-        options: [
-            { text: "1. Go for an evening run.", impact: { health: 10, happiness: 5, money: 0 } },
-            { text: "2. Skip it for the day.", impact: { health: -5, happiness: -2, money: 0 } },
-            { text: "3. Do a home workout instead.", impact: { health: 7, happiness: 3, money: 0 } },
-        ],
-    },
-    {
-        question: "You're at a restaurant, and the food takes too long. How do you react?",
-        options: [
-            { text: "1. Politely ask the waiter about the delay.", impact: { health: 0, happiness: 0, money: 0 } },
-            { text: "2. Leave without paying.", impact: { health: 0, happiness: -10, money: -15 } },
-            { text: "3. Stay patient and enjoy the ambiance.", impact: { health: 0, happiness: 5, money: 0 } },
-        ],
-    },
-    {
-        question: "You're feeling stressed at work. How do you handle it?",
-        options: [
-            { text: "1. Take a break and go for a walk.", impact: { health: 5, happiness: 5, money: 0 } },
+            { text: "1. Take a mental health day the next morning.", impact: { health: 15, happiness: 5, money: -10 } },
             { text: "2. Power through and ignore the stress.", impact: { health: -10, happiness: -5, money: 0 } },
-            { text: "3. Talk to a colleague about it.", impact: { health: 0, happiness: 5, money: 0 } },
+            { text: "3. Talk to your manager about a lighter workload.", impact: { health: 5, happiness: 5, money: 0 } },
         ],
     },
     {
-        question: "You find an old item in your closet. What do you do?",
+        question: "You’ve got a free weekend coming up. What will you do?",
         options: [
-            { text: "1. Donate it to charity.", impact: { health: 0, happiness: 5, money: 0 } },
-            { text: "2. Sell it online.", impact: { health: 0, happiness: 0, money: 10 } },
-            { text: "3. Throw it away.", impact: { health: 0, happiness: -2, money: 0 } },
+            { text: "1. Relax and do nothing.", impact: { health: 10, happiness: 5, money: 0 } },
+            { text: "2. Explore a new hobby.", impact: { health: 5, happiness: 15, money: -5 } },
+            { text: "3. Go on a spontaneous trip.", impact: { health: 0, happiness: 20, money: -30 } },
         ],
     },
     {
-        question: "You're considering taking a short trip. What do you do?",
+        question: "You’ve been feeling burnt out recently. A new opportunity comes up. How do you react?",
         options: [
-            { text: "1. Go on the trip and relax.", impact: { health: 10, happiness: 15, money: -50 } },
-            { text: "2. Stay at home and work.", impact: { health: -5, happiness: -10, money: 0 } },
-            { text: "3. Postpone the trip for later.", impact: { health: 0, happiness: 0, money: 0 } },
+            { text: "1. Take the opportunity for more flexibility (remote work).", impact: { health: 5, happiness: 10, money: 0 } },
+            { text: "2. Decline, preferring the comfort of your current routine.", impact: { health: 0, happiness: 0, money: 0 } },
+            { text: "3. Negotiate for a hybrid arrangement to balance both.", impact: { health: 5, happiness: 5, money: 0 } },
         ],
     },
     {
-        question: "You receive a compliment at work. How do you respond?",
+        question: "A colleague asks you to collaborate on a new product. What’s your next move?",
         options: [
-            { text: "1. Thank them and smile.", impact: { health: 0, happiness: 5, money: 0 } },
-            { text: "2. Humble-brag about your achievements.", impact: { health: 0, happiness: 10, money: 0 } },
-            { text: "3. Ignore the compliment.", impact: { health: 0, happiness: -5, money: 0 } },
+            { text: "1. Take it on and work hard to make it successful.", impact: { health: 0, happiness: 10, money: 10 } },
+            { text: "2. Negotiate better terms before agreeing.", impact: { health: 5, happiness: 5, money: 0 } },
+            { text: "3. Decline and focus on your current projects.", impact: { health: 0, happiness: -5, money: 0 } },
         ],
     },
     {
-        question: "You need to prepare dinner, but you’re out of groceries. What do you do?",
+        question: "At the end of the week, you reflect on your journey so far. How do you feel?",
         options: [
-            { text: "1. Order food delivery.", impact: { health: 0, happiness: 5, money: -20 } },
-            { text: "2. Go grocery shopping.", impact: { health: 5, happiness: 2, money: -30 } },
-            { text: "3. Make do with what's available at home.", impact: { health: 5, happiness: 0, money: -10 } },
+            { text: "1. Proud of the choices I made and excited for the future.", impact: { health: 10, happiness: 20, money: 0 } },
+            { text: "2. A bit overwhelmed but satisfied with what I accomplished.", impact: { health: 0, happiness: 10, money: 0 } },
+            { text: "3. Regretful, wishing I had made different decisions.", impact: { health: -10, happiness: -10, money: 0 } },
         ],
     },
     {
-        question: "You have a bad day at work. How do you unwind?",
+        question: "You’ve been invited to a networking event. How do you feel about it?",
         options: [
-            { text: "1. Watch a movie.", impact: { health: 0, happiness: 10, money: -5 } },
-            { text: "2. Take a long bath.", impact: { health: 5, happiness: 5, money: -2 } },
-            { text: "3. Call a friend and vent.", impact: { health: 0, happiness: 5, money: 0 } },
+            { text: "1. Excited to meet new people and make connections.", impact: { health: 0, happiness: 10, money: 0 } },
+            { text: "2. Reluctant, but decide to go anyway for career growth.", impact: { health: -5, happiness: 0, money: 0 } },
+            { text: "3. Decline the invitation to relax at home.", impact: { health: 10, happiness: -5, money: 0 } },
         ],
     },
     {
-        question: "You see a street performer playing music. What do you do?",
+        question: "Your friend asks for help with a major life decision. How do you support them?",
         options: [
-            { text: "1. Stop and listen for a while.", impact: { health: 0, happiness: 5, money: 0 } },
-            { text: "2. Walk by without stopping.", impact: { health: 0, happiness: 0, money: 0 } },
-            { text: "3. Give them a tip.", impact: { health: 0, happiness: 10, money: -5 } },
+            { text: "1. Offer practical advice and guidance.", impact: { health: 5, happiness: 10, money: 0 } },
+            { text: "2. Just listen and let them figure it out on their own.", impact: { health: 0, happiness: 5, money: 0 } },
+            { text: "3. Give them a loan to help with their decision.", impact: { health: 0, happiness: 0, money: -50 } },
         ],
     },
     {
-        question: "You’re running late for an important meeting. How do you react?",
+        question: "You’re offered a promotion at work. What do you do?",
         options: [
-            { text: "1. Rush to the meeting as fast as possible.", impact: { health: -10, happiness: -5, money: 0 } },
-            { text: "2. Call ahead and explain the delay.", impact: { health: 0, happiness: 5, money: 0 } },
-            { text: "3. Skip the meeting and reschedule.", impact: { health: 0, happiness: -10, money: -20 } },
+            { text: "1. Accept it for the new challenges and salary increase.", impact: { health: -10, happiness: 10, money: 50 } },
+            { text: "2. Decline and keep your current role for work-life balance.", impact: { health: 5, happiness: 5, money: 0 } },
+            { text: "3. Negotiate for a different work arrangement or benefits.", impact: { health: 5, happiness: 5, money: 0 } },
         ],
     },
     {
-        question: "You’re feeling anxious about an upcoming presentation. How do you deal with it?",
+        question: "You’re at a crossroads in your career. What’s your next move?",
         options: [
-            { text: "1. Practice more and prepare thoroughly.", impact: { health: 0, happiness: 10, money: 0 } },
-            { text: "2. Take a moment to relax and breathe.", impact: { health: 5, happiness: 5, money: 0 } },
-            { text: "3. Postpone the presentation.", impact: { health: 0, happiness: -10, money: -10 } },
+            { text: "1. Change careers to pursue your passion.", impact: { health: 10, happiness: 20, money: -30 } },
+            { text: "2. Stick with your current job for stability.", impact: { health: 0, happiness: 5, money: 20 } },
+            { text: "3. Take a break and travel to clear your mind.", impact: { health: 5, happiness: 15, money: -20 } },
         ],
     },
     {
-        question: "You feel like taking up a new hobby. What do you choose?",
+        question: "You’ve just received a bill that’s a bit more than you expected. What do you do?",
         options: [
-            { text: "1. Start painting.", impact: { health: 5, happiness: 10, money: -20 } },
-            { text: "2. Learn to play a musical instrument.", impact: { health: 5, happiness: 15, money: -30 } },
-            { text: "3. Try cooking new dishes.", impact: { health: 10, happiness: 10, money: -10 } },
+            { text: "1. Pay the bill immediately to avoid stress.", impact: { health: 0, happiness: -5, money: -20 } },
+            { text: "2. Delay payment and review your finances.", impact: { health: -5, happiness: -5, money: 0 } },
+            { text: "3. Contact the service provider to negotiate a lower charge.", impact: { health: 0, happiness: 5, money: 0 } },
         ],
     },
     {
-        question: "You receive an invitation to a weekend getaway with friends. What do you do?",
+        question: "You’ve been invited to a reunion. How do you prepare for it?",
         options: [
-            { text: "1. Go on the trip and enjoy.", impact: { health: 10, happiness: 15, money: -50 } },
-            { text: "2. Stay home and relax.", impact: { health: 5, happiness: 5, money: 0 } },
-            { text: "3. Skip the trip to save money.", impact: { health: 0, happiness: -5, money: 10 } },
+            { text: "1. Go and reconnect with old friends.", impact: { health: 5, happiness: 15, money: 0 } },
+            { text: "2. Avoid it, preferring to focus on current relationships.", impact: { health: 0, happiness: 5, money: 0 } },
+            { text: "3. Go, but only to catch up on professional opportunities.", impact: { health: 0, happiness: 0, money: 0 } },
         ],
     },
     {
-        question: "You’re planning to redecorate your room. What’s your budget?",
+        question: "You’ve started a new fitness regimen. How’s it going so far?",
         options: [
-            { text: "1. Go for a luxurious makeover.", impact: { health: 0, happiness: 10, money: -100 } },
-            { text: "2. Redecorate with minimal spending.", impact: { health: 0, happiness: 5, money: -30 } },
-            { text: "3. Skip the redecoration altogether.", impact: { health: 0, happiness: -5, money: 0 } },
+            { text: "1. Feeling great! It's boosting my energy and mood.", impact: { health: 15, happiness: 10, money: 0 } },
+            { text: "2. Struggling, but determined to keep going.", impact: { health: -5, happiness: 5, money: 0 } },
+            { text: "3. Giving up, it’s too hard to keep up with.", impact: { health: -10, happiness: -5, money: 0 } },
         ],
     },
     {
-        question: "You want to make a positive impact on the environment. What do you do?",
+        question: "A sudden opportunity to work abroad comes your way. What do you do?",
         options: [
-            { text: "1. Start using sustainable products.", impact: { health: 5, happiness: 10, money: -20 } },
-            { text: "2. Reduce your waste at home.", impact: { health: 10, happiness: 15, money: 0 } },
-            { text: "3. Invest in eco-friendly habits.", impact: { health: 10, happiness: 15, money: -30 } },
+            { text: "1. Take it for the adventure and experience.", impact: { health: 10, happiness: 15, money: 20 } },
+            { text: "2. Decline, preferring the comfort of your home country.", impact: { health: 0, happiness: 5, money: 0 } },
+            { text: "3. Negotiate terms that provide work-life balance and benefits.", impact: { health: 5, happiness: 10, money: 10 } },
         ],
     },
     {
-        question: "You’ve been invited to a family gathering. How do you react?",
+        question: "You’re feeling great after a week of good habits. How do you continue the streak?",
         options: [
-            { text: "1. Attend the gathering with enthusiasm.", impact: { health: 5, happiness: 10, money: 0 } },
-            { text: "2. Attend reluctantly.", impact: { health: 0, happiness: -5, money: 0 } },
-            { text: "3. Skip the gathering to relax at home.", impact: { health: 10, happiness: 5, money: 0 } },
+            { text: "1. Keep up with a balanced routine of work and rest.", impact: { health: 10, happiness: 10, money: 0 } },
+            { text: "2. Go on a shopping spree to reward yourself.", impact: { health: 0, happiness: 5, money: -30 } },
+            { text: "3. Treat yourself to a new hobby to stay motivated.", impact: { health: 5, happiness: 15, money: -20 } },
         ],
     },
     {
-        question: "You’re offered a promotion at work but it requires more responsibility. What do you do?",
+        question: "A new financial investment opportunity comes up. Do you take it?",
         options: [
-            { text: "1. Accept the promotion.", impact: { health: -5, happiness: 10, money: 50 } },
-            { text: "2. Decline the promotion for now.", impact: { health: 5, happiness: 0, money: 0 } },
-            { text: "3. Negotiate for a better work-life balance.", impact: { health: 5, happiness: 5, money: 10 } },
+            { text: "1. Take the risk, hoping for good returns.", impact: { health: 0, happiness: 0, money: 20 } },
+            { text: "2. Decline, preferring to stick to safer savings options.", impact: { health: 0, happiness: 0, money: 5 } },
+            { text: "3. Do thorough research and invest carefully.", impact: { health: 5, happiness: 5, money: 0 } },
         ],
     },
     {
-        question: "You're feeling overwhelmed with your workload. What do you do?",
+        question: "You’re about to make a big decision. How do you approach it?",
         options: [
-            { text: "1. Prioritize and delegate tasks.", impact: { health: 10, happiness: 5, money: 0 } },
-            { text: "2. Work harder and push through.", impact: { health: -10, happiness: -5, money: 0 } },
-            { text: "3. Take a break to clear your mind.", impact: { health: 5, happiness: 10, money: 0 } },
+            { text: "1. Take time to reflect and seek advice.", impact: { health: 5, happiness: 5, money: 0 } },
+            { text: "2. Go with your gut feeling.", impact: { health: 0, happiness: 0, money: 0 } },
+            { text: "3. Rush into the decision to get it over with.", impact: { health: -5, happiness: -5, money: 0 } },
         ],
-    },
+    }
 ];
