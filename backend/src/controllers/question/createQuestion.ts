@@ -9,6 +9,7 @@ export async function createQuestion(this: ControllerClass, request:Request, res
         title: requestBody.title,
         content: requestBody.content,
         options: requestBody.options,
+        index: requestBody.index,
     });
     if (result.acknowledged) {
         console.log("New question created successfully");
