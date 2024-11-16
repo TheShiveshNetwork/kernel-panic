@@ -1,16 +1,6 @@
+import type { NextFunction, Request, Response } from "express";
 import { z, ZodError } from "zod";
 import { StatusCodes } from "http-status-codes";
-
-const answeredQuestionSchema = z.object({
-  questionId: z.string(),
-  selectedOption: z.string(),
-});
-
-const submitAnswerRequestSchema = z.object({
-  userId: z.string(),
-  currentQuestion: z.number(),
-  answeredQuestion: answeredQuestionSchema,
-});
 
 export function validateData(schema: z.ZodObject<any, any>) {
   return (req: Request, res: Response, next: NextFunction) => {
