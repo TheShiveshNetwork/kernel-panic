@@ -1,10 +1,7 @@
-import { useState } from 'react';
-import Terminal, { ColorMode, TerminalOutput } from 'react-terminal-ui';
+import Terminal, { ColorMode } from 'react-terminal-ui';
 
 function GamePage() {
-    const [terminalLineData, setTerminalLineData] = useState([
-        <TerminalOutput>Welcome to the React Terminal UI Demo!</TerminalOutput>
-    ]);
+    const terminalLineData = "Welcome to kernel panic!";
     return (
         <div className="container">
             <Terminal
