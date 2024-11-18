@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import Terminal, { ColorMode, TerminalOutput, TerminalLine } from "react-terminal-ui";
-import { quizQuestions, QuizQuestion } from "./questions";
+import { quizQuestions } from "./questions";
 
 const GamePage: React.FC = () => {
     const [terminalLineData, setTerminalLineData] = useState<TerminalLine[]>([
         <TerminalOutput>Welcome to the Life Choices Game!</TerminalOutput>,
         <br />,
         <TerminalOutput>Your initial stats: Health: 50, Happiness: 50, Money: 50.</TerminalOutput>,
-        <br/>,
-        <TerminalOutput>{quizQuestions[0].question}</TerminalOutput>,
-        ...quizQuestions[0].options.map((option) => <TerminalOutput>{option.text}</TerminalOutput>),
+        <br />,
+        <TerminalOutput>{`Question 1: ${quizQuestions[0].question}`}</TerminalOutput>,
+        ...quizQuestions[0].options.map((option, index) => (
+            <TerminalOutput>{`${index + 1}. ${option.text}`}</TerminalOutput>
+        )),
     ]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
     const [stats, setStats] = useState<{ health: number; happiness: number; money: number }>({
@@ -30,6 +32,7 @@ const GamePage: React.FC = () => {
             setTerminalLineData((prevData) => [
                 ...prevData,
                 <TerminalOutput>Invalid input. Please choose a valid option.</TerminalOutput>,
+                <br />,
             ]);
             return;
         }
@@ -46,12 +49,13 @@ const GamePage: React.FC = () => {
         // Update terminal lines
         setTerminalLineData((prevData) => [
             ...prevData,
-            <TerminalOutput>You chose: {selectedOption.text}</TerminalOutput>,
+            <br />,
+            <TerminalOutput>{`You chose: ${selectedOption.text}`}</TerminalOutput>,
             <br />,
             <TerminalOutput>
-                Updated stats - Health: {stats.health.toString() + selectedOption.impact.health}, Happiness:{" "}
-                {stats.happiness.toString() + selectedOption.impact.happiness}, Money:{''}
-                {stats.money.toString() + selectedOption.impact.money}.
+                {`Updated stats - Health: ${stats.health + selectedOption.impact.health}, Happiness: ${
+                    stats.happiness + selectedOption.impact.happiness
+                }, Money: ${stats.money + selectedOption.impact.money}.`}
             </TerminalOutput>,
             <br />,
         ]);
@@ -63,13 +67,18 @@ const GamePage: React.FC = () => {
             const nextQuestion = quizQuestions[nextQuestionIndex];
             setTerminalLineData((prevData) => [
                 ...prevData,
-                <TerminalOutput>{nextQuestion.question}</TerminalOutput>,
-                ...nextQuestion.options.map((option) => <TerminalOutput>{option.text}</TerminalOutput>),
+                <br />,
+                <TerminalOutput>{`Question ${nextQuestionIndex + 1}: ${nextQuestion.question}`}</TerminalOutput>,
+                ...nextQuestion.options.map((option, index) => (
+                    <TerminalOutput>{`${index + 1}. ${option.text}`}</TerminalOutput>
+                )),
             ]);
         } else {
             setTerminalLineData((prevData) => [
                 ...prevData,
-                <TerminalOutput>Game Over! Final stats - Health: {stats.health.toString()}, Happiness: {stats.happiness.toString()}, Money: {stats.money.toString()}.</TerminalOutput>,
+                <TerminalOutput>
+                    {`Game Over! Final stats - Health: ${stats.health}, Happiness: ${stats.happiness}, Money: ${stats.money}.`}
+                </TerminalOutput>,
             ]);
         }
     };
