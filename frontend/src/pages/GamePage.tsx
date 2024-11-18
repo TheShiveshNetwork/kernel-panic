@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Terminal, { ColorMode, TerminalOutput, TerminalLine } from "react-terminal-ui";
+import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
 import { quizQuestions } from "./questions";
 
 const GamePage: React.FC = () => {
-    const [terminalLineData, setTerminalLineData] = useState<TerminalLine[]>([
+    const [terminalLineData, setTerminalLineData] = useState([
         <TerminalOutput>Welcome to the Life Choices Game!</TerminalOutput>,
         <br />,
         <TerminalOutput>Your initial stats: Health: 50, Happiness: 50, Money: 50.</TerminalOutput>,
