@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import { MongoDBClient } from "@/db";
 import { createUser } from "./user/createUser";
+import { loginUser } from "./user/loginUser";
 import { getUserById } from "./user/getUserById";
 import { createQuestion } from "./question/createQuestion";
 import { getQuestionById } from "./question/getQuestionById";
@@ -21,6 +22,7 @@ export class ControllerClass {
     }
 
     createUser = createUser;
+    loginUser = loginUser;
     getUserById = getUserById;
     createQuestion = createQuestion;
     getQuestionById = getQuestionById;
