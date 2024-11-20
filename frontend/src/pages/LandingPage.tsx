@@ -30,9 +30,27 @@ const LandingPage: React.FC = () => {
     return true;
   };
 
-  const handleStartGame = () => {
+  const handleLogin = async () => {
     if (validateForm()) {
-      navigate('/panic');
+      try {
+        const response = await fetch('/api/user/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to log in. Please check your credentials.');
+        }
+
+        const data = await response.json();
+        localStorage.setItem('token', data.token);
+        navigate('/panic'); 
+      } catch (error) {
+        setError(error.message || 'Something went wrong. Please try again.');
+      }
     }
   };
 
@@ -69,7 +87,7 @@ const LandingPage: React.FC = () => {
           />
           {error && <p className="text-red-500 mb-4">{error}</p>}
           <button
-            onClick={handleStartGame}
+            onClick={handleLogin}
             className="bg-gradient-to-r from-green-600 to-green-800 hover:from-green-700 hover:to-green-900 text-white font-bold py-3 px-6 rounded-full shadow-lg transform hover:-translate-y-1 transition duration-300"
             aria-label="Start the game"
           >
