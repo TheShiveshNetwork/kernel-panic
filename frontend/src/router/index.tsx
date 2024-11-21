@@ -1,15 +1,35 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
+
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import LandingPage from "@/pages/LandingPage";
 import GamePage from "@/pages/GamePage";
+import { ToastContainer } from "react-toastify";
+import ProtectedLayout from '@/layouts/protected';
+import BaseLayout from '@/layouts/base-layout';
 
 const router = createBrowserRouter([
     {
+        children: [
+            {
+                path: "/",
+                element: <LandingPage />,
+            },
+            {
+                path: "/panic",
+                element:
+                    <ProtectedLayout>
+                        <GamePage />
+                    </ProtectedLayout>
+                ,
+            },
+        ],
         path: "/",
-        element: <LandingPage/>,
-    },
-    {
-        path: "/panic",
-        element: <GamePage/>,
+        element:
+            <BaseLayout>
+                <ToastContainer />
+                <Outlet />
+            </BaseLayout>
+        ,
     }
 ]);
 
