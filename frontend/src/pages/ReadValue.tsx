@@ -1,4 +1,3 @@
-import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { globalVariable } from '@/recoil/global_test';
 
