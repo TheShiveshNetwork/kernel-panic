@@ -49,7 +49,7 @@ const LandingPage: React.FC = () => {
         localStorage.setItem('token', data.token);
         navigate('/panic'); 
       } catch (error) {
-        setError(error.message || 'Something went wrong. Please try again.');
+        setError((error as Error).message || 'Something went wrong. Please try again.');
       }
     }
   };
