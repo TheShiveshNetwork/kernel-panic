@@ -17,9 +17,17 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "*", 
+    origin: "*",
     methods: ["GET", "POST"],
   },
+});
+
+// Manual CORS Configuration
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept');
+  next();
 });
 
 app.use(express.urlencoded({ extended: true }));
@@ -52,7 +60,7 @@ io.on("connection", (socket) => {
     } else {
       socket.emit("error", { message: "Room does not exist" });
     }
-    }
+  }
   );
 
   socket.on("disconnect", () => {
