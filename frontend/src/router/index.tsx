@@ -6,6 +6,8 @@ import GamePage from "@/pages/GamePage";
 import { ToastContainer } from "react-toastify";
 import ProtectedLayout from '@/layouts/protected';
 import BaseLayout from '@/layouts/base-layout';
+import IncrementValue from '@/pages/IncrementValue';
+import ReadValue from '@/pages/ReadValue';
 
 const router = createBrowserRouter([
     {
@@ -30,20 +32,19 @@ const router = createBrowserRouter([
                 <Outlet />
             </BaseLayout>
         ,
+    },
+    {
+        path: "/incrementValue",
+        element: <IncrementValue />,
+    },
+    {
+        path: "/readValue",
+        element: <ReadValue />,
     }
 ]);
 
 export function Router() {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/incrementValue" element={<IncrementValue />} />
-                <Route path="/readValue" element={<ReadValue />} />
-                <Route path="/panic" element={<GamePage />} />
-            </Routes>
-        </BrowserRouter>
+        <RouterProvider router={router} />
     );
-};
-
-export default Router;
+}

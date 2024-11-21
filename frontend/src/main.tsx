@@ -1,7 +1,7 @@
+import '@/index.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import '@/index.css';
-import  Router  from '@/router/index';
+import { Router } from './router';
 import { RecoilRoot } from 'recoil';
 
 
