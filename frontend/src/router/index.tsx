@@ -1,20 +1,20 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "@/pages/LandingPage";
 import GamePage from "@/pages/GamePage";
+import IncrementValue from "@/pages/IncrementValue";
+import ReadValue from "@/pages/ReadValue";
 
-const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <LandingPage/>,
-    },
-    {
-        path: "/panic",
-        element: <GamePage/>,
-    }
-]);
-
-export function Router() {
+const Router = () => {
     return (
-        <RouterProvider router={router} />
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/incrementValue" element={<IncrementValue />} />
+                <Route path="/readValue" element={<ReadValue />} />
+                <Route path="/panic" element={<GamePage />} />
+            </Routes>
+        </BrowserRouter>
     );
-}
+};
+
+export default Router;
