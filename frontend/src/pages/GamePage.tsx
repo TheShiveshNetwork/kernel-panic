@@ -10,7 +10,7 @@ const GamePage: React.FC = () => {
         <br />,
         <TerminalOutput>{`Question 1: ${quizQuestions[0].question}`}</TerminalOutput>,
         ...quizQuestions[0].options.map((option, index) => (
-            <TerminalOutput>{`${index + 1}. ${option.text}`}</TerminalOutput>
+            <TerminalOutput key={`tout-${index}`}>{`${index + 1}. ${option.text}`}</TerminalOutput>
         )),
     ]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
@@ -70,7 +70,7 @@ const GamePage: React.FC = () => {
                 <br />,
                 <TerminalOutput>{`Question ${nextQuestionIndex + 1}: ${nextQuestion.question}`}</TerminalOutput>,
                 ...nextQuestion.options.map((option, index) => (
-                    <TerminalOutput>{`${index + 1}. ${option.text}`}</TerminalOutput>
+                    <TerminalOutput key={`t-${index}`}>{`${index + 1}. ${option.text}`}</TerminalOutput>
                 )),
             ]);
         } else {

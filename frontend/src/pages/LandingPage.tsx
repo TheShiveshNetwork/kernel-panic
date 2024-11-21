@@ -1,58 +1,50 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import backgroundVideo from "../assets/12679207_1920_1080_30fps.mp4";
 import profilePic from "../assets/profile.png";
+import { FieldValues, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { PanicApi } from '@/api';
+import { userSchema } from '@/validators/user';
+import { toast } from 'react-toastify';
+import Loading from '@/components/loading';
+import { useAuth } from '@/hooks/use-auth';
 
 const LandingPage: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { token, loading: authLoading } = useAuth();
 
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors: formErrors },
+  } = useForm({
+    resolver: zodResolver(userSchema),
+  });
 
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
+  if (authLoading) {
+    return <Loading />;
+  }
 
-  const validateForm = () => {
-    if (!email || !/\S+@\S+\.\S+/.test(email)) {
-      setError('Please enter a valid email address.');
-      return false;
-    }
-    if (!password || password.length < 6) {
-      setError('Password must be at least 6 characters long.');
-      return false;
-    }
-    setError('');
-    return true;
-  };
+  if (token) {
+    return <Navigate to="/panic" replace />;
+  }
 
-  const handleLogin = async () => {
-    if (validateForm()) {
-      try {
-        const response = await fetch('/api/user/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, password }),
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to log in. Please check your credentials.');
-        }
-
-        const data = await response.json();
-        localStorage.setItem('token', data.token);
-        navigate('/panic'); 
-      } catch (error) {
-        setError((error as Error).message || 'Something went wrong. Please try again.');
+  async function handleLogin(data: FieldValues) {
+    try {
+      const response = await PanicApi.post('/user/login', data);
+      // console.log(response.data);
+      if (response.status == 201) {
+        toast.success("Login successful!");
+        localStorage.setItem("token", response.data.token);
+        navigate("/panic");
+      } else {
+        toast.error(response.data.message);
       }
+    } catch (error: Error | unknown) {
+      console.log(error);
+      toast.error("An error occurred. Please try again later.");
     }
-  };
+  }
 
   return (
     <div className="home-container flex flex-col items-center justify-center min-h-screen bg-no-repeat bg-cover bg-fixed bg-center text-white text-center overflow-hidden">
@@ -68,32 +60,34 @@ const LandingPage: React.FC = () => {
         <p className="instructions mb-5 text-xl text-gray-300">
           Enter your details and embark on your journey through life decisions impacting your Money, Health, and Happiness!
         </p>
-        <div className="form-container flex flex-col items-center bg-black bg-opacity-80 p-8 rounded-lg shadow-2xl w-96">
+        <form
+          onSubmit={handleSubmit(async (data) => {
+            await handleLogin(data);
+          })}
+          className="form-container flex flex-col items-center bg-black bg-opacity-80 p-8 rounded-lg shadow-2xl w-96"
+        >
           <input
-            type="email"
-            value={email}
-            onChange={handleEmailChange}
+            {...register('email')}
             placeholder="Enter Email"
             className="bg-gray-900 bg-opacity-50 border-b-4 border-blue-500 focus:border-blue-400 focus:outline-none transition duration-300 p-3 text-lg text-white rounded-md mb-4 w-full"
             aria-label="Enter your email"
           />
+          {formErrors.email?.message && <p className="text-red-500 mb-4">{formErrors.email?.message as string}</p>}
           <input
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
+            {...register("password")}
             placeholder="Enter Password"
             className="bg-gray-900 bg-opacity-50 border-b-4 border-blue-500 focus:border-blue-400 focus:outline-none transition duration-300 p-3 text-lg text-white rounded-md mb-4 w-full"
             aria-label="Enter your password"
           />
-          {error && <p className="text-red-500 mb-4">{error}</p>}
+          {formErrors.password?.message && <p className="text-red-500 mb-4">{formErrors.password?.message as string}</p>}
           <button
-            onClick={handleLogin}
+            type='submit'
             className="bg-gradient-to-r from-green-600 to-green-800 hover:from-green-700 hover:to-green-900 text-white font-bold py-3 px-6 rounded-full shadow-lg transform hover:-translate-y-1 transition duration-300"
             aria-label="Start the game"
           >
             Enter the Game
           </button>
-        </div>
+        </form>
         <div className="rules mt-8 p-6 bg-black bg-opacity-80 rounded-lg shadow-2xl text-lg text-gray-300 transition duration-500 hover:bg-opacity-90">
           <h2 className="text-2xl font-bold text-blue-400 mb-4">Game Rules</h2>
           <ul className="list-decimal list-inside space-y-2">
