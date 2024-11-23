@@ -8,10 +8,11 @@ import { userSchema } from '@/validators/user';
 import { toast } from 'react-toastify';
 import Loading from '@/components/loading';
 import { useAuth } from '@/hooks/use-auth';
+import { useEffect } from 'react';
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
-  const { token, loading: authLoading } = useAuth();
+  const { token, setToken, loading: authLoading } = useAuth();
 
   const {
     register,
@@ -21,13 +22,11 @@ const LandingPage: React.FC = () => {
     resolver: zodResolver(userSchema),
   });
 
-  if (authLoading) {
-    return <Loading />;
-  }
-
-  if (token) {
-    return <Navigate to="/panic" replace />;
-  }
+  useEffect(() => {
+    if (token) {
+      navigate("/panic", { replace: true });
+    }
+  }, [token, navigate]);
 
   async function handleLogin(data: FieldValues) {
     try {
@@ -36,7 +35,7 @@ const LandingPage: React.FC = () => {
       if (response.status == 201) {
         toast.success("Login successful!");
         localStorage.setItem("token", response.data.token);
-        navigate("/panic");
+        setToken(response.data.token);
       } else {
         toast.error(response.data.message);
       }
@@ -44,6 +43,14 @@ const LandingPage: React.FC = () => {
       console.log(error);
       toast.error("An error occurred. Please try again later.");
     }
+  }
+
+  if (authLoading) {
+    return <Loading />;
+  }
+
+  if (token) {
+    return <Navigate to="/panic" replace />;
   }
 
   return (
