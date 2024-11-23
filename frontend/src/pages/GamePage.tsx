@@ -39,14 +39,12 @@ const GamePage: React.FC = () => {
 
         const selectedOption = currentQuestion.options[selectedOptionIndex];
 
-        // Update stats
         setStats((prevStats) => ({
             health: Math.max(0, prevStats.health + selectedOption.impact.health),
             happiness: Math.max(0, prevStats.happiness + selectedOption.impact.happiness),
             money: Math.max(0, prevStats.money + selectedOption.impact.money),
         }));
 
-        // Update terminal lines
         setTerminalLineData((prevData) => [
             ...prevData,
             <br />,
@@ -60,7 +58,6 @@ const GamePage: React.FC = () => {
             <br />,
         ]);
 
-        // Move to the next question
         const nextQuestionIndex = currentQuestionIndex + 1;
         if (nextQuestionIndex < quizQuestions.length) {
             setCurrentQuestionIndex(nextQuestionIndex);

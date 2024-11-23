@@ -17,7 +17,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "*", 
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
@@ -60,7 +60,7 @@ io.on("connection", (socket) => {
     } else {
       socket.emit("error", { message: "Room does not exist" });
     }
-    }
+  }
   );
 
   socket.on("disconnect", () => {
