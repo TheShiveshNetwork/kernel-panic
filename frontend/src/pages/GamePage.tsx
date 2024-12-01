@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
+import { PanicApi } from "@/api";
 
 interface Option {
   text: string;
@@ -11,7 +12,7 @@ interface Option {
 }
 
 interface Question {
-  _id: string; // MongoDB ObjectId as a string
+  _id: string;
   title: string;
   options: Option[];
 }
@@ -20,53 +21,66 @@ const GamePage: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [terminalLineData, setTerminalLineData] = useState<string[]>([
     "Welcome to the Life Choices Game!",
-    "\nYour initial stats: Health: 50, Wealth: 50, Happiness: 50.\n",
+    "Type '/start' to begin the game.\n",
   ]);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number | null>(null);
   const [stats, setStats] = useState<{ health: number; wealth: number; happiness: number }>({
     health: 50,
     wealth: 50,
     happiness: 50,
   });
   const [gameOver, setGameOver] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [, setError] = useState<string | null>(null);
 
   const userId = "mocked-user-id"; // Mocked userId for demonstration
 
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const response = await fetch("https://kernel-panic.onrender.com/api/getAllQuestions");
-        if (!response.ok) {
-          throw new Error(`Failed to fetch questions: ${response.statusText}`);
-        }
-        const data = await response.json();
+  const fetchQuestions = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await PanicApi.get("/getAllQuestions");
+      const data = response.data;
 
-        if (data.length > 0) {
-          setQuestions(data);
-          const firstQuestionText = `Question 1: ${data[0].title}`;
-          const firstOptionsText = data[0].options
-            .map((option: Option, index: number) => `${index + 1}. ${option.text}`)
-            .join("\n");
-          setTerminalLineData((prevData) => [
-            ...prevData,
-            firstQuestionText,
-            firstOptionsText,
-          ]);
-        } else {
-          setGameOver(true);
-          setTerminalLineData((prevData) => [...prevData, "No questions available. Game over!"]);
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred.");
-      } finally {
-        setIsLoading(false);
+      if (data.length > 0) {
+        setQuestions(data);
+        setTerminalLineData((prevData) => [
+          ...prevData,
+          "Questions are loaded. Type '/start' to begin!",
+        ]);
+      } else {
+        setGameOver(true);
+        setTerminalLineData((prevData) => [...prevData, "No questions available. Game over!"]);
       }
-    };
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred.");
+      setTerminalLineData((prevData) => [
+        ...prevData,
+        `Error: ${err instanceof Error ? err.message : "Unknown error"}`,
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    fetchQuestions();
-  }, []);
+  const startGame = () => {
+    if (questions.length === 0) {
+      setTerminalLineData((prevData) => [
+        ...prevData,
+        "Questions are not loaded yet. Please wait...",
+      ]);
+      return;
+    }
+
+    setCurrentQuestionIndex(0); // Start with the first question
+    const firstQuestion = questions[0];
+    const questionText = `Question 1: ${firstQuestion.title}`;
+    const optionsText = firstQuestion.options
+      .map((option, index) => `${index + 1}. ${option.text}`)
+      .join("\n");
+
+    setTerminalLineData((prevData) => [...prevData, questionText, optionsText]);
+  };
 
   const submitAnswer = async (
     questionId: string,
@@ -74,25 +88,19 @@ const GamePage: React.FC = () => {
     newStats: { health: number; wealth: number; happiness: number }
   ): Promise<boolean> => {
     try {
-      const response = await fetch("https://kernel-panic.onrender.com/api/submitAnswer", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId,
-          answeredQuestion: {
-            questionId,
-            selectedOption,
-          },
-          updatedStats: newStats, // Sending updated stats to backend
-        }),
+      const response = await PanicApi.post("/submitAnswer", {
+        userId,
+        answeredQuestion: {
+          questionId,
+          selectedOption,
+        },
+        updatedStats: newStats, // Sending updated stats to backend
       });
 
-      const result = await response.json();
-
-      if (response.ok) {
+      if (response.status === 200) {
         return true; // Successfully submitted answer
       } else {
-        throw new Error(result.message || "Failed to submit answer.");
+        throw new Error(response.data.message || "Failed to submit answer.");
       }
     } catch (error) {
       console.error("Error submitting answer:", error);
@@ -105,15 +113,38 @@ const GamePage: React.FC = () => {
   };
 
   const handleInput = async (input: string) => {
+    if (isLoading) {
+      setTerminalLineData((prevData) => [...prevData, "Game is still loading, please wait..."]);
+      return;
+    }
+
     if (gameOver) {
       setTerminalLineData((prevData) => [
         ...prevData,
-        "Game is over. No more input allowed.",
+        "Game is over. Restart the application to play again.",
       ]);
       return;
     }
 
-    const currentQuestion = questions[currentQuestionIndex];
+    if (input === "/start") {
+      if (currentQuestionIndex === null) {
+        startGame();
+      } else {
+        setTerminalLineData((prevData) => [
+          ...prevData,
+          "Game has already started! Answer the current question.",
+        ]);
+      }
+      return;
+    }
+
+    const currentIndex = currentQuestionIndex;
+    if (currentIndex === null || currentIndex >= questions.length) {
+      setTerminalLineData((prevData) => [...prevData, "Invalid command. Type '/start' to begin."]);
+      return;
+    }
+
+    const currentQuestion = questions[currentIndex];
     const selectedOptionIndex = parseInt(input) - 1;
 
     if (
@@ -135,13 +166,6 @@ const GamePage: React.FC = () => {
       happiness: stats.happiness + selectedOption.points.happiness,
     };
 
-    // Immediate frontend update
-    setTerminalLineData((prevData) => [
-      ...prevData,
-      `You chose: ${selectedOption.text}`,
-      `Updated stats - Health: ${newStats.health}, Wealth: ${newStats.wealth}, Happiness: ${newStats.happiness}.\n`,
-    ]);
-
     // Sync stats with database
     const isAnswerSubmitted = await submitAnswer(
       currentQuestion._id,
@@ -154,17 +178,18 @@ const GamePage: React.FC = () => {
       setStats(newStats);
 
       // Move to the next question or end the game
-      const nextQuestionIndex = currentQuestionIndex + 1;
+      const nextQuestionIndex = currentIndex + 1;
       if (nextQuestionIndex < questions.length) {
         setCurrentQuestionIndex(nextQuestionIndex);
 
         const nextQuestion = questions[nextQuestionIndex];
         const nextQuestionText = `Question ${nextQuestionIndex + 1}: ${nextQuestion.title}`;
         const nextOptionsText = nextQuestion.options
-          .map((option: Option, index: number) => `${index + 1}. ${option.text}`)
+          .map((option, index) => `${index + 1}. ${option.text}`)
           .join("\n");
         setTerminalLineData((prevData) => [
           ...prevData,
+          `You chose: ${selectedOption.text}`,
           nextQuestionText,
           nextOptionsText,
         ]);
@@ -178,13 +203,9 @@ const GamePage: React.FC = () => {
     }
   };
 
-  if (isLoading) {
-    return <div>Loading questions...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  useEffect(() => {
+    fetchQuestions();
+  }, []);
 
   return (
     <div className="container">
@@ -193,6 +214,7 @@ const GamePage: React.FC = () => {
           <TerminalOutput key={index}>{line}</TerminalOutput>
         ))}
       </Terminal>
+      {isLoading && <TerminalOutput>Loading questions...</TerminalOutput>}
     </div>
   );
 };
