@@ -12,3 +12,7 @@ class MongoDBClient:
         self.db = client[self.db_name]
         if self.db:
             print(f"Connected to MongoDB at {self.host}:{self.port}")
+
+    def disconnect(self):
+        self.db.client.close()
+        print(f"Disconnected from MongoDB")
