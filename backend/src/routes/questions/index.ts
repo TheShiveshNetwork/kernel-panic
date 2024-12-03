@@ -5,6 +5,12 @@ import { createQuestionSchema, getQuestionByIdSchema } from "@/schemas";
 
 export const questionRoutes = Router();
 
-questionRoutes.post('/question/create', validateData(createQuestionSchema), (req: Request, res: Response) => void Controllers.createQuestion(req, res));
-questionRoutes.get('/question/:id', validateData(getQuestionByIdSchema), (req: Request, res: Response) => void Controllers.getQuestionById(req, res));
-questionRoutes.get('/getAllQuestions', (req: Request, res: Response) => void Controllers.getAllQuestions(req, res));
+questionRoutes.post('/question/create', validateData(createQuestionSchema), async (req: Request, res: Response) => {
+    await Controllers.createQuestion(req, res);
+});
+questionRoutes.get('/question/:id', validateData(getQuestionByIdSchema), async (req: Request, res: Response) => {
+    await Controllers.getQuestionById(req, res);
+});
+questionRoutes.get('/getAllQuestions', async (req: Request, res: Response) => {
+    await Controllers.getAllQuestions(req, res);
+});

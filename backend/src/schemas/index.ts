@@ -1,6 +1,6 @@
 import { createUserSchema, loginUserSchema, getUserByIdSchema } from "./user.schema";
 import { createQuestionSchema, getQuestionByIdSchema } from "./question.schema";
-import { submitAnswerRequestSchema, answerSchema, getQuestionStatusByUserIdSchema } from "./questionStatus.schema";
+import { submitAnswerRequestSchema, answerSchema } from "./questionStatus.schema";
 
 export {
     createUserSchema,
@@ -10,5 +10,4 @@ export {
     getQuestionByIdSchema,
     submitAnswerRequestSchema,
     answerSchema,
-    getQuestionStatusByUserIdSchema,
 };

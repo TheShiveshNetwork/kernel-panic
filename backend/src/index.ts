@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import { listenToQuestionStatusChanges } from "./socket/leaderbaord";
 import { questionStatusCollection } from "./storage";
+import cors from "cors";
 
 import { routes } from "./routes";
 
@@ -22,11 +23,16 @@ const io = new Server(server, {
   },
 });
 
-// Manual CORS Configuration
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept');
+  // res.header('Access-Control-Allow-Origin', '*');
+  // res.header('Access-Control-Allow-Headers',
+  //   'Origin, X-Requested-With, Content-Type, Accept');
+  // res.header('Access-Control-Allow-Credentials', 'true');
+  // next();
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  });
   next();
 });
 

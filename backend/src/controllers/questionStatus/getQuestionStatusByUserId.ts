@@ -3,9 +3,9 @@ import type { ControllerClass } from "@/controllers";
 import { questionStatusCollection } from "@/storage";
 
 export async function getQuestionStatusByUserId(this: ControllerClass, request: Request, response: Response) {
-    const { id } = request.params;
+    const userId:string = request.body.userId;
     try {
-        const questionStatus = await questionStatusCollection.findOne({ userId: id });
+        const questionStatus = await questionStatusCollection.findOne({ userId: userId });
         if (!questionStatus) {
             return response.status(404).json({ message: "No answers submitted by user" });
         }
