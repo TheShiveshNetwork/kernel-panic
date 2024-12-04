@@ -1,99 +1,171 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
-import { quizQuestions } from "./questions";
+import { PanicApi } from "@/api";
+import Loading from "@/components/loading";
+import { config } from "@/config";
+
+// Define types for the API response
+type Option = {
+  text: string;
+  points: {
+    health: number;
+    wealth: number;
+    happiness: number;
+  };
+};
+
+type Question = {
+  _id: string;
+  title: string;
+  content: string;
+  options: Option[];
+  index?: number | null;
+};
 
 const GamePage: React.FC = () => {
-    const [terminalLineData, setTerminalLineData] = useState([
-        <TerminalOutput>Welcome to the Life Choices Game!</TerminalOutput>,
+  const [terminalLineData, setTerminalLineData] = useState<React.ReactNode[]>([
+    `Welcome to ${config.name}`,
+    <br />,
+    <TerminalOutput>Press Enter to start the game</TerminalOutput>,
+  ]);
+
+  const [quizQuestions, setQuizQuestions] = useState<Question[]>([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
+  const [stats, setStats] = useState<{
+    health: number;
+    happiness: number;
+    wealth: number;
+  }>({
+    health: 50,
+    happiness: 50,
+    wealth: 50,
+  });
+
+  const [loading, setLoading] = useState<boolean>(true);
+
+  // Function to handle user input
+  const handleInput = (input: string) => {
+    if (loading) return; // Ignore input if still loading
+
+    const currentQuestion = quizQuestions[currentQuestionIndex];
+    const selectedOptionIndex = parseInt(input) - 1;
+
+    // Validate user input
+    if (
+      isNaN(selectedOptionIndex) ||
+      selectedOptionIndex < 0 ||
+      selectedOptionIndex >= currentQuestion.options.length
+    ) {
+      if(currentQuestionIndex == 0){
+        return displayQuestion(0);
+      }
+      setTerminalLineData((prevData) => [
+        ...prevData,
+        <TerminalOutput>
+          Invalid input. Please choose a valid option.
+        </TerminalOutput>,
         <br />,
-        <TerminalOutput>Your initial stats: Health: 50, Happiness: 50, Money: 50.</TerminalOutput>,
+      ]);
+      return;
+    }
+
+    const selectedOption = currentQuestion.options[selectedOptionIndex];
+
+    // Update stats and terminal lines together
+    setStats((prevStats) => {
+      const updatedStats = {
+        health: Math.max(0, prevStats.health + selectedOption.points.health),
+        happiness: Math.max(
+          0,
+          prevStats.happiness + selectedOption.points.happiness
+        ),
+        wealth: Math.max(0, prevStats.wealth + selectedOption.points.wealth),
+      };
+
+      setTerminalLineData((prevData) => [
+        ...prevData,
         <br />,
-        <TerminalOutput>{`Question 1: ${quizQuestions[0].question}`}</TerminalOutput>,
-        ...quizQuestions[0].options.map((option, index) => (
-            <TerminalOutput key={`tout-${index}`}>{`${index + 1}. ${option.text}`}</TerminalOutput>
-        )),
-    ]);
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
-    const [stats, setStats] = useState<{ health: number; happiness: number; money: number }>({
-        health: 50,
-        happiness: 50,
-        money: 50,
+        <TerminalOutput>{`You chose: ${selectedOption.text}`}</TerminalOutput>,
+        <br />,
+        <TerminalOutput>
+          {`Updated stats - Health: ${updatedStats.health}, Happiness: ${updatedStats.happiness}, Wealth: ${updatedStats.wealth}.`}
+        </TerminalOutput>,
+        <br />,
+      ]);
+
+      return updatedStats;
     });
 
-    const handleInput = (input: string) => {
-        const currentQuestion = quizQuestions[currentQuestionIndex];
-        const selectedOptionIndex = parseInt(input) - 1;
+    // Move to the next question or end the game
+    const nextQuestionIndex = currentQuestionIndex + 1;
+    if (nextQuestionIndex < quizQuestions.length) {
+      setCurrentQuestionIndex(nextQuestionIndex);
+      displayQuestion(nextQuestionIndex);
+    } else {
+      setTerminalLineData((prevData) => [
+        ...prevData,
+        <br />,
+        <TerminalOutput>
+          {`Game Over! Final stats - Health: ${stats.health}, Happiness: ${stats.happiness}, Wealth: ${stats.wealth}.`}
+        </TerminalOutput>,
+      ]);
+    }
+  };
 
-        if (
-            isNaN(selectedOptionIndex) ||
-            selectedOptionIndex < 0 ||
-            selectedOptionIndex >= currentQuestion.options.length
-        ) {
-            setTerminalLineData((prevData) => [
-                ...prevData,
-                <TerminalOutput>Invalid input. Please choose a valid option.</TerminalOutput>,
-                <br />,
-            ]);
-            return;
+  // Function to display a specific question
+  const displayQuestion = (questionIndex: number) => {
+    const question = quizQuestions[questionIndex];
+    setTerminalLineData((prevData) => [
+      ...prevData,
+      <br />,
+      <TerminalOutput>{`Question ${questionIndex + 1}: ${
+        question.content
+      }`}</TerminalOutput>,
+      ...question.options.map((option: Option, index: number) => (
+        <TerminalOutput key={`option-${index}`}>{`${index + 1}. ${
+          option.text
+        }`}</TerminalOutput>
+      )),
+    ]);
+  };
+
+  // Fetch questions from the API
+  useEffect(() => {
+    setLoading(true);
+    PanicApi.get("/getAllQuestions")
+      .then((res) => {
+        const questions = res.data;
+        if (quizQuestions.length == 0) {
+          setQuizQuestions(questions);
         }
-
-        const selectedOption = currentQuestion.options[selectedOptionIndex];
-
-        // Update stats
-        setStats((prevStats) => ({
-            health: Math.max(0, prevStats.health + selectedOption.impact.health),
-            happiness: Math.max(0, prevStats.happiness + selectedOption.impact.happiness),
-            money: Math.max(0, prevStats.money + selectedOption.impact.money),
-        }));
-
-        // Update terminal lines
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching questions:", error);
         setTerminalLineData((prevData) => [
-            ...prevData,
-            <br />,
-            <TerminalOutput>{`You chose: ${selectedOption.text}`}</TerminalOutput>,
-            <br />,
-            <TerminalOutput>
-                {`Updated stats - Health: ${stats.health + selectedOption.impact.health}, Happiness: ${
-                    stats.happiness + selectedOption.impact.happiness
-                }, Money: ${stats.money + selectedOption.impact.money}.`}
-            </TerminalOutput>,
-            <br />,
+          ...prevData,
+          <br />,
+          <TerminalOutput>
+            Error fetching questions. Please try again later.
+          </TerminalOutput>,
         ]);
+        setLoading(false);
+      });
+  }, []);
 
-        // Move to the next question
-        const nextQuestionIndex = currentQuestionIndex + 1;
-        if (nextQuestionIndex < quizQuestions.length) {
-            setCurrentQuestionIndex(nextQuestionIndex);
-            const nextQuestion = quizQuestions[nextQuestionIndex];
-            setTerminalLineData((prevData) => [
-                ...prevData,
-                <br />,
-                <TerminalOutput>{`Question ${nextQuestionIndex + 1}: ${nextQuestion.question}`}</TerminalOutput>,
-                ...nextQuestion.options.map((option, index) => (
-                    <TerminalOutput key={`t-${index}`}>{`${index + 1}. ${option.text}`}</TerminalOutput>
-                )),
-            ]);
-        } else {
-            setTerminalLineData((prevData) => [
-                ...prevData,
-                <TerminalOutput>
-                    {`Game Over! Final stats - Health: ${stats.health}, Happiness: ${stats.happiness}, Money: ${stats.money}.`}
-                </TerminalOutput>,
-            ]);
-        }
-    };
 
-    return (
-        <div className="container">
-            <Terminal
-                name="Life Choices Game"
-                colorMode={ColorMode.Dark}
-                onInput={handleInput}
-            >
-                {terminalLineData}
-            </Terminal>
-        </div>
-    );
+  return (
+    <div className="container">
+      <Terminal
+        name="Life Choices Game"
+        colorMode={ColorMode.Dark}
+        onInput={handleInput}
+      >
+        {loading ? <Loading /> : null}
+        {terminalLineData}
+      </Terminal>
+    </div>
+  );
 };
 
 export default GamePage;
