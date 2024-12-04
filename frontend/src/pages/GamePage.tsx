@@ -46,7 +46,6 @@ const GamePage: React.FC = () => {
       const data = response.data;
 
       if (data.length > 0) {
-        toast.info("Questions are loaded.");
         setQuestions(data);
       } else {
         setGameOver(true);
@@ -99,7 +98,6 @@ const GamePage: React.FC = () => {
       });
 
       if (response.status === 200) {
-        toast.success("Answer submitted successfully");
         return true; // Successfully submitted answer
       } else {
        toast.error(response.data.message || "Failed to submit answer.");
