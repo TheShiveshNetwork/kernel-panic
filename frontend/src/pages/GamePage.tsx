@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
 import { PanicApi } from "@/api";
+import { toast } from 'react-toastify';
+
 
 interface Option {
   text: string;
@@ -21,7 +23,7 @@ const GamePage: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [terminalLineData, setTerminalLineData] = useState<string[]>([
     "Welcome to the Life Choices Game!",
-    "Type '/start' to begin the game.\n",
+    "Type 'start' to begin the game.\n",
   ]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number | null>(null);
   const [stats, setStats] = useState<{ health: number; wealth: number; happiness: number }>({
@@ -31,44 +33,42 @@ const GamePage: React.FC = () => {
   });
   const [gameOver, setGameOver] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const userId = "mocked-user-id"; // Mocked userId for demonstration
 
+  // Fetch questions from the backend
   const fetchQuestions = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await PanicApi.get("/getAllQuestions");
+      const response = await PanicApi.get("/getAllQuestions", { timeout: 5000 }); // Increased timeout to 10s
       const data = response.data;
 
       if (data.length > 0) {
+        toast.info("Questions are loaded.");
         setQuestions(data);
-        setTerminalLineData((prevData) => [
-          ...prevData,
-          "Questions are loaded. Type '/start' to begin!",
-        ]);
       } else {
         setGameOver(true);
         setTerminalLineData((prevData) => [...prevData, "No questions available. Game over!"]);
       }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred.");
-      setTerminalLineData((prevData) => [
-        ...prevData,
-        `Error: ${err instanceof Error ? err.message : "Unknown error"}`,
-      ]);
+    } catch (err:unknown) {
+      if(err instanceof Error){
+        setError(err.message);
+        setTerminalLineData((prevData) => [
+          ...prevData,
+          `Error: ${err instanceof Error ? err.message : "Unknown error"}`,
+        ]);
+      }       
     } finally {
       setIsLoading(false);
     }
   };
 
+  // Start the game
   const startGame = () => {
     if (questions.length === 0) {
-      setTerminalLineData((prevData) => [
-        ...prevData,
-        "Questions are not loaded yet. Please wait...",
-      ]);
+      toast.info("Questions are loading...");
       return;
     }
 
@@ -82,6 +82,7 @@ const GamePage: React.FC = () => {
     setTerminalLineData((prevData) => [...prevData, questionText, optionsText]);
   };
 
+  // Submit answer to the backend and update stats
   const submitAnswer = async (
     questionId: string,
     selectedOption: string,
@@ -94,13 +95,15 @@ const GamePage: React.FC = () => {
           questionId,
           selectedOption,
         },
-        updatedStats: newStats, // Sending updated stats to backend
+        updatedStats: newStats,
       });
 
       if (response.status === 200) {
+        toast.success("Answer submitted successfully");
         return true; // Successfully submitted answer
       } else {
-        throw new Error(response.data.message || "Failed to submit answer.");
+       toast.error(response.data.message || "Failed to submit answer.");
+       return false;
       }
     } catch (error) {
       console.error("Error submitting answer:", error);
@@ -112,6 +115,7 @@ const GamePage: React.FC = () => {
     }
   };
 
+  // Handle terminal input
   const handleInput = async (input: string) => {
     if (isLoading) {
       setTerminalLineData((prevData) => [...prevData, "Game is still loading, please wait..."]);
@@ -126,7 +130,7 @@ const GamePage: React.FC = () => {
       return;
     }
 
-    if (input === "/start") {
+    if (input === "start") {
       if (currentQuestionIndex === null) {
         startGame();
       } else {
@@ -140,7 +144,7 @@ const GamePage: React.FC = () => {
 
     const currentIndex = currentQuestionIndex;
     if (currentIndex === null || currentIndex >= questions.length) {
-      setTerminalLineData((prevData) => [...prevData, "Invalid command. Type '/start' to begin."]);
+      setTerminalLineData((prevData) => [...prevData, "Invalid command. Type 'start' to begin."]);
       return;
     }
 
@@ -204,19 +208,27 @@ const GamePage: React.FC = () => {
   };
 
   useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
+
+  // Fetch questions on component mount
+  useEffect(() => {
     fetchQuestions();
   }, []);
 
-  return (
+    return (
     <div className="container">
       <Terminal name="Life Choices Game" colorMode={ColorMode.Dark} onInput={handleInput}>
+        {isLoading && <TerminalOutput>Loading questions...</TerminalOutput>}
         {terminalLineData.map((line, index) => (
           <TerminalOutput key={index}>{line}</TerminalOutput>
         ))}
       </Terminal>
-      {isLoading && <TerminalOutput>Loading questions...</TerminalOutput>}
     </div>
   );
+
 };
 
 export default GamePage;
