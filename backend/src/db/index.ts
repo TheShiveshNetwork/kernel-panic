@@ -10,6 +10,7 @@ export class MongoDBClient {
         this.client = new MongoClient(this.url, {});
     }
     async init() {
+        console.log("[database]: connecting to mongodb...");
         try {
             await this.client.connect();
             console.log('connected to db');
