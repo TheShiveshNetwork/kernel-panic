@@ -25,9 +25,3 @@ export const answerSchema = z.object({
     accumulatedPoints: z.number(),
   }),
 });
-
-export const getQuestionStatusByUserIdSchema = z.object({
-  params: z.object({
-    id: z.string(),
-  }),
-});
