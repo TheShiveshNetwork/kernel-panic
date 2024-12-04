@@ -1,99 +1,232 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
-import { quizQuestions } from "./questions";
+import { PanicApi } from "@/api";
+import { toast } from 'react-toastify';
+
+
+interface Option {
+  text: string;
+  points: {
+    health: number;
+    wealth: number;
+    happiness: number;
+  };
+}
+
+interface Question {
+  _id: string;
+  title: string;
+  options: Option[];
+}
 
 const GamePage: React.FC = () => {
-    const [terminalLineData, setTerminalLineData] = useState([
-        <TerminalOutput>Welcome to the Life Choices Game!</TerminalOutput>,
-        <br />,
-        <TerminalOutput>Your initial stats: Health: 50, Happiness: 50, Money: 50.</TerminalOutput>,
-        <br />,
-        <TerminalOutput>{`Question 1: ${quizQuestions[0].question}`}</TerminalOutput>,
-        ...quizQuestions[0].options.map((option, index) => (
-            <TerminalOutput key={`tout-${index}`}>{`${index + 1}. ${option.text}`}</TerminalOutput>
-        )),
-    ]);
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
-    const [stats, setStats] = useState<{ health: number; happiness: number; money: number }>({
-        health: 50,
-        happiness: 50,
-        money: 50,
-    });
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [terminalLineData, setTerminalLineData] = useState<string[]>([
+    "Welcome to the Life Choices Game!",
+    "Type 'start' to begin the game.\n",
+  ]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number | null>(null);
+  const [stats, setStats] = useState<{ health: number; wealth: number; happiness: number }>({
+    health: 50,
+    wealth: 50,
+    happiness: 50,
+  });
+  const [gameOver, setGameOver] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-    const handleInput = (input: string) => {
-        const currentQuestion = quizQuestions[currentQuestionIndex];
-        const selectedOptionIndex = parseInt(input) - 1;
+  const userId = "mocked-user-id"; // Mocked userId for demonstration
 
-        if (
-            isNaN(selectedOptionIndex) ||
-            selectedOptionIndex < 0 ||
-            selectedOptionIndex >= currentQuestion.options.length
-        ) {
-            setTerminalLineData((prevData) => [
-                ...prevData,
-                <TerminalOutput>Invalid input. Please choose a valid option.</TerminalOutput>,
-                <br />,
-            ]);
-            return;
-        }
+  // Fetch questions from the backend
+  const fetchQuestions = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await PanicApi.get("/getAllQuestions", { timeout: 5000 }); // Increased timeout to 10s
+      const data = response.data;
 
-        const selectedOption = currentQuestion.options[selectedOptionIndex];
-
-        // Update stats
-        setStats((prevStats) => ({
-            health: Math.max(0, prevStats.health + selectedOption.impact.health),
-            happiness: Math.max(0, prevStats.happiness + selectedOption.impact.happiness),
-            money: Math.max(0, prevStats.money + selectedOption.impact.money),
-        }));
-
-        // Update terminal lines
+      if (data.length > 0) {
+        setQuestions(data);
+      } else {
+        setGameOver(true);
+        setTerminalLineData((prevData) => [...prevData, "No questions available. Game over!"]);
+      }
+    } catch (err:unknown) {
+      if(err instanceof Error){
+        setError(err.message);
         setTerminalLineData((prevData) => [
-            ...prevData,
-            <br />,
-            <TerminalOutput>{`You chose: ${selectedOption.text}`}</TerminalOutput>,
-            <br />,
-            <TerminalOutput>
-                {`Updated stats - Health: ${stats.health + selectedOption.impact.health}, Happiness: ${
-                    stats.happiness + selectedOption.impact.happiness
-                }, Money: ${stats.money + selectedOption.impact.money}.`}
-            </TerminalOutput>,
-            <br />,
+          ...prevData,
+          `Error: ${err instanceof Error ? err.message : "Unknown error"}`,
         ]);
+      }       
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-        // Move to the next question
-        const nextQuestionIndex = currentQuestionIndex + 1;
-        if (nextQuestionIndex < quizQuestions.length) {
-            setCurrentQuestionIndex(nextQuestionIndex);
-            const nextQuestion = quizQuestions[nextQuestionIndex];
-            setTerminalLineData((prevData) => [
-                ...prevData,
-                <br />,
-                <TerminalOutput>{`Question ${nextQuestionIndex + 1}: ${nextQuestion.question}`}</TerminalOutput>,
-                ...nextQuestion.options.map((option, index) => (
-                    <TerminalOutput key={`t-${index}`}>{`${index + 1}. ${option.text}`}</TerminalOutput>
-                )),
-            ]);
-        } else {
-            setTerminalLineData((prevData) => [
-                ...prevData,
-                <TerminalOutput>
-                    {`Game Over! Final stats - Health: ${stats.health}, Happiness: ${stats.happiness}, Money: ${stats.money}.`}
-                </TerminalOutput>,
-            ]);
-        }
+  // Start the game
+  const startGame = () => {
+    if (questions.length === 0) {
+      toast.info("Questions are loading...");
+      return;
+    }
+
+    setCurrentQuestionIndex(0); // Start with the first question
+    const firstQuestion = questions[0];
+    const questionText = `Question 1: ${firstQuestion.title}`;
+    const optionsText = firstQuestion.options
+      .map((option, index) => `${index + 1}. ${option.text}`)
+      .join("\n");
+
+    setTerminalLineData((prevData) => [...prevData, questionText, optionsText]);
+  };
+
+  // Submit answer to the backend and update stats
+  const submitAnswer = async (
+    questionId: string,
+    selectedOption: string,
+    newStats: { health: number; wealth: number; happiness: number }
+  ): Promise<boolean> => {
+    try {
+      const response = await PanicApi.post("/submitAnswer", {
+        userId,
+        answeredQuestion: {
+          questionId,
+          selectedOption,
+        },
+        updatedStats: newStats,
+      });
+
+      if (response.status === 200) {
+        return true; // Successfully submitted answer
+      } else {
+       toast.error(response.data.message || "Failed to submit answer.");
+       return false;
+      }
+    } catch (error) {
+      console.error("Error submitting answer:", error);
+      setTerminalLineData((prevData) => [
+        ...prevData,
+        `Error: ${error instanceof Error ? error.message : "Unknown error"}`,
+      ]);
+      return false;
+    }
+  };
+
+  // Handle terminal input
+  const handleInput = async (input: string) => {
+    if (isLoading) {
+      setTerminalLineData((prevData) => [...prevData, "Game is still loading, please wait..."]);
+      return;
+    }
+
+    if (gameOver) {
+      setTerminalLineData((prevData) => [
+        ...prevData,
+        "Game is over. Restart the application to play again.",
+      ]);
+      return;
+    }
+
+    if (input === "start") {
+      if (currentQuestionIndex === null) {
+        startGame();
+      } else {
+        setTerminalLineData((prevData) => [
+          ...prevData,
+          "Game has already started! Answer the current question.",
+        ]);
+      }
+      return;
+    }
+
+    const currentIndex = currentQuestionIndex;
+    if (currentIndex === null || currentIndex >= questions.length) {
+      setTerminalLineData((prevData) => [...prevData, "Invalid command. Type 'start' to begin."]);
+      return;
+    }
+
+    const currentQuestion = questions[currentIndex];
+    const selectedOptionIndex = parseInt(input) - 1;
+
+    if (
+      isNaN(selectedOptionIndex) ||
+      selectedOptionIndex < 0 ||
+      selectedOptionIndex >= currentQuestion.options.length
+    ) {
+      setTerminalLineData((prevData) => [
+        ...prevData,
+        "Invalid input. Please choose a valid option.",
+      ]);
+      return;
+    }
+
+    const selectedOption = currentQuestion.options[selectedOptionIndex];
+    const newStats = {
+      health: stats.health + selectedOption.points.health,
+      wealth: stats.wealth + selectedOption.points.wealth,
+      happiness: stats.happiness + selectedOption.points.happiness,
     };
 
-    return (
-        <div className="container">
-            <Terminal
-                name="Life Choices Game"
-                colorMode={ColorMode.Dark}
-                onInput={handleInput}
-            >
-                {terminalLineData}
-            </Terminal>
-        </div>
+    // Sync stats with database
+    const isAnswerSubmitted = await submitAnswer(
+      currentQuestion._id,
+      selectedOptionIndex.toString(),
+      newStats
     );
+
+    if (isAnswerSubmitted) {
+      // Update React state with synced stats
+      setStats(newStats);
+
+      // Move to the next question or end the game
+      const nextQuestionIndex = currentIndex + 1;
+      if (nextQuestionIndex < questions.length) {
+        setCurrentQuestionIndex(nextQuestionIndex);
+
+        const nextQuestion = questions[nextQuestionIndex];
+        const nextQuestionText = `Question ${nextQuestionIndex + 1}: ${nextQuestion.title}`;
+        const nextOptionsText = nextQuestion.options
+          .map((option, index) => `${index + 1}. ${option.text}`)
+          .join("\n");
+        setTerminalLineData((prevData) => [
+          ...prevData,
+          `You chose: ${selectedOption.text}`,
+          nextQuestionText,
+          nextOptionsText,
+        ]);
+      } else {
+        setGameOver(true);
+        setTerminalLineData((prevData) => [
+          ...prevData,
+          `Game Over! Final stats - Health: ${newStats.health}, Wealth: ${newStats.wealth}, Happiness: ${newStats.happiness}.\nThank you for playing!`,
+        ]);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
+
+  // Fetch questions on component mount
+  useEffect(() => {
+    fetchQuestions();
+  }, []);
+
+    return (
+    <div className="container">
+      <Terminal name="Life Choices Game" colorMode={ColorMode.Dark} onInput={handleInput}>
+        {isLoading && <TerminalOutput>Loading questions...</TerminalOutput>}
+        {terminalLineData.map((line, index) => (
+          <TerminalOutput key={index}>{line}</TerminalOutput>
+        ))}
+      </Terminal>
+    </div>
+  );
+
 };
 
 export default GamePage;
