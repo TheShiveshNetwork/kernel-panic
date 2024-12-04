@@ -1,10 +1,20 @@
 export interface QuizQuestion {
     question: string;
+    image: string;
     options: { text: string; impact: { health: number; happiness: number; money: number } }[]; 
 }
 
 export const quizQuestions: QuizQuestion[] = [
     {
+        image: `
+         \   |   /        
+       '.  \ | /  .'
+         '. * * .'
+      --- *  O  * ---
+         .' * * '.
+       .'  / | \  '.
+         /   |   \        
+        `,
         question: "You're waking up on a typical weekday morning. How do you feel about the day ahead?",
         options: [
             { text: "1. Excited for the opportunities!", impact: { health: 0, happiness: 5, money: 0 } },
@@ -13,6 +23,20 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        image: `
+                ___                ___                ___
+             /       \          /       \          /       \
+            |  O   O  |        |  O   O  |        |  O   O  |
+            |    |    |        |    |    |        |    |    |
+            |    _    |        |    _    |        |    _    |
+             \_______/          \_______/          \_______/
+                 |                  |                  |
+                 |                  |                  |
+               __|__              __|__              __|__
+          | |         | |    | |         | |    | |         | |
+          | |         | |    | |         | |    | |         | |
+          ______________________________________________________    
+        `,
         question: "You’ve just arrived at work and are assigned a team project. What’s your approach to this task?",
         options: [
             { text: "1. Take charge and lead the team.", impact: { health: 0, happiness: 5, money: 0 } },
@@ -21,6 +45,26 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        image: `
+                ___                ___          
+             /       \          /       \       
+            |  O   O  |        |  O   O  |      
+            |    |    |        |    |    |      
+            |    _    |        |    _    |      
+             \_______/          \_______/       
+                 |                  |           
+                 |                  |           
+               __|__              __|__         
+          | |         | |    | |         | |    
+          | |         | |    | |         | |    
+          | |         | |    | |         | |    
+          | |         | |    | |         | |     
+          | |_________| |    | |_________| |    
+               /   \              /   \          
+              /     \            /     \         
+             /       \          /       \        
+            /_________\        /_________\          
+        `,
         question: "During a break, you spot a colleague struggling with a personal issue. What do you do?",
         options: [
             { text: "1. Offer support and listen to them.", impact: { health: 5, happiness: 10, money: 0 } },
@@ -29,6 +73,18 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        image:`
+         ___________________________
+        |                           |
+        |        GIFT CARD          |
+        |                           |
+        |  -----------------------  |
+        |  | $$$$$$ 100.00 $$$$$$ | |
+        |  -----------------------  |
+        |                           |
+        |   Valid Until: XX/XX/XXXX |
+        |___________________________|
+        `,
         question: "After work, you get a gift card worth $100. How do you spend it?",
         options: [
             { text: "1. Buy something you need.", impact: { health: 0, happiness: 5, money: -20 } },
@@ -37,6 +93,23 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        image:`
+                        __________
+                     |              |
+         __________  |   $$$$$$$$   |   __________
+        |            |  FINE DINING |             |
+        |    __      |  RESTAURANT  |      __     |
+        |  |    |    |              |    |    |   |
+        |  |    |    |  $$$$$$$$$$  |    |    |   |
+        |  |____|    |  $$$$$$$$$$  |    |____|   |
+        |____________|______________|_____________|
+                    _____/      \_____
+                   /                  \
+                  /                    \
+                 /                      \
+                /                        \
+               /                          \
+        `,
         question: "You get invited to an expensive restaurant. How do you respond?",
         options: [
             { text: "1. Go and enjoy the experience.", impact: { health: 0, happiness: 10, money: -25 } },
@@ -45,6 +118,15 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        image:`
+ SSSSS  TTTTT RRRR   AAAAA TTTTT EEEEE GGGG  Y     Y
+ S        T   R   R  A   A   T   E     G      Y   Y
+ SSSSS    T   RRRR   AAAAA   T   EEEE  G  GG   Y Y
+     S    T   R  R   A   A   T   E     G   G    Y
+ SSSSS    T   R   R  A   A   T   EEEEE GGGG     Y
+
+         
+        `,
         question: "Later that evening, you’re feeling stressed and overwhelmed. What’s your coping strategy?",
         options: [
             { text: "1. Take a mental health day the next morning.", impact: { health: 15, happiness: 5, money: -10 } },
@@ -53,6 +135,34 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        image:`
+                \ | /     
+              --  o  --   
+                / | \    
+          ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+        ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+       ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+        ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+      ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     ~ ~ ~ ~  ~  ~  ~ ~ ~ ~ ~ ~    ~ ~ ~ ~ ~
+       ~ ~ ~ ~  ~ ~ ~ ~ ~ ~ ~ ~  ~  ~  ~ ~ ~
+     ~  ~ ~ ~  ~   ~  ~  ~ ~ ~ ~  ~ ~ ~ ~ ~ ~ ~
+    ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
+          ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
+     ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
+       ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+             |  |     |  |
+            /    \   /    \
+             |  |     |  |
+             |  |     |  |
+             |  |     |  |
+             |  |     |  |
+             |  |     |  |
+             |__|     |__|
+           
+        `,
         question: "You’ve got a free weekend coming up. What will you do?",
         options: [
             { text: "1. Relax and do nothing.", impact: { health: 10, happiness: 5, money: 0 } },
@@ -61,6 +171,23 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        image:`
+        __________________
+       |                  |
+       |                  |
+       |                  |
+       |                  |
+       |     DOOR TO      |
+       |                  |
+       |    OPPORTUNITY   |
+       |                _ |
+       |               |_||
+       |                  |
+       |                  |
+       |                  |
+       |                  |
+       |__________________|
+        `,
         question: "You’ve been feeling burnt out recently. A new opportunity comes up. How do you react?",
         options: [
             { text: "1. Take the opportunity for more flexibility (remote work).", impact: { health: 5, happiness: 10, money: 0 } },
@@ -69,6 +196,27 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        image:`
+          
+                     ________                      
+                    /        \                
+                    |Product |           
+                    | Launch?|            
+                    |        |             
+                   /\________/ 
+           .-'''-./
+         .'       '.
+        /           \
+       |   O     O   |
+       |      |      |
+       |      _      |
+        \           /
+         '._._._._.'
+           /     \
+          /       \
+         /         \
+        /___________\
+        `,
         question: "A colleague asks you to collaborate on a new product. What’s your next move?",
         options: [
             { text: "1. Take it on and work hard to make it successful.", impact: { health: 0, happiness: 10, money: 10 } },
@@ -77,6 +225,17 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        image:`
+            :-)           :-|           :-(
+            ___           ___           ___
+         /       \     /       \     /       \
+        |  O   O  |   |  O   O  |   |  O   O  |
+        |    ^    |   |    ^    |   |    ^    |
+        |   ---   |   |   ---   |   |   ---   |
+        \_________/   \_________/   \_________/
+            |              |             |
+         '--'--'        '--'--'       '--'--'
+        `,
         question: "At the end of the week, you reflect on your journey so far. How do you feel?",
         options: [
             { text: "1. Proud of the choices I made and excited for the future.", impact: { health: 10, happiness: 20, money: 0 } },
@@ -85,6 +244,25 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        image:`
+        _________________________________
+        |                               |
+        |     YOU'RE INVITED TO         |
+        |                               |
+        |     A NETWORKING EVENT        |
+        |                               |
+        |   Join us for an evening of   |
+        |   connection, collaboration,  |
+        |   and growth!                 |
+        |                               |
+        |   Date: [Event Date]          |
+        |   Time: [Event Time]          |
+        |   Location: [Event Venue]     |
+        |                               |
+        |   RSVP by: [RSVP Date]        |
+        |                               |
+        |_______________________________|
+        `,
         question: "You’ve been invited to a networking event. How do you feel about it?",
         options: [
             { text: "1. Excited to meet new people and make connections.", impact: { health: 0, happiness: 10, money: 0 } },
@@ -93,6 +271,27 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        image:`
+                     ________                      
+                    /        \                
+                    |WHAT TO |           
+                    |   DO?  |            
+                    |        |             
+                   /\________/ 
+           .-'''-./
+         .'       '.
+        /           \
+       |   O     O   |
+       |      |      |
+       |      _      |
+        \           /
+         '._._._._.'
+           /     \
+          /       \
+         /         \
+        /___________\ 
+          
+        `,
         question: "Your friend asks for help with a major life decision. How do you support them?",
         options: [
             { text: "1. Offer practical advice and guidance.", impact: { health: 5, happiness: 10, money: 0 } },
@@ -101,6 +300,26 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        image:`
+                   ___
+                /       \
+               |   O O   |
+               |    ^    |
+               |   ---   |
+                \_______/
+                    |
+                    |
+                   / \
+                  /   \
+                 /     \
+                /       \
+            ____|_______|____
+         /                     \
+        |   CONGRATULATIONS!    |
+        |  WE ARE OFFERING YOU  |
+        |     A PROMOTION       |
+        |_______________________|
+        `,
         question: "You’re offered a promotion at work. What do you do?",
         options: [
             { text: "1. Accept it for the new challenges and salary increase.", impact: { health: -10, happiness: 10, money: 50 } },
@@ -109,6 +328,22 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        image:`
+             /\
+            /  \
+           /    \
+          /      \
+         /        \
+  Path 1   Path 2   Path 3
+     \        |        /
+      \       |       /
+       \______|______/
+              |
+              O
+             \|/
+              |
+             / \
+        `,
         question: "You’re at a crossroads in your career. What’s your next move?",
         options: [
             { text: "1. Change careers to pursue your passion.", impact: { health: 10, happiness: 20, money: -30 } },
@@ -117,6 +352,26 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        image:`
+        ________________
+     |                    |
+     |      INVOICE       |
+     |--------------------|
+     | Item       | Price |
+     |--------------------|
+     | Product A  | $500  |
+     | Product B  | $300  |
+     | Service X  | $200  |
+     |--------------------|
+     | TOTAL      | $1000 |
+     |--------------------|
+     |    PAYMENT DUE     |
+     |____________________|
+           \    /
+            \  /
+             \/
+    !!!!!WOW THAT'S A LOT!!!!
+        `,
         question: "You’ve just received a bill that’s a bit more than you expected. What do you do?",
         options: [
             { text: "1. Pay the bill immediately to avoid stress.", impact: { health: 0, happiness: -5, money: -20 } },
@@ -125,6 +380,14 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        "image": ` 
+ RRRR   EEEEE  U   U N   N III  OOO  N   N
+ R   R  E      U   U NN  N  I  O   O NN  N
+ RRRR   EEEE   U   U N N N  I  O   O N N N
+ R  R   E      U   U N  NN  I  O   O N  NN
+ R   R  EEEEE  UUUUU N   N III  OOO  N   N
+
+        `,
         question: "You’ve been invited to a reunion. How do you prepare for it?",
         options: [
             { text: "1. Go and reconnect with old friends.", impact: { health: 5, happiness: 15, money: 0 } },
@@ -133,6 +396,14 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        image:`
+         EEEEE X   X EEEEE RRRR   CCCC III SSSSS EEEEE
+         E      X X  E     R   R C       I  S     E
+         EEEE    X   EEEE  RRRR  C       I  SSSSS EEEE
+         E      X X  E     R  R  C       I     S E
+         EEEEE X   X EEEEE R   R  CCCC III SSSSS EEEEE
+
+        `,
         question: "You’ve started a new fitness regimen. How’s it going so far?",
         options: [
             { text: "1. Feeling great! It's boosting my energy and mood.", impact: { health: 15, happiness: 10, money: 0 } },
@@ -141,6 +412,8 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        image:`
+        `,
         question: "A sudden opportunity to work abroad comes your way. What do you do?",
         options: [
             { text: "1. Take it for the adventure and experience.", impact: { health: 10, happiness: 15, money: 20 } },
@@ -149,6 +422,22 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        image:`
+      _______
+     /       \         _         _____
+    /         \       | |       |     |
+   |   Work    |      | |       |     |
+   |  Abroad   |      | |       |     |
+   |  Offer    |     /   \      |     |__
+    \_________/     /     \     |        \  
+        |          /  ___  \    |  O     |  
+        |         /  /   \  \   |____    |   
+        |        /  /     \  \  |     \   |  
+        |       |  |       |  | |      \  |  
+        |       |  |       |  | |       | |  
+        |_______|__|_______|__|_|_______|_|
+
+        `,
         question: "You’re feeling great after a week of good habits. How do you continue the streak?",
         options: [
             { text: "1. Keep up with a balanced routine of work and rest.", impact: { health: 10, happiness: 10, money: 0 } },
@@ -157,6 +446,29 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        image:`
+         $$$$$$$$$$$$$
+        $$            $$
+       $$   INVEST    $$
+      $$    OPPORTUNITY$$
+     $$    COMES UP   $$
+     $$    DO YOU     $$
+      $$   TAKE IT?  $$
+       $$           $$
+        $$$$$$$$$$$$
+             |
+   _________|_________
+  /                   \
+ |  YES       |     NO  |
+ |  Take the  |  Pass it |
+ |   Chance   |   Up    |
+ |____________|_________|
+            / \
+           /   \
+          /     \
+        $$$$$   $$$$$
+
+        `,
         question: "A new financial investment opportunity comes up. Do you take it?",
         options: [
             { text: "1. Take the risk, hoping for good returns.", impact: { health: 0, happiness: 0, money: 20 } },
@@ -165,6 +477,16 @@ export const quizQuestions: QuizQuestion[] = [
         ],
     },
     {
+        image:`
+ BBBBB   III  GGG       DDDD  EEEEE CCCC  III SSSSS III  OOO  N   N
+ B    B   I   G         D   D E     C      I  S      I  O   O NN  N
+ BBBBB    I   G  GG     D   D EEEE  C      I  SSSSS  I  O   O N N N
+ B    B   I   G   G     D   D E     C      I     S   I  O   O N  NN
+ BBBBB   III  GGGG      DDDD  EEEEE CCCC  III SSSSS III  OOO  N   N
+
+        
+        
+        `,
         question: "You’re about to make a big decision. How do you approach it?",
         options: [
             { text: "1. Take time to reflect and seek advice.", impact: { health: 5, happiness: 5, money: 0 } },
