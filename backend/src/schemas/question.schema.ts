@@ -14,7 +14,7 @@ export const createQuestionSchema = z.object({
                 }),
             }),
         ).min(2),
-    }),
+    }).strict(),
 });
 
 export const getQuestionByIdSchema = z.object({

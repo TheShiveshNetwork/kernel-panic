@@ -18,3 +18,6 @@ userRoutes.post('/user/login', validateData(loginUserSchema), async (req: Reques
 userRoutes.get('/user/:id', validateData(getUserByIdSchema), async (req: Request, res: Response) => {
     await Controllers.getUserById(req, res)
 });
+userRoutes.get('/logout', authenticateToken, async (req: Request, res: Response) => {
+    await Controllers.logoutUser(req, res);
+});

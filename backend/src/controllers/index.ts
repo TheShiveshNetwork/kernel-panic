@@ -9,6 +9,7 @@ import { getAllQuestions } from "./question/getAllQuestions";
 import { submitAnswer } from "./questionStatus/submitAnswer";
 import { getQuestionStatusByUserId } from "./questionStatus/getQuestionStatusByUserId";
 import { getCurrentUser } from "./user/getCurrentUser";
+import { logoutUser } from "./user/logout";
 
 export class ControllerClass {
     private mongoClient = new MongoDBClient;
@@ -31,6 +32,7 @@ export class ControllerClass {
     submitAnswer = submitAnswer;
     getQuestionStatusByUserId = getQuestionStatusByUserId;
     getCurrentUser = getCurrentUser;
+    logoutUser = logoutUser;
 }
 
 let Controllers = new ControllerClass();

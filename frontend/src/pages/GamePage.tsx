@@ -2,28 +2,21 @@ import React, { useState, useEffect } from "react";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
 import { PanicApi } from "@/api";
 import { toast } from 'react-toastify';
-
-
-interface Option {
-  text: string;
-  points: {
-    health: number;
-    wealth: number;
-    happiness: number;
-  };
-}
-
-interface Question {
-  _id: string;
-  title: string;
-  options: Option[];
-}
+import { config } from "@/config";
+import { TerminalError } from "@/components/commons/TerminalError";
+import { TerminalColorText } from "@/components/commons/TerminalColorText";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/use-auth";
+import { Question } from "@/helpers/common-types";
 
 const GamePage: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
-  const [terminalLineData, setTerminalLineData] = useState<string[]>([
-    "Welcome to the Life Choices Game!",
-    "Type 'start' to begin the game.\n",
+  const [terminalLineData, setTerminalLineData] = useState<(string | JSX.Element)[]>([
+    "Welcome to",
+    `${config.asciiName}\n`,
+    // `${config.asciiLogo}\n`,
+    `Type '${config.commonCommands.helpCommand.name}' to see all available commands.\n`,
+    `Type '${config.commonCommands.startCommand.name}' to start the game.\n\n`,
   ]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number | null>(null);
   const [stats, setStats] = useState<{ health: number; wealth: number; happiness: number }>({
@@ -34,10 +27,9 @@ const GamePage: React.FC = () => {
   const [gameOver, setGameOver] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const { logout } = useAuth();
 
-  const userId = "mocked-user-id"; // Mocked userId for demonstration
-
-  // Fetch questions from the backend
   const fetchQuestions = async () => {
     setIsLoading(true);
     setError(null);
@@ -51,27 +43,29 @@ const GamePage: React.FC = () => {
         setGameOver(true);
         setTerminalLineData((prevData) => [...prevData, "No questions available. Game over!"]);
       }
-    } catch (err:unknown) {
-      if(err instanceof Error){
-        setError(err.message);
-        setTerminalLineData((prevData) => [
-          ...prevData,
-          `Error: ${err instanceof Error ? err.message : "Unknown error"}`,
-        ]);
-      }       
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error:any) {
+      console.log("Error submitting answer:", error);
+      setTerminalLineData((prevData) => [
+        ...prevData,
+        <TerminalError>
+          Error: {error instanceof Error ? error.message : "Unknown error"}
+          <p>{error.response.data.error}</p>
+        </TerminalError>,
+      ]);
+      return false;
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Start the game
   const startGame = () => {
     if (questions.length === 0) {
       toast.info("Questions are loading...");
       return;
     }
 
-    setCurrentQuestionIndex(0); // Start with the first question
+    setCurrentQuestionIndex(0);
     const firstQuestion = questions[0];
     const questionText = `Question 1: ${firstQuestion.title}`;
     const optionsText = firstQuestion.options
@@ -81,39 +75,40 @@ const GamePage: React.FC = () => {
     setTerminalLineData((prevData) => [...prevData, questionText, optionsText]);
   };
 
-  // Submit answer to the backend and update stats
   const submitAnswer = async (
     questionId: string,
     selectedOption: string,
-    newStats: { health: number; wealth: number; happiness: number }
-  ): Promise<boolean> => {
+  ) => {
     try {
       const response = await PanicApi.post("/submitAnswer", {
-        userId,
         answeredQuestion: {
           questionId,
           selectedOption,
         },
-        updatedStats: newStats,
       });
 
-      if (response.status === 200) {
-        return true; // Successfully submitted answer
+      if (response.status === 201) {
+        return true;
+      } else if (response.status === 200) {
+        return true;
       } else {
-       toast.error(response.data.message || "Failed to submit answer.");
-       return false;
+        toast.error(response.data.message || "Failed to submit answer.");
+        return false;
       }
-    } catch (error) {
-      console.error("Error submitting answer:", error);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error:any) {
+      console.log("Error submitting answer:", error);
       setTerminalLineData((prevData) => [
         ...prevData,
-        `Error: ${error instanceof Error ? error.message : "Unknown error"}`,
+        <TerminalError>
+          Error: {error instanceof Error ? error.message : "Unknown error"}
+          <p>{error.response.data.error}</p>
+        </TerminalError>,
       ]);
       return false;
     }
   };
 
-  // Handle terminal input
   const handleInput = async (input: string) => {
     if (isLoading) {
       setTerminalLineData((prevData) => [...prevData, "Game is still loading, please wait..."]);
@@ -123,26 +118,61 @@ const GamePage: React.FC = () => {
     if (gameOver) {
       setTerminalLineData((prevData) => [
         ...prevData,
-        "Game is over. Restart the application to play again.",
+        <TerminalColorText color="blue">{config.asciiGameOver}</TerminalColorText>,
+        <TerminalColorText color="white">Hurray! You have completed all questions.</TerminalColorText>,
+        <TerminalColorText color="white">Check out your rank on <Link to={"/leaderboard"} className="underline">Leaderboard</Link>.</TerminalColorText>,
       ]);
       return;
     }
 
-    if (input === "start") {
-      if (currentQuestionIndex === null) {
-        startGame();
-      } else {
-        setTerminalLineData((prevData) => [
-          ...prevData,
-          "Game has already started! Answer the current question.",
-        ]);
-      }
+    setTerminalLineData((prevData) => [...prevData, `> ${input}`]);
+
+    if (input === config.commonCommands.startCommand.name) {
+      config.commonCommands.startCommand.command(setTerminalLineData, currentQuestionIndex, startGame);
       return;
+    }
+
+    if (input === config.commonCommands.continueCommand.name) {
+      config.commonCommands.continueCommand.command(setTerminalLineData, currentQuestionIndex, questions);
+      return;
+    }
+
+    if (input === config.commonCommands.clearCommand.name) {
+      config.commonCommands.clearCommand.command(setTerminalLineData);
+      return;
+    }
+
+    if (input === config.commonCommands.helpCommand.name) {
+      config.commonCommands.helpCommand.command(setTerminalLineData);
+      return;
+    }
+
+    if (input === config.commonCommands.describeCommand.name) {
+      config.commonCommands.describeCommand.command(setTerminalLineData);
+      return;
+    }
+
+    if (input === config.commonCommands.whoamiCommand.name) {
+      await config.commonCommands.whoamiCommand.command(setTerminalLineData);
+      return;
+    }
+
+    if (input === config.commonCommands.logoutCommand.name) {
+      config.commonCommands.logoutCommand.command(setTerminalLineData);
+      logout();
+      navigate("/");
+    }
+
+    if (input === config.commonCommands.leaderboardCommand.name) {
+      navigate("/leaderboard");
     }
 
     const currentIndex = currentQuestionIndex;
     if (currentIndex === null || currentIndex >= questions.length) {
-      setTerminalLineData((prevData) => [...prevData, "Invalid command. Type 'start' to begin."]);
+      setTerminalLineData((prevData) => [
+        ...prevData, 
+        <TerminalColorText color="blue">Invalid command. Type '{config.commonCommands.helpCommand.name}' to see all available commands.</TerminalColorText>
+      ]);
       return;
     }
 
@@ -156,7 +186,7 @@ const GamePage: React.FC = () => {
     ) {
       setTerminalLineData((prevData) => [
         ...prevData,
-        "Invalid input. Please choose a valid option.",
+        <TerminalColorText color="blue">Invalid command. Type '{config.commonCommands.helpCommand.name}' to see all available commands.</TerminalColorText>,
       ]);
       return;
     }
@@ -168,18 +198,13 @@ const GamePage: React.FC = () => {
       happiness: stats.happiness + selectedOption.points.happiness,
     };
 
-    // Sync stats with database
     const isAnswerSubmitted = await submitAnswer(
       currentQuestion._id,
       selectedOptionIndex.toString(),
-      newStats
     );
 
     if (isAnswerSubmitted) {
-      // Update React state with synced stats
       setStats(newStats);
-
-      // Move to the next question or end the game
       const nextQuestionIndex = currentIndex + 1;
       if (nextQuestionIndex < questions.length) {
         setCurrentQuestionIndex(nextQuestionIndex);
@@ -199,7 +224,10 @@ const GamePage: React.FC = () => {
         setGameOver(true);
         setTerminalLineData((prevData) => [
           ...prevData,
-          `Game Over! Final stats - Health: ${newStats.health}, Wealth: ${newStats.wealth}, Happiness: ${newStats.happiness}.\nThank you for playing!`,
+          <TerminalColorText color="blue">{config.asciiGameOver}</TerminalColorText>,
+          <TerminalColorText color="white">Hurray! You have completed all questions.</TerminalColorText>,
+          <TerminalColorText color="blue">Final stats - Health: {newStats.health}, Wealth: {newStats.wealth}, Happiness: {newStats.happiness}</TerminalColorText>,
+          <TerminalColorText color="white">Check out your rank on <Link to={"/leaderboard"} className="underline">Leaderboard</Link>.</TerminalColorText>,
         ]);
       }
     }
@@ -211,14 +239,13 @@ const GamePage: React.FC = () => {
     }
   }, [error]);
 
-  // Fetch questions on component mount
   useEffect(() => {
     fetchQuestions();
   }, []);
 
-    return (
-    <div className="container">
-      <Terminal name="Life Choices Game" colorMode={ColorMode.Dark} onInput={handleInput}>
+  return (
+    <div className="h-screen w-screen bg-[var(--primary-bg)]">
+      <Terminal name={config.name} colorMode={ColorMode.Dark} onInput={handleInput}>
         {isLoading && <TerminalOutput>Loading questions...</TerminalOutput>}
         {terminalLineData.map((line, index) => (
           <TerminalOutput key={index}>{line}</TerminalOutput>
@@ -226,7 +253,6 @@ const GamePage: React.FC = () => {
       </Terminal>
     </div>
   );
-
 };
 
 export default GamePage;

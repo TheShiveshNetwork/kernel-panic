@@ -23,18 +23,12 @@ const io = new Server(server, {
   },
 });
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  next();
-  // cors({
-  //   origin: "http://localhost:5173",
-  //   credentials: true,
-  // });
-  // next();
-});
+let corsConfig = {
+  origin: "http://localhost:5173",
+  credentials: true,
+};
+
+app.use(cors(corsConfig));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -46,6 +40,7 @@ app.use(
 
 app.use("/api", routes);
 
+// Setup socket connections
 io.on("connection", (socket) => {
   console.log("A user connected:", socket.id);
   socket.on("joinRoom", async (room) => {

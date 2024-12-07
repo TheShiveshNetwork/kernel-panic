@@ -9,109 +9,73 @@ export async function submitAnswer(
   response: Response
 ) {
   const requestBody = request.body;
-  const { userId, currentQuestion, answeredQuestion } = requestBody;
-  const { questionId, selectedOption } = answeredQuestion;
+  const { userId, answeredQuestion } = requestBody;
 
   const question = await questionsCollection.findOne({
-    _id: new ObjectId(questionId),
+    _id: new ObjectId(`${answeredQuestion.questionId}`),
   });
 
   if (!question) {
     return response.status(404).json({ message: "Question not found" });
   }
 
-  const selectedOptionData = question.options[parseInt(selectedOption)];
-
-  if (!selectedOptionData) {
-    return response.status(400).json({ message: "Invalid option selected" });
-  }
+  const selectedOptionData = question.options[parseInt(answeredQuestion.selectedOption)];
 
   const points = selectedOptionData.points;
-
-  const existingUser = await questionStatusCollection.findOne({ userId });
 
   const timestamp = new Date().toLocaleString("en-IN", {
     timeZone: "Asia/Kolkata",
   });
 
-  if (existingUser) {
-    const updatedAnsweredQuestions = [
-      ...existingUser.answeredQuestions,
-      answeredQuestion,
-    ];
+  let totalHealthPoints = points.health, totalWealthPoints = points.wealth, totalHappinessPoints = points.happiness;
 
-    let totalHealthPoints = 0;
-    let totalWealthPoints = 0;
-    let totalHappinessPoints = 0;
-
-    updatedAnsweredQuestions.forEach((answer) => {
-      const { points } = answer;
-      if (points !== undefined) {
-        totalHealthPoints += points.health || 0;
-        totalWealthPoints += points.wealth || 0;
-        totalHappinessPoints += points.happiness || 0;
-      }
-    });
-
-    const accumulatedPoints =
-      totalHealthPoints + totalWealthPoints + totalHappinessPoints;
-
+  try {
+    const existingQuestionStatus = await questionStatusCollection.findOne({ userId });
+    if (
+      existingQuestionStatus && 
+      existingQuestionStatus.answeredQuestions.some((question: any) => question.questionId === answeredQuestion.questionId)
+    ) {
+      return response.status(400).json({ error: "Question already answered" });
+    }
     const result = await questionStatusCollection.updateOne(
-      { userId },
       {
+        userId: userId,
+        "answeredQuestions.questionId": { $ne: answeredQuestion.questionId },
+      },
+      {
+        $inc: {
+          currentQuestion: 1,
+          "points.health": totalHealthPoints,
+          "points.wealth": totalWealthPoints,
+          "points.happiness": totalHappinessPoints,
+          accumulatedPoints: totalHappinessPoints + totalHealthPoints + totalWealthPoints,
+        },
         $set: {
-          currentQuestion: updatedAnsweredQuestions.length + 1,
-          points: {
-            health: totalHealthPoints,
-            wealth: totalWealthPoints,
-            happiness: totalHappinessPoints,
-          },
-          accumulatedPoints,
-          timestamp, 
+          timestamp,
         },
         $push: {
           answeredQuestions: {
             ...answeredQuestion,
             points,
-            timestamp, 
-          },
-        },
-      }
+            timestamp,
+          }
+        }
+      },
+      { upsert: true }
     );
 
-    if (result.modifiedCount > 0) {
-      const nextQuestionNumber = updatedAnsweredQuestions.length + 1;
-      return response.status(200).json({
-        message: "Answer updated successfully",
-        nextQuestion: nextQuestionNumber,
+    if (result.upsertedCount > 0) {
+      return response.status(201).json({
+        message: "Answers submitted successfully",
       });
-    } else {
-      return response
-        .status(500)
-        .json({ message: "An error occurred while updating the answer" });
+    } else if (result.modifiedCount > 0) {
+      return response.status(200).json({
+        message: "Answers updated successfully",
+      });
     }
-  } else {
-    const result = await questionStatusCollection.insertOne({
-      userId,
-      answeredQuestions: [
-        {
-          ...answeredQuestion,
-          points,
-          timestamp, 
-        },
-      ],
-      currentQuestion: 2,
-      points,
-      accumulatedPoints: points.health + points.wealth + points.happiness,
-      timestamp, 
-    });
-
-    if (result.acknowledged) {
-      return response
-        .status(201)
-        .json({ message: "Answer submitted successfully", nextQuestion: 2 });
-    } else {
-      return response.status(500).json({ message: "An error occurred" });
-    }
+    return response.status(400).json({ message: "An unhandled error occurred" });
+  } catch (error) {
+    console.error("An unhandled error occurred while submitting answer: ", error);
+    return response.status(500).json({ message: "Internal Server Error" });
   }
 }

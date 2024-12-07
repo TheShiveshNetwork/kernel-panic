@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers["cookie"];
     if (!authHeader) {
-        res.status(401).json({ message: "Access token is missing" });
+        res.status(401).json({ message: "Token is missing" });
         return;
     }
     const cookie = authHeader.split("=")[1];

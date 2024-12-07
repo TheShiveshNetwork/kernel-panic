@@ -2,12 +2,11 @@ import { z } from "zod";
 
 export const submitAnswerRequestSchema = z.object({
   body: z.object({
-    userId: z.string(),
     answeredQuestion: z.object({
       questionId: z.string(),
       selectedOption: z.string(),
     }),
-  }),
+  }).strict(),
 });
 
 export const answerSchema = z.object({
@@ -23,5 +22,5 @@ export const answerSchema = z.object({
       happiness: z.number(),
     }),
     accumulatedPoints: z.number(),
-  }),
+  }).strict(),
 });

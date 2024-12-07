@@ -26,17 +26,12 @@ export async function loginUser(this: ControllerClass, request:Request, response
             maxAge: 60 * 60 * 1000,
             httpOnly: true,
             secure: true,
-            sameSite: true,
+            sameSite: "none" as const,
         };
-        response.cookie("SessionID", token, options);
-        // TODO: don't send the token in response
-        // return response.status(200).json({
-        //     status: "success",
-        //     message: "You have successfully logged in.",
-        // });
-        return response.status(201).json({ message: "Logged in user successfully", token });
+        response.cookie("token", token, options);
+        return response.status(200).json({ status: "success", message: "Logged in user successfully", token });
     } catch (error) {
-        console.error("An error occurred while logging in user: ", error);
+        console.error("An unhandled error occurred while logging in user: ", error);
         return response.status(500).json({ message: "Internal Server Error" });
     }
 }

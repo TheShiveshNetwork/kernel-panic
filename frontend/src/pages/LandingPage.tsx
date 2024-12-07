@@ -31,8 +31,7 @@ const LandingPage: React.FC = () => {
   async function handleLogin(data: FieldValues) {
     try {
       const response = await PanicApi.post('/user/login', data);
-      // console.log(response.data);
-      if (response.status == 201) {
+      if (response.status == 200) {
         toast.success("Login successful!");
         localStorage.setItem("token", response.data.token);
         setToken(response.data.token);
@@ -83,6 +82,7 @@ const LandingPage: React.FC = () => {
           <input
             {...register("password")}
             placeholder="Enter Password"
+            type="password"
             className="bg-gray-900 bg-opacity-50 border-b-4 border-blue-500 focus:border-blue-400 focus:outline-none transition duration-300 p-3 text-lg text-white rounded-md mb-4 w-full"
             aria-label="Enter your password"
           />
