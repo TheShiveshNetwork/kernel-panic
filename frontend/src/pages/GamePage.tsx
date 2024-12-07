@@ -217,7 +217,7 @@ const GamePage: React.FC = () => {
   }, []);
 
     return (
-    <div className="container">
+    <div>
       <Terminal name="Life Choices Game" colorMode={ColorMode.Dark} onInput={handleInput}>
         {isLoading && <TerminalOutput>Loading questions...</TerminalOutput>}
         {terminalLineData.map((line, index) => (
