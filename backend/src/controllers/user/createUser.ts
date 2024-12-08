@@ -4,7 +4,7 @@ import type { ControllerClass } from "@/controllers";
 import { userCollection } from "@/storage/index.js";
 
 export async function createUser(this: ControllerClass, request:Request, response:Response) {
-    const { email, password } = request.body;
+    const { name, email, password } = request.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const userExists = !!(await userCollection.findOne({ email }));
     if (userExists) {
@@ -12,7 +12,7 @@ export async function createUser(this: ControllerClass, request:Request, respons
         return response.status(409).json({ message: "Email already exists" });
     }
     // Save the user to the database
-    const user = await userCollection.insertOne({ email, password: hashedPassword });
+    const user = await userCollection.insertOne({ name, email, password: hashedPassword });
     if (user.acknowledged) {
         console.log("New user created successfully");
         return response.status(201).json({ message: "User created successfully" });
