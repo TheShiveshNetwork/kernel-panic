@@ -57,6 +57,8 @@ export const config = {
     asciiGameOver: asciiGameOver,
     localBackendUrl: "http://localhost:8080/api",
     backendApiUrl: "https://kernel-panic.onrender.com/api",
+    localSocketUrl: "http://localhost:8080",
+    socketUrl: "https://kernel-panic.onrender.com",
     commonCommands: {
         helpCommand: {
             name: "help",
@@ -71,7 +73,7 @@ export const config = {
         startCommand: {
             name: "start-game",
             description: "Start the game",
-            command: (setTerminalData:ISetTerminalData, currentIndex:number|null, startGame: () => void) => startGameCommandHandler(setTerminalData, currentIndex, startGame),
+            command: (startGame: () => void) => startGameCommandHandler(startGame),
         },
         continueCommand: {
             name: "continue-game",

@@ -31,7 +31,7 @@ const router = createBrowserRouter([
         path: "/",
         element:
             <BaseLayout>
-                <ToastContainer />
+                <ToastContainer toastClassName="toast-message" position='bottom-right' hideProgressBar  />
                 <Outlet />
             </BaseLayout>
         ,

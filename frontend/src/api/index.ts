@@ -9,3 +9,5 @@ export const PanicApi = axios.create({
     headers: { 'Content-Type': 'application/json' },
     withCredentials: true,
 });
+
+export const socketUrl = import.meta.env.MODE === "development" ? config.localSocketUrl : config.socketUrl;

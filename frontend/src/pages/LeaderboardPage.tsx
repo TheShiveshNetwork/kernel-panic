@@ -1,3 +1,4 @@
+import { config } from "@/config";
 import React, { useEffect, useState } from "react";
 import Terminal, { TerminalOutput, ColorMode } from "react-terminal-ui";
 import { io } from "socket.io-client";
@@ -15,7 +16,7 @@ const LeaderboardPage: React.FC = () => {
     ]);
 
     useEffect(() => {
-        const socket = io("http://localhost:8080");
+        const socket = io(config.socketUrl);
 
         socket.emit("joinRoom", "leaderboardData");
 
@@ -51,8 +52,8 @@ const LeaderboardPage: React.FC = () => {
     }, []);
 
     return (
-        <div>
-            <Terminal name="Leaderboard" colorMode={ColorMode.Dark} prompt="">
+        <div className="h-screen w-screen bg-[var(--primary-bg)]">
+            <Terminal name={`${config.name} Leaderboard`} colorMode={ColorMode.Dark} prompt="">
                 <div className="mx-auto"> {terminalLineData}</div>
             </Terminal>
         </div>

@@ -9,6 +9,8 @@ type Option = {
 
 export type Question = {
     _id: string;
-    title: string;
+    index: number;
+    image: string;
+    question: string;
     options: Option[];
 }

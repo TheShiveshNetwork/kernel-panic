@@ -2,8 +2,8 @@ import { z } from "zod";
 
 export const createQuestionSchema = z.object({
     body: z.object({
-        title: z.string().min(5),
-        content: z.string().nullable(),
+        image: z.string().nullable(),
+        question: z.string(),
         options: z.array(
             z.object({
                 text: z.string(),

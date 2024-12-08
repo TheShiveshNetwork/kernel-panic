@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
 import { PanicApi } from "@/api";
 import { toast } from 'react-toastify';
@@ -8,8 +8,10 @@ import { TerminalColorText } from "@/components/commons/TerminalColorText";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
 import { Question } from "@/helpers/common-types";
+import { FormatImageToAscii } from "@/helpers/common-functions";
+import TerminalLoading from "@/components/terminal-loader";
 
-const GamePage: React.FC = () => {
+const GamePage = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [terminalLineData, setTerminalLineData] = useState<(string | JSX.Element)[]>([
     "Welcome to",
@@ -24,39 +26,18 @@ const GamePage: React.FC = () => {
     wealth: 50,
     happiness: 50,
   });
-  const [gameOver, setGameOver] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const { logout } = useAuth();
 
-  const fetchQuestions = async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await PanicApi.get("/getAllQuestions", { timeout: 5000 }); // Increased timeout to 10s
-      const data = response.data;
-
-      if (data.length > 0) {
-        setQuestions(data);
-      } else {
-        setGameOver(true);
-        setTerminalLineData((prevData) => [...prevData, "No questions available. Game over!"]);
-      }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error:any) {
-      console.log("Error submitting answer:", error);
-      setTerminalLineData((prevData) => [
-        ...prevData,
-        <TerminalError>
-          Error: {error instanceof Error ? error.message : "Unknown error"}
-          <p>{error.response.data.error}</p>
-        </TerminalError>,
-      ]);
-      return false;
-    } finally {
-      setIsLoading(false);
-    }
+  function gameOver() {
+    setTerminalLineData((prevData) => [
+      ...prevData,
+      <TerminalColorText color="white">You have already completed all questions.</TerminalColorText>,
+      <TerminalColorText color="white">Check out your rank on <Link to={"/leaderboard"} className="underline">Leaderboard</Link>.</TerminalColorText>,
+    ]);
+    return;
   };
 
   const startGame = () => {
@@ -64,15 +45,26 @@ const GamePage: React.FC = () => {
       toast.info("Questions are loading...");
       return;
     }
-
-    setCurrentQuestionIndex(0);
-    const firstQuestion = questions[0];
-    const questionText = `Question 1: ${firstQuestion.title}`;
-    const optionsText = firstQuestion.options
+    let currentQuestion: Question;
+    if (currentQuestionIndex === null) {
+      setCurrentQuestionIndex(0);
+      currentQuestion = questions[0];
+    } else if (currentQuestionIndex < questions.length) {
+      currentQuestion = questions[currentQuestionIndex];
+    } else {
+      gameOver();
+      return;
+    }
+    const optionsText = currentQuestion.options
       .map((option, index) => `${index + 1}. ${option.text}`)
       .join("\n");
-
-    setTerminalLineData((prevData) => [...prevData, questionText, optionsText]);
+    setTerminalLineData((prevData) => [
+      ...prevData,
+      <div className="whitespace-pre-wrap">{FormatImageToAscii(currentQuestion.image)}</div>,
+      `\nQuestion ${(currentQuestionIndex || 0) +1}: ${currentQuestion.question}\n`,
+      <br />,
+      optionsText,
+    ]);
   };
 
   const submitAnswer = async (
@@ -95,8 +87,8 @@ const GamePage: React.FC = () => {
         toast.error(response.data.message || "Failed to submit answer.");
         return false;
       }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error:any) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.log("Error submitting answer:", error);
       setTerminalLineData((prevData) => [
         ...prevData,
@@ -115,20 +107,10 @@ const GamePage: React.FC = () => {
       return;
     }
 
-    if (gameOver) {
-      setTerminalLineData((prevData) => [
-        ...prevData,
-        <TerminalColorText color="blue">{config.asciiGameOver}</TerminalColorText>,
-        <TerminalColorText color="white">Hurray! You have completed all questions.</TerminalColorText>,
-        <TerminalColorText color="white">Check out your rank on <Link to={"/leaderboard"} className="underline">Leaderboard</Link>.</TerminalColorText>,
-      ]);
-      return;
-    }
-
     setTerminalLineData((prevData) => [...prevData, `> ${input}`]);
 
     if (input === config.commonCommands.startCommand.name) {
-      config.commonCommands.startCommand.command(setTerminalLineData, currentQuestionIndex, startGame);
+      config.commonCommands.startCommand.command(startGame);
       return;
     }
 
@@ -167,16 +149,15 @@ const GamePage: React.FC = () => {
       navigate("/leaderboard");
     }
 
-    const currentIndex = currentQuestionIndex;
-    if (currentIndex === null || currentIndex >= questions.length) {
+    if (currentQuestionIndex === null || currentQuestionIndex >= questions.length) {
       setTerminalLineData((prevData) => [
-        ...prevData, 
+        ...prevData,
         <TerminalColorText color="blue">Invalid command. Type '{config.commonCommands.helpCommand.name}' to see all available commands.</TerminalColorText>
       ]);
       return;
     }
 
-    const currentQuestion = questions[currentIndex];
+    const currentQuestion = questions[currentQuestionIndex];
     const selectedOptionIndex = parseInt(input) - 1;
 
     if (
@@ -205,23 +186,24 @@ const GamePage: React.FC = () => {
 
     if (isAnswerSubmitted) {
       setStats(newStats);
-      const nextQuestionIndex = currentIndex + 1;
+      const nextQuestionIndex = currentQuestionIndex + 1;
       if (nextQuestionIndex < questions.length) {
         setCurrentQuestionIndex(nextQuestionIndex);
 
         const nextQuestion = questions[nextQuestionIndex];
-        const nextQuestionText = `Question ${nextQuestionIndex + 1}: ${nextQuestion.title}`;
         const nextOptionsText = nextQuestion.options
           .map((option, index) => `${index + 1}. ${option.text}`)
           .join("\n");
         setTerminalLineData((prevData) => [
           ...prevData,
           `You chose: ${selectedOption.text}`,
-          nextQuestionText,
+          <br />,
+          <div className="whitespace-pre-wrap">{FormatImageToAscii(nextQuestion.image)}</div>,
+          `\nQuestion ${nextQuestionIndex + 1}: ${nextQuestion.question}\n`,
+          <br />,
           nextOptionsText,
         ]);
       } else {
-        setGameOver(true);
         setTerminalLineData((prevData) => [
           ...prevData,
           <TerminalColorText color="blue">{config.asciiGameOver}</TerminalColorText>,
@@ -233,23 +215,56 @@ const GamePage: React.FC = () => {
     }
   };
 
+  async function fetchAllQuestions() {
+    await PanicApi.get("/getAllQuestions")
+      .then((result) => {
+        if (result.status === 200) {
+          setQuestions(result.data);
+          return;
+        }
+      }).catch((error) => {
+        console.log(`Error: ${error}`);
+        setError(error.message);
+      });
+  }
+
+  async function fetchUserQuestionStatus() {
+    await PanicApi.get("/getQuestionStatusByUserId")
+      .then((result) => {
+        if (result.status === 200) {
+          setCurrentQuestionIndex(result.data.currentQuestion);
+          return;
+        }
+      });
+    return;
+  }
+
+  useEffect(() => {
+    setIsLoading(true);
+    const initialFunctions: Promise<void>[] = [];
+    initialFunctions.push(fetchAllQuestions());
+    initialFunctions.push(fetchUserQuestionStatus());
+    Promise.all(initialFunctions).then(() => {
+      setIsLoading(false);
+    }).catch(() => {
+      setIsLoading(false);
+    });
+  }, [])
+
   useEffect(() => {
     if (error) {
       toast.error(error);
     }
   }, [error]);
 
-  useEffect(() => {
-    fetchQuestions();
-  }, []);
-
   return (
     <div className="h-screen w-screen bg-[var(--primary-bg)]">
       <Terminal name={config.name} colorMode={ColorMode.Dark} onInput={handleInput}>
-        {isLoading && <TerminalOutput>Loading questions...</TerminalOutput>}
-        {terminalLineData.map((line, index) => (
-          <TerminalOutput key={index}>{line}</TerminalOutput>
-        ))}
+        {isLoading ? <TerminalLoading />
+          : terminalLineData.map((line, index) => (
+            <TerminalOutput key={index}>{line}</TerminalOutput>
+          ))
+        }
       </Terminal>
     </div>
   );

@@ -16,3 +16,8 @@
     background-color: var(--primary-bg) !important;
     color: var(--primary-text) !important;
 }
+
+.toast-message {
+    background-color: black;
+    color: white;
+}

@@ -2,6 +2,7 @@ import { PanicApi } from "@/api";
 import { TerminalColorText } from "@/components/commons/TerminalColorText";
 import { TerminalError } from "@/components/commons/TerminalError";
 import { config } from "@/config";
+import { FormatImageToAscii } from "@/helpers/common-functions";
 import { Question } from "@/helpers/common-types";
 
 export type ISetTerminalData = React.Dispatch<React.SetStateAction<(string | JSX.Element)[]>>;
@@ -25,36 +26,36 @@ export function helpCommandHandler(setTerminalLineData: ISetTerminalData) {
     return;
 };
 
-export function startGameCommandHandler(setTerminalLineData: ISetTerminalData, currentIndex: number | null, startGame: () => void) {
-    if (currentIndex === null) {
-        startGame();
-    } else {
-        setTerminalLineData((prevData) => [
-            ...prevData,
-            <TerminalColorText color="blue">Game has already started! Answer the current question.</TerminalColorText>,
-        ]);
-    }
+export function startGameCommandHandler(startGame: () => void) {
+    startGame();
     return;
 };
 
 export function continueGameCommandHandler(setTerminalLineData: ISetTerminalData, currentIndex: number | null, questions: Question[]) {
-    if (currentIndex !== null) {
-        const currentQuestion = questions[currentIndex];
-        const optionsText = currentQuestion.options
-            .map((option, index) => `${index + 1}. ${option.text}`)
-            .join("\n");
-
-        setTerminalLineData((prevData) => [
-            ...prevData,
-            `You are continuing from Question ${currentIndex + 1}: ${currentQuestion.title}`,
-            optionsText,
-        ]);
-    } else {
+    if (currentIndex === null) {
         setTerminalLineData((prevData) => [
             ...prevData,
             "Game hasn't started yet. Type 'start' to begin the game.",
         ]);
+        return;
     }
+    const currentQuestion = questions[currentIndex];
+    const optionsText = currentQuestion.options
+        .map((option, index) => `${index + 1}. ${option.text}`)
+        .join("\n");
+
+    setTerminalLineData((prevData) => [
+        ...prevData,
+        <br />,
+        <TerminalColorText color="blue">
+        You are continuing from Question {currentIndex + 1}
+        </TerminalColorText>,
+        <br />,
+        <div className="whitespace-pre-wrap">{FormatImageToAscii(currentQuestion.image)}</div>,
+        `\nQuestion ${(currentIndex) +1}: ${currentQuestion.question}\n`,
+        <br />,
+        optionsText,
+    ]);
     return;
 };
 
@@ -63,7 +64,7 @@ export function describeCommandHandler(setTerminalLineData: ISetTerminalData) {
         ...prevData,
         <TerminalColorText color="blue">{config.asciiLogo}</TerminalColorText>,
         <TerminalColorText color="blue" className="flex max-w-[600px] justify-between">
-            {config.name} 
+            {config.name}
             <a href={config.githubLink} target="_blank" className="underline">View on GitHub</a>
         </TerminalColorText>,
         <TerminalColorText color="white">{config.description}</TerminalColorText>,

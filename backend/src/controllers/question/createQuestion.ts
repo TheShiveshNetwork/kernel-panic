@@ -6,8 +6,8 @@ export async function createQuestion(this: ControllerClass, request:Request, res
     const requestBody = request.body;
     // Save the question to the database
     const result = await questionsCollection.insertOne({
-        title: requestBody.title,
-        content: requestBody.content,
+        image: requestBody.image,
+        question: requestBody.question,
         options: requestBody.options,
         index: requestBody.index,
     });

@@ -3,6 +3,8 @@ import asyncio
 import httpx
 from contextlib import asynccontextmanager
 
+from termcolor import cprint
+
 from config import BACKEND_PING_URL
 
 app = FastAPI()
@@ -19,9 +21,9 @@ async def cyclic_func():
             async with httpx.AsyncClient() as client:
                 res = await client.get(BACKEND_PING_URL)
                 if (res.status_code != 201):
-                    print("[log] Success")
+                    cprint("[log] Success", "green")
                 else:
-                    print("[log] Failure")
+                    cprint("[log] Failure", "red")
                 await asyncio.sleep(900)  # 15 minutes
         except Exception as e:
             print(f"Error in cyclic_func: {e}")
