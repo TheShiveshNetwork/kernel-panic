@@ -21,37 +21,22 @@ const LeaderboardPage: React.FC = () => {
 
         socket.on("leaderboardUpdate", (data: LeaderboardEntry[]) => {
             const updatedTerminalLines = [
-                <TerminalOutput
-                    key="header"
-                    style={{
-                        fontWeight: "bold",
-                        fontSize: "1.5em",
-                        textAlign: "center",
-                    }}
-                >
-                    {"Position".padEnd(10)}{"Team Name".padEnd(25)}{"Points".padStart(10)}
+                <TerminalOutput key="header">
+                    {"Position" + "Team Name".padStart(15) + "Points".padStart(32)}
                 </TerminalOutput>,
-                <TerminalOutput key="divider" style={{ textAlign: "center" }}>
+                <TerminalOutput key="divider">
                     {"-".repeat(55)}
                 </TerminalOutput>,
                 ...data.map((entry, index) => (
-                    <TerminalOutput
-                        key={`${entry.userId}-${index}`}
-                        style={{
-                            fontSize: "1.2em",
-                            display: "flex",
-                            justifyContent: "space-between",
-                            padding: "5px 0",
-                        }}
-                    >
+                    <div className="flex justify-between">
                         <span>{(index + 1).toString().padEnd(10)}</span>
                         <span style={{ textAlign: "center", flexGrow: 1 }}>
                             {entry.userId.padEnd(25)}
                         </span>
                         <span>{entry.accumulatedPoints.toString().padStart(10)}</span>
-                    </TerminalOutput>
+                    </div>
                 )),
-                <TerminalOutput key="footer" style={{ textAlign: "center" }}>
+                <TerminalOutput key="footer">
                     {"-".repeat(55)}
                 </TerminalOutput>,
             ];
