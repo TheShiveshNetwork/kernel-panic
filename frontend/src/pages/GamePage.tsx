@@ -53,6 +53,8 @@ const GamePage = () => {
       setTerminalLineData((prevData) => [
         ...prevData,
         <TerminalError>Error: The game has already started</TerminalError>,
+        <TerminalColorText color="white">Type '{config.commonCommands.continueCommand.name}' to continue the game.</TerminalColorText>,
+        <br />,
       ]);
       return;
     } else {
