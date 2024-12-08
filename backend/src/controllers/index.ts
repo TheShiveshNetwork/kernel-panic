@@ -10,6 +10,7 @@ import { submitAnswer } from "./questionStatus/submitAnswer";
 import { getQuestionStatusByUserId } from "./questionStatus/getQuestionStatusByUserId";
 import { getCurrentUser } from "./user/getCurrentUser";
 import { logoutUser } from "./user/logout";
+import { tokenIsValid } from "./user/validateToken";
 
 export class ControllerClass {
     private mongoClient = new MongoDBClient;
@@ -33,6 +34,7 @@ export class ControllerClass {
     getQuestionStatusByUserId = getQuestionStatusByUserId;
     getCurrentUser = getCurrentUser;
     logoutUser = logoutUser;
+    tokenIsValid = tokenIsValid;
 }
 
 let Controllers = new ControllerClass();

@@ -50,7 +50,11 @@ const GamePage = () => {
       setCurrentQuestionIndex(0);
       currentQuestion = questions[0];
     } else if (currentQuestionIndex < questions.length) {
-      currentQuestion = questions[currentQuestionIndex];
+      setTerminalLineData((prevData) => [
+        ...prevData,
+        <TerminalError>Error: The game has already started</TerminalError>,
+      ]);
+      return;
     } else {
       gameOver();
       return;

@@ -6,6 +6,9 @@ import { authenticateToken } from "@/middlewares/authenticationMiddleware";
 
 export const userRoutes = Router();
 
+userRoutes.get("/token-is-valid", async (req: Request, res: Response) => {
+    await Controllers.tokenIsValid(req, res);
+});
 userRoutes.post('/user/create', validateData(createUserSchema), async (req: Request, res: Response) => {
     await Controllers.createUser(req, res);
 });

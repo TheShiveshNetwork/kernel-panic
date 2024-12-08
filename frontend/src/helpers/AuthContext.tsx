@@ -1,3 +1,4 @@
+import { PanicApi } from "@/api";
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 
 export interface AuthContextType {
@@ -22,11 +23,35 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setToken(null);
     }
 
+    async function checkTokenValidity() {
+        await PanicApi.get("/token-is-valid")
+        .then((result) => {
+            console.log(result.data);
+            if (result.data.validToken) {
+                return;
+            }
+            logout();
+            return;
+        })
+        .catch((error) => {
+            console.log(error);
+            logout();
+            return;
+        });
+    }
+
     useEffect(() => {
         const storedToken = localStorage.getItem("token");
         setToken(storedToken);
         setLoading(false);
     }, []);
+
+    useEffect(() => {
+        if (token) {
+            checkTokenValidity();
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [token]);
 
     return (
         <AuthContext.Provider value={{ token, setToken, loading, logout }}>

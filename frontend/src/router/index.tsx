@@ -7,6 +7,7 @@ import LeaderboardPage from "@/pages/LeaderboardPage";
 import { ToastContainer } from "react-toastify";
 import ProtectedLayout from '@/layouts/protected';
 import BaseLayout from '@/layouts/base-layout';
+import ScrollToTop from '@/utils/scroll-to-top';
 
 const router = createBrowserRouter([
     {
@@ -31,7 +32,8 @@ const router = createBrowserRouter([
         path: "/",
         element:
             <BaseLayout>
-                <ToastContainer toastClassName="toast-message" position='bottom-right' hideProgressBar  />
+                <ToastContainer toastClassName="toast-message" position='bottom-right' hideProgressBar />
+                <ScrollToTop />
                 <Outlet />
             </BaseLayout>
         ,
