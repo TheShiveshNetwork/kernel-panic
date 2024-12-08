@@ -158,7 +158,7 @@ const GamePage = () => {
     if (currentQuestionIndex === null || currentQuestionIndex >= questions.length) {
       setTerminalLineData((prevData) => [
         ...prevData,
-        <TerminalColorText color="blue">Invalid command. Type '{config.commonCommands.helpCommand.name}' to see all available commands.</TerminalColorText>
+        <TerminalError>Invalid command. Type '{config.commonCommands.helpCommand.name}' to see all available commands.</TerminalError>
       ]);
       return;
     }
@@ -173,7 +173,7 @@ const GamePage = () => {
     ) {
       setTerminalLineData((prevData) => [
         ...prevData,
-        <TerminalColorText color="blue">Invalid command. Type '{config.commonCommands.helpCommand.name}' to see all available commands.</TerminalColorText>,
+        <TerminalError>Invalid command. Type '{config.commonCommands.helpCommand.name}' to see all available commands.</TerminalError>,
       ]);
       return;
     }

@@ -26,7 +26,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     async function checkTokenValidity() {
         await PanicApi.get("/token-is-valid")
         .then((result) => {
-            console.log(result.data);
             if (result.data.validToken) {
                 return;
             }

@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { questionStatusCollection, questionsCollection } from "@/storage";
+import { questionStatusCollection, questionsCollection, userCollection } from "@/storage";
 import type { ControllerClass } from "@/controllers";
 import { ObjectId } from "mongodb";
 
@@ -30,6 +30,10 @@ export async function submitAnswer(
   let totalHealthPoints = points.health, totalWealthPoints = points.wealth, totalHappinessPoints = points.happiness;
 
   try {
+    const existingUser = await userCollection.findOne({ _id: new ObjectId(`${userId}`) });
+    if (!existingUser) {
+      return response.status(404).json({ message: "User not found" });
+    }
     const existingQuestionStatus = await questionStatusCollection.findOne({ userId });
     if (
       existingQuestionStatus && 
@@ -51,6 +55,7 @@ export async function submitAnswer(
           accumulatedPoints: totalHappinessPoints + totalHealthPoints + totalWealthPoints,
         },
         $set: {
+          name: existingUser.name,
           timestamp,
         },
         $push: {

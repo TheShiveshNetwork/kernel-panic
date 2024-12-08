@@ -5,6 +5,7 @@ import { io } from "socket.io-client";
 
 interface LeaderboardEntry {
     userId: string;
+    name: string;
     accumulatedPoints: number;
 }
 
@@ -22,19 +23,21 @@ const LeaderboardPage: React.FC = () => {
 
         socket.on("leaderboardUpdate", (data: LeaderboardEntry[]) => {
             const updatedTerminalLines = [
-                <TerminalOutput key="header">
-                    {"Position" + "Team Name".padStart(15) + "Points".padStart(32)}
-                </TerminalOutput>,
+                <div className="flex">
+                    <div className="w-60">Position</div>
+                    <div className="w-full">Team Name</div>
+                    <div className="w-40">Points</div>
+                </div>,
                 <TerminalOutput key="divider">
                     {"-".repeat(55)}
                 </TerminalOutput>,
                 ...data.map((entry, index) => (
                     <div className="flex justify-between">
-                        <span>{(index + 1).toString().padEnd(10)}</span>
-                        <span style={{ textAlign: "center", flexGrow: 1 }}>
-                            {entry.userId.padEnd(25)}
-                        </span>
-                        <span>{entry.accumulatedPoints.toString().padStart(10)}</span>
+                        <div className="w-60">{index + 1}</div>
+                        <div className="w-full">
+                            {entry.name}
+                        </div>
+                        <div className="w-40">{entry.accumulatedPoints}</div>
                     </div>
                 )),
                 <TerminalOutput key="footer">
@@ -54,7 +57,7 @@ const LeaderboardPage: React.FC = () => {
     return (
         <div className="h-screen w-screen bg-[var(--primary-bg)]">
             <Terminal name={`${config.name} Leaderboard`} colorMode={ColorMode.Dark} prompt="">
-                <div className="mx-auto"> {terminalLineData}</div>
+                <div className="mx-auto">{terminalLineData}</div>
             </Terminal>
         </div>
     );

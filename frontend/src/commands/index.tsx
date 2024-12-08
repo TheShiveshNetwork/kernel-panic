@@ -79,7 +79,6 @@ export function describeCommandHandler(setTerminalLineData: ISetTerminalData) {
 export async function whoamiCommandHandler(setTerminalLineData: ISetTerminalData) {
     await PanicApi.get("/getCurrentUser")
         .then((response) => {
-            console.log(response.data)
             setTerminalLineData((prevData) => [
                 ...prevData,
                 <TerminalColorText color="blue">You are currently logged in as: {response.data.data.name}</TerminalColorText>,
