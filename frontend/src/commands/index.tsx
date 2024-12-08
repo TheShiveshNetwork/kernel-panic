@@ -81,7 +81,7 @@ export async function whoamiCommandHandler(setTerminalLineData: ISetTerminalData
             console.log(response.data)
             setTerminalLineData((prevData) => [
                 ...prevData,
-                <TerminalColorText color="blue">You are currently logged in as: {response.data.data.email}</TerminalColorText>,
+                <TerminalColorText color="blue">You are currently logged in as: {response.data.data.name}</TerminalColorText>,
                 <br />
             ]);
         })
