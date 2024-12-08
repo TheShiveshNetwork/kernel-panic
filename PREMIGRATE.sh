@@ -1,16 +1,9 @@
 #!/bin/bash
 
-# Navigate to the ./migrations folder
-cd ./migrations || { echo "Directory ./migrations does not exist."; exit 1; }
-
-# Check if the virtual environment exists
-if [ ! -d ".venv" ]; then
-    echo "Virtual environment not found. Creating one..."
-    python -m venv .venv
-    if [ $? -ne 0 ]; then
-        echo "Failed to create a virtual environment. Make sure Python is installed."
-        exit 1
-    fi
+python -m venv .venv
+if [ $? -ne 0 ]; then
+    echo "Failed to create a virtual environment. Make sure Python is installed."
+    exit 1
 fi
 
 # Define paths to activation scripts

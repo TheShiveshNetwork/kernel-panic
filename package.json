@@ -1,0 +1,10 @@
+{
+  "name": "kernel-panick",
+  "version": "1.0.0",
+  "description": "Backend url: https://kernel-panic.onrender.com\r Frontend url: https://kernel-panic.vercel.app",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
