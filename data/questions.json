@@ -50,6 +50,256 @@
                 { "text": "Politely decline and suggest a cheaper alternative.", "points": { "health": 0, "happiness": 5, "wealth": 0 } },
                 { "text": "Go but keep the spending minimal.", "points": { "health": 0, "happiness": 5, "wealth": -15 } }
             ]
+        },
+        {
+            "index": 5,
+            "image": "SSSSS  TTTTT  RRRR   AAAAA  TTTTT  EEEEE  GGGG  Y     Y\\nS        T    R   R  A   A    T    E      G      Y   Y\\nSSSSS    T    RRRR   AAAAA    T    EEEE   G  GG   Y Y\\n    S    T    R  R   A   A    T    E      G   G    Y\\nSSSSS    T    R   R  A   A    T    EEEEE  GGGG     Y",
+            "question": "Later that evening, you’re feeling stressed and overwhelmed. What’s your coping strategy?",
+            "options": [
+                { "text": "1. Take a mental health day the next morning.", "impact": { "health": 15, "happiness": 5, "money": -10 } },
+                { "text": "2. Power through and ignore the stress.", "impact": { "health": -10, "happiness": -5, "money": 0 } },
+                { "text": "3. Talk to your manager about a lighter workload.", "impact": { "health": 5, "happiness": 5, "money": 0 } }
+            ]
+        },
+        {
+            "index": 6,
+            "image": "    \\   |   /\\n  --  o  --\\n    / | \\    \\n  ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\\n~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\\n~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\\n ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\\n~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\\n ~ ~ ~ ~  ~  ~  ~ ~ ~ ~ ~ ~    ~ ~ ~ ~ ~\\n   ~ ~ ~ ~  ~ ~ ~ ~ ~ ~ ~ ~  ~  ~  ~ ~ ~\\n ~  ~ ~ ~  ~   ~  ~  ~ ~ ~ ~  ~ ~ ~ ~ ~ ~ ~\\n~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\\n      ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\\n        ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\\n ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\\n   ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\\n         |  |     |  |\\n        /    \\   /    \\ \\n         |  |     |  |\\n         |  |     |  |\\n         |  |     |  |\\n         |  |     |  |\\n         |  |     |  |\\n         |__|     |__|",
+            "question": "You’ve got a free weekend coming up. What will you do?",
+            "options": [
+                { "text": "1. Relax and do nothing.", "impact": { "health": 10, "happiness": 5, "money": 0 } },
+                { "text": "2. Explore a new hobby.", "impact": { "health": 5, "happiness": 15, "money": -5 } },
+                { "text": "3. Go on a spontaneous trip.", "impact": { "health": 0, "happiness": 20, "money": -30 } }
+            ]
+        },
+        {
+            "index": 7,
+            "image": "__________________\\n|                  |\\n|                  |\\n|                  |\\n|                  |\\n|     DOOR TO      |\\n|                  |\\n|    OPPORTUNITY   |\\n|                _ |\\n|               |_||\\n|                  |\\n|                  |\\n|                  |\\n|__________________|",
+            "question": "You’ve been feeling burnt out recently. A new opportunity comes up. How do you react?",
+            "options": [
+                { "text": "1. Take the opportunity for more flexibility (remote work).", "impact": { "health": 5, "happiness": 10, "money": 0 } },
+                { "text": "2. Decline, preferring the comfort of your current routine.", "impact": { "health": 0, "happiness": 0, "money": 0 } },
+                { "text": "3. Negotiate for a hybrid arrangement to balance both.", "impact": { "health": 5, "happiness": 5, "money": 0 } }
+            ]
+        },
+        {
+            "index": 8,
+            "image": "__________\\n/        \\n|Product |\\n| Launch?|\\n|        |\\n/\\_________/\\n.-'''-.\\/\\n.'       '.\\n/           \\n|   O     O   |\\n|      |      |\\n|      _      |\\n\\           /\\n '._._._._.'\\n  /     \\n /       \\n/         \\n/___________\\n",
+            "question": "A colleague asks you to collaborate on a new product. What’s your next move?",
+            "options": [
+                { "text": "1. Take it on and work hard to make it successful.", "impact": { "health": 0, "happiness": 10, "money": 10 } },
+                { "text": "2. Negotiate better terms before agreeing.", "impact": { "health": 5, "happiness": 5, "money": 0 } },
+                { "text": "3. Decline and focus on your current projects.", "impact": { "health": 0, "happiness": -5, "money": 0 } }
+            ]
+        },
+        {
+            "index": 9,
+            "image": ":-)           :-|           :-(\\n___           ___           ___\\n/       \\     /       \\     /       \\n|  O   O  |   |  O   O  |   |  O   O  |\\n|    ^    |   |    ^    |   |    ^    |\\n|   ---   |   |   ---   |   |   ---   |\\n\\_________/   \\_________/   \\_________/\\n     |             |             |\\n  '--'--'       '--'--'       '--'--'\\n",
+            "question": "At the end of the week, you reflect on your journey so far. How do you feel?",
+            "options": [
+                { "text": "1. Proud of the choices I made and excited for the future.", "impact": { "health": 10, "happiness": 20, "money": 0 } },
+                { "text": "2. A bit overwhelmed but satisfied with what I accomplished.", "impact": { "health": 0, "happiness": 10, "money": 0 } },
+                { "text": "3. Regretful, wishing I had made different decisions.", "impact": { "health": -10, "happiness": -10, "money": 0 } }
+            ]
+        },
+        {
+            "index": 10,
+            "image": "_______________________________\\n|                               |\\n|     YOU'RE INVITED TO         |\\n|                               |\\n|     A NETWORKING EVENT        |\\n|                               |\\n|   Join us for an evening of   |\\n|   connection, collaboration,  |\\n|   and growth!                 |\\n|                               |\\n|   Date: [Event Date]          |\\n|   Time: [Event Time]          |\\n|   Location: [Event Venue]     |\\n|                               |\\n|   RSVP by: [RSVP Date]        |\\n|                               |\\n|_______________________________|\\n",
+            "question": "You’ve been invited to a networking event. How do you feel about it?",
+            "options": [
+                { "text": "1. Excited to meet new people and make connections.", "impact": { "health": 0, "happiness": 10, "money": 0 } },
+                { "text": "2. Reluctant, but decide to go anyway for career growth.", "impact": { "health": -5, "happiness": 0, "money": 0 } },
+                { "text": "3. Decline the invitation to relax at home.", "impact": { "health": 10, "happiness": -5, "money": 0 } }
+            ]
+        },
+        {
+            "index": 11,
+            "image": "__________\\n/        \\n|WHAT TO |\\n|   DO?  |\\n|        |\\n/\\_________/\\n.-'''-.\\/\\n.'       '.\\n/           \\n|   O     O   |\\n|      |      |\\n|      _      |\\n\\           /\\n '._._._._.'\\n  /     \\n /       \\n/         \\n/___________\\n",
+            "question": "Your friend asks for help with a major life decision. How do you support them?",
+            "options": [
+                { "text": "1. Offer practical advice and guidance.", "impact": { "health": 5, "happiness": 10, "money": 0 } },
+                { "text": "2. Just listen and let them figure it out on their own.", "impact": { "health": 0, "happiness": 5, "money": 0 } },
+                { "text": "3. Give them a loan to help with their decision.", "impact": { "health": 0, "happiness": 0, "money": -50 } }
+            ]
+        },
+        {
+            "index": 12,
+            "image": "___\\n/       \\n|   O O   |\\n|    ^    |\\n|   ---   |\\n\\_______/\\n    |\\n    |\\n   / \\n  /   \\n /     \\n/       \\n_____|_______|____\\n/                     \\n|   CONGRATULATIONS!    |\\n|  WE ARE OFFERING YOU  |\\n|     A PROMOTION       |\\n|_______________________|\\n",
+            "question": "You’re offered a promotion at work. What do you do?",
+            "options": [
+                { "text": "1. Accept it for the new challenges and salary increase.", "impact": { "health": -10, "happiness": 10, "money": 50 } },
+                { "text": "2. Decline and keep your current role for work-life balance.", "impact": { "health": 5, "happiness": 5, "money": 0 } },
+                { "text": "3. Negotiate for a different work arrangement or benefits.", "impact": { "health": 5, "happiness": 5, "money": 0 } }
+            ]
+        },
+        {
+            "index": 13,
+            "image": "/\\ \\n/  \\ \\n/    \\ \\n/      \\ \\n/        \\ \\nPath 1   Path 2   Path 3\\n   \\        |        /\\n    \\       |       /\\n     \\______|______\\/\\n            |\\n            O\\n           \\|/\\n            |\\n           / \\n",
+            "question": "You’re at a crossroads in your career. What’s your next move?",
+            "options": [
+                { "text": "1. Change careers to pursue your passion.", "impact": { "health": 10, "happiness": 20, "money": -30 } },
+                { "text": "2. Stick with your current job for stability.", "impact": { "health": 0, "happiness": 5, "money": 20 } },
+                { "text": "3. Take a break and travel to clear your mind.", "impact": { "health": 5, "happiness": 15, "money": -20 } }
+            ]
+        },
+        {
+            "index": 14,
+            "image": "_______________\\n|                    |\\n|      INVOICE       |\\n|--------------------|\\n| Item       | Price |\\n|--------------------|\\n| Product A  | $500  |\\n| Product B  | $300  |\\n| Service X  | $200  |\\n|--------------------|\\n| TOTAL      | $1000 |\\n|--------------------|\\n|    PAYMENT DUE     |\\n|____________________|\\n         \\    /\\n          \\  /\\n           \\/\\n!!!!WOW THAT'S A LOT!!!!",
+            "question": "You’ve just received a bill that’s a bit more than you expected. What do you do?",
+            "options": [
+                { "text": "1. Pay the bill immediately to avoid stress.", "impact": { "health": 0, "happiness": -5, "money": -20 } },
+                { "text": "2. Delay payment and review your finances.", "impact": { "health": -5, "happiness": -5, "money": 0 } },
+                { "text": "3. Contact the service provider to negotiate a lower charge.", "impact": { "health": 0, "happiness": 5, "money": 0 } }
+            ]
+        },
+        {
+            "index": 15,
+            "image": "RRRR   EEEEE  U   U  N   N  III   OOO   N   N\\nRRRR   EEEEE  U   U  N   N  III   OOO   N   N\\nR   R  E      U   U  NN  N   I   O   O  NN  N\\nRRRR   EEEE   U   U  N N N   I   O   O  N N N\\nR  R   E      U   U  N  NN   I   O   O  N  NN\\nR   R  EEEEE  UUUUU  N   N  III   OOO   N   N",
+            "question": "You’ve been invited to a reunion. How do you prepare for it?",
+            "options": [
+                { "text": "1. Go and reconnect with old friends.", "impact": { "health": 5, "happiness": 15, "money": 0 } },
+                { "text": "2. Avoid it, preferring to focus on current relationships.", "impact": { "health": 0, "happiness": 5, "money": 0 } },
+                { "text": "3. Go, but only to catch up on professional opportunities.", "impact": { "health": 0, "happiness": 0, "money": 0 } }
+            ]
+        },
+        {
+            "index": 16,
+            "image": "EEEEE  X   X  EEEEE  RRRR    CCCC   III  SSSSS  EEEEE\\nE       X X   E      R   R  C        I   S      E\\nEEEE     X    EEEE   RRRR   C        I   SSSSS  EEEE\\nE       X X   E      R  R   C        I       S  E\\nEEEEE  X   X  EEEEE  R   R   CCCC   III  SSSSS  EEEEE",
+            "question": "You’ve started a new fitness regimen. How’s it going so far?",
+            "options": [
+                { "text": "1. Feeling great! It's boosting my energy and mood.", "impact": { "health": 15, "happiness": 10, "money": 0 } },
+                { "text": "2. Struggling, but determined to keep going.", "impact": { "health": -5, "happiness": 5, "money": 0 } },
+                { "text": "3. Giving up, it’s too hard to keep up with.", "impact": { "health": -10, "happiness": -5, "money": 0 } }
+            ]
+        },
+        {
+            "index": 17,
+            "image": "      _______\\n     /       \\         _         _____\\n    /         \\       | |       |     |\\n   |   Work    |      | |       |     |\\n   |   Abroad  |      | |       |     |\\n   |   Offer   |     /   \\      |     |__\\n    \\_________/     /     \\     |        \\  \\n        |          /  ___  \\    |  O     |  \\n        |         /  /   \\  \\   |____    |   \\n        |        /  /     \\  \\  |     \\   |  \\n        |       |  |       |  | |      \\  |  \\n        |       |  |       |  | |       | |  \\n        |_______|__|_______|__|_|_______|_|",
+            "question": "A sudden opportunity to work abroad comes your way. What do you do?",
+            "options": [
+                { "text": "1. Take it for the adventure and experience.", "impact": { "health": 10, "happiness": 15, "money": 20 } },
+                { "text": "2. Decline, preferring the comfort of your home country.", "impact": { "health": 0, "happiness": 5, "money": 0 } },
+                { "text": "3. Negotiate terms that provide work-life balance and benefits.", "impact": { "health": 5, "happiness": 10, "money": 10 } }
+            ]
+        },
+        {
+            "index": 18,
+            "image": " ________   Keep Going!      _____   Stay Positive!    _____\\n|        | ---------------> |     | ----------------> |     |\\n| You're |    Feeling       | Yes!|     Keep it up!   |GOAL!|\\n| on top!|    Great!        |     |                   |     |\\n|________|                  |_____|                   |_____|",
+            "question": "You’re feeling great after a week of good habits. How do you continue the streak?",
+            "options": [
+                { "text": "1. Keep up with a balanced routine of work and rest.", "impact": { "health": 10, "happiness": 10, "money": 0 } },
+                { "text": "2. Go on a shopping spree to reward yourself.", "impact": { "health": 0, "happiness": 5, "money": -30 } },
+                { "text": "3. Treat yourself to a new hobby to stay motivated.", "impact": { "health": 5, "happiness": 15, "money": -20 } }
+            ]
+        },
+        {
+            "index": 19,
+            "image": "$$$$$$$$$$$\\n$$         $$\\n$$   INVEST  $$\\n$$ OPPORTUNITY $$\\n$$   COMES UP    $$\\n$$    DO YOU     $$\\n$$  TAKE IT?   $$\\n$$           $$\\n$$$$$$$$$$$$$$\\n              |\\n     _________|__________\\n   /                     \\n  |  YES      |       NO  |\\n  |  Take the |  Pass it  |\\n  |    Chance |  Up       |\\n  |___________|___________|\\n             / \\n            /   \\n           /     \\n        $$$$$   $$$$$",
+            "question": "A new financial investment opportunity comes up. Do you take it?",
+            "options": [
+                { "text": "1. Take the risk, hoping for good returns.", "impact": { "health": 0, "happiness": 0, "money": 20 } },
+                { "text": "2. Decline, preferring to stick to safer savings options.", "impact": { "health": 0, "happiness": 0, "money": 5 } },
+                { "text": "3. Do thorough research and invest carefully.", "impact": { "health": 5, "happiness": 5, "money": 0 } }
+            ]
+        },
+        {
+            "index": 20,
+            "image": "BBBBB   III  GGG       DDDD   EEEEE  CCCC  III  SSSSS  III   OOO   N   N\\nB    B   I   G         D   D  E      C      I   S       I   O   O  NN  N\\nBBBBB    I   G  GG     D   D  EEEE   C      I   SSSSS   I   O   O  N N N\\nB    B   I   G   G     D   D  E      C      I       S   I   O   O  N  NN\\nBBBBB   III  GGGG      DDDD   EEEEE  CCCC  III  SSSSS  III   OOO   N   N",
+            "question": "You’re about to make a big decision. How do you approach it?",
+            "options": [
+                { "text": "1. Take time to reflect and seek advice.", "impact": { "health": 5, "happiness": 5, "money": 0 } },
+                { "text": "2. Go with your gut feeling.", "impact": { "health": 0, "happiness": 0, "money": 0 } },
+                { "text": "3. Rush into the decision to get it over with.", "impact": { "health": -5, "happiness": -5, "money": 0 } }
+            ]
+        },
+        {
+            "index": 21,
+            "image": "_______\\n|       |\\n| 100%  |\\n|       |\\n|SUCCESS|\\n|_______|\\n/         \\ \\n/           \\ \\n|             |\\n|             |\\n|   YOU DID   |\\n|     IT!     |\\n \\           /\\n  \\_________/",
+            "question": "You successfully completed a major milestone in your project. How do you celebrate?",
+            "options": [
+                { "text": "1. Throw a party for your team.", "impact": { "health": -5, "happiness": 20, "money": -30 } },
+                { "text": "2. Take a day off to relax.", "impact": { "health": 10, "happiness": 10, "money": 0 } },
+                { "text": "3. Treat yourself to something special.", "impact": { "health": 0, "happiness": 15, "money": -20 } }
+            ]
+        },
+        {
+            "index": 22,
+            "image": ".--.         \\n|o_o |      \\n|\\_/ |     SO TIRED :/\\n/   \\    \\n( |     | )\\n/\\'_   _/'\\ \\n\\___)=(___/ ",
+            "question": "It’s late at night, and you’ve been working on a problem for hours. What do you do?",
+            "options": [
+                { "text": "1. Keep working until you solve it.", "impact": { "health": -10, "happiness": -5, "money": 0 } },
+                { "text": "2. Sleep and tackle it in the morning.", "impact": { "health": 10, "happiness": 5, "money": 0 } },
+                { "text": "3. Ask for help from a colleague or friend.", "impact": { "health": 5, "happiness": 10, "money": 0 } }
+            ]
+        },
+        {
+            "index": 23,
+            "image": "***************\\n* Vacay Time  *\\n***************\\n  \\         /\\n   \\_______/\\n   /       \\ \\n  /         \\ \\n /___________\\",
+            "question": "You’ve earned some vacation days. How do you spend them?",
+            "options": [
+                { "text": "1. Go on an international trip.", "impact": { "health": 0, "happiness": 20, "money": -50 } },
+                { "text": "2. Take a staycation to recharge.", "impact": { "health": 10, "happiness": 10, "money": 0 } },
+                { "text": "3. Volunteer for a cause you care about.", "impact": { "health": 5, "happiness": 15, "money": 0 } }
+            ]
+        },
+        {
+            "index": 24,
+            "image": "~~~~~~\\n/     \\ \\n|       |\\n|  $$$  |\\n|       |\\n \\_____/\\n  ~~~~~",
+            "question": "You receive an unexpected cash bonus. What do you do?",
+            "options": [
+                { "text": "1. Save it for future expenses.", "impact": { "health": 0, "happiness": 5, "money": 30 } },
+                { "text": "2. Invest in a side project or stocks.", "impact": { "health": 0, "happiness": 10, "money": 20 } },
+                { "text": "3. Spend it on a luxury item.", "impact": { "health": 0, "happiness": 15, "money": -30 } }
+            ]
+        },
+        {
+            "index": 25,
+            "image": "(\\_/)\\n(O.o)\\n(> <)  \\nBunny Time!",
+            "question": "Your pet is seeking attention while you’re busy. What do you do?",
+            "options": [
+                { "text": "1. Take a break to play with them.", "impact": { "health": 5, "happiness": 15, "money": 0 } },
+                { "text": "2. Continue working and ignore them for now.", "impact": { "health": -5, "happiness": -5, "money": 0 } },
+                { "text": "3. Ask someone else to care for them temporarily.", "impact": { "health": 0, "happiness": 5, "money": -5 } }
+            ]
+        },
+        {
+            "index": 26,
+            "image": "\\o/\\n |\\n / \\nTime for Fitness!",
+            "question": "A friend invites you to join a fitness class. What do you do?",
+            "options": [
+                { "text": "1. Join and commit to regular sessions.", "impact": { "health": 15, "happiness": 10, "money": -10 } },
+                { "text": "2. Try it out but don’t commit.", "impact": { "health": 5, "happiness": 5, "money": -5 } },
+                { "text": "3. Decline and stick to your own routine.", "impact": { "health": 0, "happiness": 0, "money": 0 } }
+            ]
+        },
+        {
+            "index": 27,
+            "image": "______\\n|      |\\n| Game |\\n| Night|\\n|______|",
+            "question": "Your friends are hosting a game night. How do you participate?",
+            "options": [
+                { "text": "1. Go all in and try to win!", "impact": { "health": 0, "happiness": 15, "money": 0 } },
+                { "text": "2. Play casually and have fun.", "impact": { "health": 0, "happiness": 10, "money": 0 } },
+                { "text": "3. Skip it to focus on personal tasks.", "impact": { "health": 0, "happiness": -5, "money": 0 } }
+            ]
+        },
+        {
+            "index": 28,
+            "image": "AAAAA   RRRR   TTTTT\\nA   A   R   R    T\\nAAAAA   RRRR     T\\nA   A   R  R     T\\nA   A   R   R    T",
+            "question": "You discover a local art workshop. How do you engage?",
+            "options": [
+                { "text": "1. Sign up and explore your creativity.", "impact": { "health": 5, "happiness": 20, "money": -15 } },
+                { "text": "2. Attend as an observer.", "impact": { "health": 0, "happiness": 10, "money": -5 } },
+                { "text": "3. Skip it and pursue other interests.", "impact": { "health": 0, "happiness": 0, "money": 0 } }
+            ]
+        },
+        {
+            "index": 29,
+            "image": "  _____\\n/_/|\\_\\n|_|_|_|_|\\n|_|_|_|_|\\n|_|_|_|_|\\n|_|_|_|_|     MIC DROP!\\n   \\_\\|/_/\\n  |||\\n  |||\\n  |||\\n  |||\\n  |||\\n __|||__\\n|_______|",
+            "question": "You’re invited to karaoke. How do you respond?",
+            "options": [
+                { "text": "1. Sing your heart out.", "impact": { "health": 0, "happiness": 15, "money": 0 } },
+                { "text": "2. Cheer for others and enjoy the event.", "impact": { "health": 0, "happiness": 10, "money": 0 } },
+                { "text": "3. Avoid it and focus on your hobbies.", "impact": { "health": 0, "happiness": -5, "money": 0 } }
+            ]
         }
     ]
 }
