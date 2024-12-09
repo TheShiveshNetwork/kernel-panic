@@ -7,12 +7,12 @@ from art import tprint
 from termcolor import cprint
 
 def main():
-    if len(sys.argv) != 3:
-        print("Usage: python main.py <collection_name> <json_file_path>")
+    if len(sys.argv) != 2:
+        print("Usage: python main.py <json_file_path>")
         sys.exit(1)
 
-    collection_name = sys.argv[1]
-    json_file_path = sys.argv[2]
+    json_file_path = sys.argv[1]
+    print(f"Reading data from {json_file_path}")
 
     client = AtlasClient(MONGODB_URL, DB_NAME)
 
@@ -20,6 +20,7 @@ def main():
         data = json.load(f)
         # for single_data in data["data"]:
         #     print(single_data)
+        collection_name = data["name"]
         cprint(f"\nMigrating data to {collection_name}: \n", "blue")
         try:
             client.insert_many(collection_name, data["data"])

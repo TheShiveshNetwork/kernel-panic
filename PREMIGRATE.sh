@@ -34,6 +34,7 @@ fi
 if [ -f "requirements.txt" ]; then
     echo "Installing libraries from requirements.txt..."
     pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir -r ./migrations/requirements.txt
     if [ $? -ne 0 ]; then
         echo "Failed to install the required libraries."
         deactivate
@@ -41,7 +42,7 @@ if [ -f "requirements.txt" ]; then
     fi
     echo "Libraries installed successfully."
 else
-    echo "requirements.txt file not found in the ./migrations directory."
+    echo "requirements.txt file not found in root folder (or) ./migrations directory."
 fi
 
 # Deactivate the virtual environment
