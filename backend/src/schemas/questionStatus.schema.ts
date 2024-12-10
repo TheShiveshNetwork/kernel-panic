@@ -6,21 +6,29 @@ export const submitAnswerRequestSchema = z.object({
       questionId: z.string(),
       selectedOption: z.string(),
     }),
-  }).strict(),
+  }),
 });
 
 export const answerSchema = z.object({
   body: z.object({
     userId: z.string(),
-    answeredQuestion: z.object({
-      questionId: z.string(),
-      selectedOption: z.string(),
-    }),
-    points: z.object({
-      health: z.number(),
-      wealth: z.number(),
-      happiness: z.number(),
-    }),
+    name: z.string(),
+    timestamp: z.string(),
     accumulatedPoints: z.number(),
-  }).strict(),
+    currentQuestion: z.number(),
+    answeredQuestions: z.array(
+      z.object({
+        questionId: z.string(),
+        selectedOption: z.string(),
+        timestamp: z.string(),
+        points: z.object({
+          health: z.number(),
+          wealth: z.number(),
+          happiness: z.number(),
+        }),
+      })
+    ),
+  }),
 });
+
+export type IAnswerSchema = z.infer<typeof answerSchema>;

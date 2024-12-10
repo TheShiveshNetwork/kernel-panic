@@ -1,11 +1,11 @@
+import { ITerminalLineData, Question } from "@/common-types";
 import { PanicApi } from "@/api";
 import { TerminalColorText } from "@/components/commons/TerminalColorText";
 import { TerminalError } from "@/components/commons/TerminalError";
 import { config } from "@/config";
-import { FormatImageToAscii } from "@/helpers/common-functions";
-import { Question } from "@/helpers/common-types";
+import { FormatImageToAscii } from "@/utils";
 
-export type ISetTerminalData = React.Dispatch<React.SetStateAction<(string | JSX.Element)[]>>;
+export type ISetTerminalData = React.Dispatch<React.SetStateAction<ITerminalLineData>>;
 
 export function helpCommandHandler(setTerminalLineData: ISetTerminalData) {
     const helpText = [

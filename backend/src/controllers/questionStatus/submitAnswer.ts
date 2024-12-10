@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import { questionStatusCollection, questionsCollection, userCollection } from "@/storage";
 import type { ControllerClass } from "@/controllers";
 import { ObjectId } from "mongodb";
+import type { IAnswerSchema } from "@/schemas/questionStatus.schema";
 
 export async function submitAnswer(
   this: ControllerClass,
@@ -49,9 +50,9 @@ export async function submitAnswer(
       {
         $inc: {
           currentQuestion: 1,
-          "points.health": totalHealthPoints,
-          "points.wealth": totalWealthPoints,
-          "points.happiness": totalHappinessPoints,
+          "totalPoints.health": totalHealthPoints,
+          "totalPoints.wealth": totalWealthPoints,
+          "totalPoints.happiness": totalHappinessPoints,
           accumulatedPoints: totalHappinessPoints + totalHealthPoints + totalWealthPoints,
         },
         $set: {
@@ -69,13 +70,33 @@ export async function submitAnswer(
       { upsert: true }
     );
 
+    if (existingQuestionStatus) {
+      existingQuestionStatus.answeredQuestions.forEach((item: IAnswerSchema["body"]["answeredQuestions"][0]) => {
+        totalHealthPoints += item.points.health || 0;
+        totalWealthPoints += item.points.wealth || 0;
+        totalHappinessPoints += item.points.happiness || 0;
+      });
+    }
+
     if (result.upsertedCount > 0) {
       return response.status(201).json({
         message: "Answers submitted successfully",
+        totalPoints: {
+          totalHappinessPoints,
+          totalHealthPoints,
+          totalWealthPoints,
+        },
+        questionPoints: {...points}
       });
     } else if (result.modifiedCount > 0) {
       return response.status(200).json({
         message: "Answers updated successfully",
+        totalPoints: {
+          totalHappinessPoints,
+          totalHealthPoints,
+          totalWealthPoints,
+        },
+        questionPoints: {...points}
       });
     }
     return response.status(400).json({ message: "An unhandled error occurred" });

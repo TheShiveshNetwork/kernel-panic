@@ -1,19 +1,20 @@
+import type { IPointsSchema, ITerminalLineData } from "@/common-types";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
-import { PanicApi } from "@/api";
 import { toast } from 'react-toastify';
+import { PanicApi } from "@/api";
 import { config } from "@/config";
 import { TerminalError } from "@/components/commons/TerminalError";
 import { TerminalColorText } from "@/components/commons/TerminalColorText";
-import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
-import { Question } from "@/helpers/common-types";
-import { FormatImageToAscii } from "@/helpers/common-functions";
+import { Question } from "@/common-types";
+import { FormatImageToAscii, renderStats } from "@/utils";
 import TerminalLoading from "@/components/terminal-loader";
 
 const GamePage = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
-  const [terminalLineData, setTerminalLineData] = useState<(string | JSX.Element)[]>([
+  const [terminalLineData, setTerminalLineData] = useState<ITerminalLineData>([
     "Welcome to",
     `${config.asciiName}\n`,
     // `${config.asciiLogo}\n`,
@@ -21,10 +22,10 @@ const GamePage = () => {
     `Type '${config.commonCommands.startCommand.name}' to start the game.\n\n`,
   ]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number | null>(null);
-  const [stats, setStats] = useState<{ health: number; wealth: number; happiness: number }>({
-    health: 50,
-    wealth: 50,
-    happiness: 50,
+  const [stats, setStats] = useState<IPointsSchema>({
+    health: 0,
+    wealth: 0,
+    happiness: 0,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -85,9 +86,18 @@ const GamePage = () => {
         },
       });
 
-      if (response.status === 201) {
-        return true;
-      } else if (response.status === 200) {
+      if (response.status === 201 || response.status === 200) {
+        setStats({
+          health: response.data.totalPoints.totalHealthPoints,
+          wealth: response.data.totalPoints.totalWealthPoints,
+          happiness: response.data.totalPoints.totalHappinessPoints,
+        });
+        toast.success(`
+          Congrats! You earned: 
+          health: ${response.data.questionPoints.health},
+          wealth: ${response.data.questionPoints.wealth},
+          happiness: ${response.data.questionPoints.happiness},
+        `);
         return true;
       } else {
         toast.error(response.data.message || "Failed to submit answer.");
@@ -147,12 +157,19 @@ const GamePage = () => {
 
     if (input === config.commonCommands.logoutCommand.name) {
       config.commonCommands.logoutCommand.command(setTerminalLineData);
-      logout();
+      const { success, message } = await logout();
+      if (!success) {
+        toast.error(message);
+        return;
+      }
+      toast.success(message);
       navigate("/");
+      return;
     }
 
     if (input === config.commonCommands.leaderboardCommand.name) {
       navigate("/leaderboard");
+      return;
     }
 
     if (currentQuestionIndex === null || currentQuestionIndex >= questions.length) {
@@ -166,11 +183,7 @@ const GamePage = () => {
     const currentQuestion = questions[currentQuestionIndex];
     const selectedOptionIndex = parseInt(input) - 1;
 
-    if (
-      isNaN(selectedOptionIndex) ||
-      selectedOptionIndex < 0 ||
-      selectedOptionIndex >= currentQuestion.options.length
-    ) {
+    if (isNaN(selectedOptionIndex) || selectedOptionIndex < 0 || selectedOptionIndex >= currentQuestion.options.length) {
       setTerminalLineData((prevData) => [
         ...prevData,
         <TerminalError>Invalid command. Type '{config.commonCommands.helpCommand.name}' to see all available commands.</TerminalError>,
@@ -179,11 +192,6 @@ const GamePage = () => {
     }
 
     const selectedOption = currentQuestion.options[selectedOptionIndex];
-    const newStats = {
-      health: stats.health + selectedOption.points.health,
-      wealth: stats.wealth + selectedOption.points.wealth,
-      happiness: stats.happiness + selectedOption.points.happiness,
-    };
 
     const isAnswerSubmitted = await submitAnswer(
       currentQuestion._id,
@@ -191,7 +199,7 @@ const GamePage = () => {
     );
 
     if (isAnswerSubmitted) {
-      setStats(newStats);
+      // setStats(newStats);
       const nextQuestionIndex = currentQuestionIndex + 1;
       if (nextQuestionIndex < questions.length) {
         setCurrentQuestionIndex(nextQuestionIndex);
@@ -203,7 +211,10 @@ const GamePage = () => {
         setTerminalLineData((prevData) => [
           ...prevData,
           `You chose: ${selectedOption.text}`,
-          <br />,
+          <TerminalColorText color="blue">
+            Total points:
+            <div className="whitespace-pre-wrap">{renderStats(stats)}</div>
+          </TerminalColorText>,
           <div className="whitespace-pre-wrap">{FormatImageToAscii(nextQuestion.image)}</div>,
           `\nQuestion ${nextQuestionIndex + 1}: ${nextQuestion.question}\n`,
           <br />,
@@ -214,7 +225,10 @@ const GamePage = () => {
           ...prevData,
           <TerminalColorText color="blue">{config.asciiGameOver}</TerminalColorText>,
           <TerminalColorText color="white">Hurray! You have completed all questions.</TerminalColorText>,
-          <TerminalColorText color="blue">Final stats - Health: {newStats.health}, Wealth: {newStats.wealth}, Happiness: {newStats.happiness}</TerminalColorText>,
+          <TerminalColorText color="blue">
+            Final stats
+            <div className="whitespace-pre-wrap">{renderStats(stats)}</div>
+          </TerminalColorText>,
           <TerminalColorText color="white">Check out your rank on <Link to={"/leaderboard"} className="underline">Leaderboard</Link>.</TerminalColorText>,
         ]);
       }

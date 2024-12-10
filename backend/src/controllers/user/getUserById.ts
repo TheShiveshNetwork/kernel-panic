@@ -4,9 +4,9 @@ import { userCollection } from "@/storage";
 import { ObjectId } from "mongodb";
 
 export async function getUserById(this: ControllerClass, request:Request, response:Response) {
-    const userId:string = request.body.userId;
+    const userId:string = request.params.id;
     try {
-        const user = await userCollection.findOne({ _id: new ObjectId(userId) });
+        const user = await userCollection.findOne({ _id: new ObjectId(userId) }, { projection: { password: 0 } });
         if (!user) {
             return response.status(404).json({ message: "User not found" });
         }

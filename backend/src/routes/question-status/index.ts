@@ -6,7 +6,7 @@ import { authenticateToken } from "@/middlewares/authenticationMiddleware";
 
 export const questionStatusRoutes = Router();
 
-questionStatusRoutes.post('/submitAnswer', validateData(submitAnswerRequestSchema), authenticateToken, async (req: Request, res: Response) => {
+questionStatusRoutes.post('/submitAnswer', authenticateToken, validateData(submitAnswerRequestSchema), authenticateToken, async (req: Request, res: Response) => {
     await Controllers.submitAnswer(req, res);
 });
 questionStatusRoutes.get('/getQuestionStatusByUserId', authenticateToken, async (req: Request, res: Response) => {

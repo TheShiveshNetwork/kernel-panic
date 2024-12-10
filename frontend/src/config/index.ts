@@ -1,5 +1,5 @@
 import { continueGameCommandHandler, describeCommandHandler, helpCommandHandler, ISetTerminalData, logoutCommandHandler, startGameCommandHandler, whoamiCommandHandler } from "@/commands";
-import { Question } from "@/helpers/common-types";
+import { Question } from "@/common-types";
 
 const asciiName = `
  __  __     ______     ______     __   __     ______     __            ______   ______     __   __     __     ______    

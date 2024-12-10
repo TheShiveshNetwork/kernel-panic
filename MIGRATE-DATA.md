@@ -40,7 +40,7 @@ Our module is defined for a specific json data format, make sure to follow this:
 }
 ```
 
-NOTE: The module gets the name from the json object and this name will become the collection name in mongodb database
+IMPORTANT: The module gets the name from the json object and this name will become the collection name in mongodb database
 
 ## Run Script
 

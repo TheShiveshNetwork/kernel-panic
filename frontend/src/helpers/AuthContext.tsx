@@ -1,11 +1,16 @@
 import { PanicApi } from "@/api";
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 
+type ILogout = {
+    success: boolean;
+    message: string;
+};
+
 export interface AuthContextType {
     token: string | null;
     setToken: React.Dispatch<React.SetStateAction<string | null>>;
     loading: boolean;
-    logout: () => void;
+    logout: () => Promise<ILogout>;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -18,9 +23,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [token, setToken] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
-    async function logout() {
-        localStorage.removeItem("token");
-        setToken(null);
+    async function logout(): Promise<ILogout> {
+        try {
+            await PanicApi.get("/logout");
+            localStorage.removeItem("token");
+            setToken(null);
+            return { success: true, message: "Logged out successfully" };
+        } catch (error) {
+            console.error(error);
+            return { success: false, message: "An error occurred while logging out" };
+        }
     }
 
     async function checkTokenValidity() {
