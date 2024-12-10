@@ -13,6 +13,13 @@ import { FormatImageToAscii, renderStats } from "@/utils";
 import TerminalLoading from "@/components/terminal-loader";
 import { scrollToBottom } from "@/utils/scroll-to-bottom";
 
+type ISubmitAnswerResponse = { 
+  success: true; 
+  stats: IPointsSchema;
+} | {
+  success: false;
+};
+
 const GamePage = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [terminalLineData, setTerminalLineData] = useState<ITerminalLineData>([
@@ -23,11 +30,11 @@ const GamePage = () => {
     `Type '${config.commonCommands.startCommand.name}' to start the game.\n\n`,
   ]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number | null>(null);
-  const [stats, setStats] = useState<IPointsSchema>({
-    health: 0,
-    wealth: 0,
-    happiness: 0,
-  });
+  // const [stats, setStats] = useState<IPointsSchema>({
+  //   health: 0,
+  //   wealth: 0,
+  //   happiness: 0,
+  // });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -69,16 +76,13 @@ const GamePage = () => {
     setTerminalLineData((prevData) => [
       ...prevData,
       <div className="whitespace-pre-wrap">{FormatImageToAscii(currentQuestion.image)}</div>,
-      `\nQuestion ${(currentQuestionIndex || 0) +1}: ${currentQuestion.question}\n`,
+      `\nQuestion ${(currentQuestionIndex || 0) + 1}: ${currentQuestion.question}\n`,
       <br />,
       optionsText,
     ]);
   };
 
-  const submitAnswer = async (
-    questionId: string,
-    selectedOption: string,
-  ) => {
+  async function submitAnswer(questionId: string, selectedOption: string): Promise<ISubmitAnswerResponse> {
     try {
       const response = await PanicApi.post("/submitAnswer", {
         answeredQuestion: {
@@ -88,21 +92,20 @@ const GamePage = () => {
       });
 
       if (response.status === 201 || response.status === 200) {
-        setStats({
+        const stats: IPointsSchema = {
           health: response.data.totalPoints.totalHealthPoints,
           wealth: response.data.totalPoints.totalWealthPoints,
           happiness: response.data.totalPoints.totalHappinessPoints,
-        });
-        toast.success(`
-          Congrats! You earned: 
-          health: ${response.data.questionPoints.health},
-          wealth: ${response.data.questionPoints.wealth},
+        };
+        toast.success(`Congrats! You earned: 
+          health: ${response.data.questionPoints.health}, 
+          wealth: ${response.data.questionPoints.wealth}, 
           happiness: ${response.data.questionPoints.happiness},
         `);
-        return true;
+        return { success: true, stats };
       } else {
         toast.error(response.data.message || "Failed to submit answer.");
-        return false;
+        return { success: false };
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
@@ -114,7 +117,7 @@ const GamePage = () => {
           <p>{error.response.data.error}</p>
         </TerminalError>,
       ]);
-      return false;
+      return { success: false };
     }
   };
 
@@ -173,7 +176,7 @@ const GamePage = () => {
       return;
     }
 
-    if (currentQuestionIndex === null || currentQuestionIndex >= questions.length) {
+    if (currentQuestionIndex === null || currentQuestionIndex > questions.length) {
       setTerminalLineData((prevData) => [
         ...prevData,
         <TerminalError>Invalid command. Type '{config.commonCommands.helpCommand.name}' to see all available commands.</TerminalError>
@@ -194,17 +197,12 @@ const GamePage = () => {
 
     const selectedOption = currentQuestion.options[selectedOptionIndex];
 
-    const isAnswerSubmitted = await submitAnswer(
-      currentQuestion._id,
-      selectedOptionIndex.toString(),
-    );
+    const submitAnswerResponse = await submitAnswer(currentQuestion._id, selectedOptionIndex.toString());
 
-    if (isAnswerSubmitted) {
-      // setStats(newStats);
+    if (submitAnswerResponse.success) {
       const nextQuestionIndex = currentQuestionIndex + 1;
       if (nextQuestionIndex < questions.length) {
         setCurrentQuestionIndex(nextQuestionIndex);
-
         const nextQuestion = questions[nextQuestionIndex];
         const nextOptionsText = nextQuestion.options
           .map((option, index) => `${index + 1}. ${option.text}`)
@@ -214,7 +212,7 @@ const GamePage = () => {
           `You chose: ${selectedOption.text}`,
           <TerminalColorText color="blue">
             Total points:
-            <div className="whitespace-pre-wrap">{renderStats(stats)}</div>
+            <div className="whitespace-pre-wrap">{renderStats(submitAnswerResponse.stats)}</div>
           </TerminalColorText>,
           <div className="whitespace-pre-wrap">{FormatImageToAscii(nextQuestion.image)}</div>,
           `\nQuestion ${nextQuestionIndex + 1}: ${nextQuestion.question}\n`,
@@ -228,7 +226,7 @@ const GamePage = () => {
           <TerminalColorText color="white">Hurray! You have completed all questions.</TerminalColorText>,
           <TerminalColorText color="blue">
             Final stats
-            <div className="whitespace-pre-wrap">{renderStats(stats)}</div>
+            <div className="whitespace-pre-wrap">{renderStats(submitAnswerResponse.stats)}</div>
           </TerminalColorText>,
           <TerminalColorText color="white">Check out your rank on <Link to={"/leaderboard"} className="underline">Leaderboard</Link>.</TerminalColorText>,
         ]);
