@@ -119,11 +119,11 @@ export const quizQuestions: QuizQuestion[] = [
     },
     {
         image:`
- SSSSS  TTTTT RRRR   AAAAA TTTTT EEEEE GGGG  Y     Y
- S        T   R   R  A   A   T   E     G      Y   Y
- SSSSS    T   RRRR   AAAAA   T   EEEE  G  GG   Y Y
-     S    T   R  R   A   A   T   E     G   G    Y
- SSSSS    T   R   R  A   A   T   EEEEE GGGG     Y
+    SSSSS  TTTTT  RRRR   AAAAA  TTTTT  EEEEE  GGGG  Y     Y
+    S        T    R   R  A   A    T    E      G      Y   Y
+    SSSSS    T    RRRR   AAAAA    T    EEEE   G  GG   Y Y
+        S    T    R  R   A   A    T    E      G   G    Y
+    SSSSS    T    R   R  A   A    T    EEEEE  GGGG     Y
 
          
         `,
@@ -233,8 +233,8 @@ export const quizQuestions: QuizQuestion[] = [
         |    ^    |   |    ^    |   |    ^    |
         |   ---   |   |   ---   |   |   ---   |
         \_________/   \_________/   \_________/
-            |              |             |
-         '--'--'        '--'--'       '--'--'
+             |             |             |
+          '--'--'       '--'--'       '--'--'
         `,
         question: "At the end of the week, you reflect on your journey so far. How do you feel?",
         options: [
@@ -367,10 +367,10 @@ export const quizQuestions: QuizQuestion[] = [
      |--------------------|
      |    PAYMENT DUE     |
      |____________________|
-           \    /
-            \  /
-             \/
-    !!!!!WOW THAT'S A LOT!!!!
+             \    /
+              \  /
+               \/
+    !!!!WOW THAT'S A LOT!!!!
         `,
         question: "You’ve just received a bill that’s a bit more than you expected. What do you do?",
         options: [
@@ -381,11 +381,11 @@ export const quizQuestions: QuizQuestion[] = [
     },
     {
         "image": ` 
- RRRR   EEEEE  U   U N   N III  OOO  N   N
- R   R  E      U   U NN  N  I  O   O NN  N
- RRRR   EEEE   U   U N N N  I  O   O N N N
- R  R   E      U   U N  NN  I  O   O N  NN
- R   R  EEEEE  UUUUU N   N III  OOO  N   N
+        RRRR   EEEEE  U   U  N   N  III   OOO   N   N
+        R   R  E      U   U  NN  N   I   O   O  NN  N
+        RRRR   EEEE   U   U  N N N   I   O   O  N N N
+        R  R   E      U   U  N  NN   I   O   O  N  NN
+        R   R  EEEEE  UUUUU  N   N  III   OOO   N   N
 
         `,
         question: "You’ve been invited to a reunion. How do you prepare for it?",
@@ -397,11 +397,11 @@ export const quizQuestions: QuizQuestion[] = [
     },
     {
         image:`
-         EEEEE X   X EEEEE RRRR   CCCC III SSSSS EEEEE
-         E      X X  E     R   R C       I  S     E
-         EEEE    X   EEEE  RRRR  C       I  SSSSS EEEE
-         E      X X  E     R  R  C       I     S E
-         EEEEE X   X EEEEE R   R  CCCC III SSSSS EEEEE
+         EEEEE  X   X  EEEEE  RRRR    CCCC   III  SSSSS  EEEEE
+         E       X X   E      R   R  C        I   S      E
+         EEEE     X    EEEE   RRRR   C        I   SSSSS  EEEE
+         E       X X   E      R  R   C        I       S  E
+         EEEEE  X   X  EEEEE  R   R   CCCC   III  SSSSS  EEEEE
 
         `,
         question: "You’ve started a new fitness regimen. How’s it going so far?",
@@ -413,6 +413,20 @@ export const quizQuestions: QuizQuestion[] = [
     },
     {
         image:`
+      _______
+     /       \         _         _____
+    /         \       | |       |     |
+   |   Work    |      | |       |     |
+   |   Abroad  |      | |       |     |
+   |   Offer   |     /   \      |     |__
+    \_________/     /     \     |        \  
+        |          /  ___  \    |  O     |  
+        |         /  /   \  \   |____    |   
+        |        /  /     \  \  |     \   |  
+        |       |  |       |  | |      \  |  
+        |       |  |       |  | |       | |  
+        |_______|__|_______|__|_|_______|_|
+
         `,
         question: "A sudden opportunity to work abroad comes your way. What do you do?",
         options: [
@@ -423,20 +437,13 @@ export const quizQuestions: QuizQuestion[] = [
     },
     {
         image:`
-      _______
-     /       \         _         _____
-    /         \       | |       |     |
-   |   Work    |      | |       |     |
-   |  Abroad   |      | |       |     |
-   |  Offer    |     /   \      |     |__
-    \_________/     /     \     |        \  
-        |          /  ___  \    |  O     |  
-        |         /  /   \  \   |____    |   
-        |        /  /     \  \  |     \   |  
-        |       |  |       |  | |      \  |  
-        |       |  |       |  | |       | |  
-        |_______|__|_______|__|_|_______|_|
+         ________   Keep Going!      _____   Stay Positive!    _____
+        |        | ---------------> |     | ----------------> |     |
+        | You're |    Feeling       | Yes!|     Keep it up!   |GOAL!|
+        | on top!|    Great!        |     |                   |     |
+        |________|                  |_____|                   |_____|
 
+   
         `,
         question: "You’re feeling great after a week of good habits. How do you continue the streak?",
         options: [
@@ -447,25 +454,25 @@ export const quizQuestions: QuizQuestion[] = [
     },
     {
         image:`
-         $$$$$$$$$$$$$
-        $$            $$
-       $$   INVEST    $$
-      $$    OPPORTUNITY$$
-     $$    COMES UP   $$
+         $$$$$$$$$$$
+        $$         $$
+       $$   INVEST  $$
+      $$ OPPORTUNITY $$
+     $$   COMES UP    $$ 
      $$    DO YOU     $$
-      $$   TAKE IT?  $$
+      $$  TAKE IT?   $$
        $$           $$
-        $$$$$$$$$$$$
-             |
-   _________|_________
-  /                   \
- |  YES       |     NO  |
- |  Take the  |  Pass it |
- |   Chance   |   Up    |
- |____________|_________|
-            / \
-           /   \
-          /     \
+        $$$$$$$$$$$$$
+              |
+     _________|__________
+   /                     \
+  |  YES      |       NO  |
+  |  Take the |  Pass it  |
+  |    Chance |  Up       |
+  |___________|___________|
+             / \
+            /   \
+           /     \
         $$$$$   $$$$$
 
         `,
@@ -478,20 +485,180 @@ export const quizQuestions: QuizQuestion[] = [
     },
     {
         image:`
- BBBBB   III  GGG       DDDD  EEEEE CCCC  III SSSSS III  OOO  N   N
- B    B   I   G         D   D E     C      I  S      I  O   O NN  N
- BBBBB    I   G  GG     D   D EEEE  C      I  SSSSS  I  O   O N N N
- B    B   I   G   G     D   D E     C      I     S   I  O   O N  NN
- BBBBB   III  GGGG      DDDD  EEEEE CCCC  III SSSSS III  OOO  N   N
-
-        
-        
-        `,
+    BBBBB   III  GGG       DDDD   EEEEE  CCCC  III  SSSSS  III   OOO   N   N
+    B    B   I   G         D   D  E      C      I   S       I   O   O  NN  N
+    BBBBB    I   G  GG     D   D  EEEE   C      I   SSSSS   I   O   O  N N N
+    B    B   I   G   G     D   D  E      C      I       S   I   O   O  N  NN
+    BBBBB   III  GGGG      DDDD   EEEEE  CCCC  III  SSSSS  III   OOO   N   N
+    `,
         question: "You’re about to make a big decision. How do you approach it?",
         options: [
             { text: "1. Take time to reflect and seek advice.", impact: { health: 5, happiness: 5, money: 0 } },
             { text: "2. Go with your gut feeling.", impact: { health: 0, happiness: 0, money: 0 } },
             { text: "3. Rush into the decision to get it over with.", impact: { health: -5, happiness: -5, money: 0 } },
         ],
+    },
+    {
+        image: `
+        _______
+       |       |
+       | 100%  |
+       |       |
+       |SUCCESS|
+       |_______|
+      /         \
+     /           \
+    |             |
+    |             |
+    |   YOU DID   |
+    |     IT!     |
+     \           /
+      \_________/
+        `,
+        question: "You successfully completed a major milestone in your project. How do you celebrate?",
+        options: [
+            { text: "1. Throw a party for your team.", impact: { health: -5, happiness: 20, money: -30 } },
+            { text: "2. Take a day off to relax.", impact: { health: 10, happiness: 10, money: 0 } },
+            { text: "3. Treat yourself to something special.", impact: { health: 0, happiness: 15, money: -20 } },
+        ],
+    },
+    {
+        image: `
+                .--.         
+               |o_o |      
+               |\_/ |     SO TIRED :/
+               /   \    
+            ( |     | )
+            /'\_   _/'\
+            \___)=(___/ 
+
+        `,
+        question: "It’s late at night, and you’ve been working on a problem for hours. What do you do?",
+        options: [
+            { text: "1. Keep working until you solve it.", impact: { health: -10, happiness: -5, money: 0 } },
+            { text: "2. Sleep and tackle it in the morning.", impact: { health: 10, happiness: 5, money: 0 } },
+            { text: "3. Ask for help from a colleague or friend.", impact: { health: 5, happiness: 10, money: 0 } },
+        ],
+    },
+    {
+        image: `
+        ***************
+        * Vacay Time  *
+        ***************
+          \         /
+           \_______/
+           /       \
+          /         \
+         /___________\
+        `,
+        question: "You’ve earned some vacation days. How do you spend them?",
+        options: [
+            { text: "1. Go on an international trip.", impact: { health: 0, happiness: 20, money: -50 } },
+            { text: "2. Take a staycation to recharge.", impact: { health: 10, happiness: 10, money: 0 } },
+            { text: "3. Volunteer for a cause you care about.", impact: { health: 5, happiness: 15, money: 0 } },
+        ],
+    },
+    {
+        image: `
+      ~~~~~
+     /     \
+    |       |
+    |  $$$  |
+    |       |
+     \_____/
+      ~~~~~
+        `,
+        question: "You receive an unexpected cash bonus. What do you do?",
+        options: [
+            { text: "1. Save it for future expenses.", impact: { health: 0, happiness: 5, money: 30 } },
+            { text: "2. Invest in a side project or stocks.", impact: { health: 0, happiness: 10, money: 20 } },
+            { text: "3. Spend it on a luxury item.", impact: { health: 0, happiness: 15, money: -30 } },
+        ],
+    },
+    {
+        image: `
+       (\_/)
+       (O.o)
+       (> <)  
+      Bunny Time!
+        `,
+        question: "Your pet is seeking attention while you’re busy. What do you do?",
+        options: [
+            { text: "1. Take a break to play with them.", impact: { health: 5, happiness: 15, money: 0 } },
+            { text: "2. Continue working and ignore them for now.", impact: { health: -5, happiness: -5, money: 0 } },
+            { text: "3. Ask someone else to care for them temporarily.", impact: { health: 0, happiness: 5, money: -5 } },
+        ],
+    },
+    {
+        image: `
+        \o/
+         |
+        / \
+   Time for Fitness!
+        `,
+        question: "A friend invites you to join a fitness class. What do you do?",
+        options: [
+            { text: "1. Join and commit to regular sessions.", impact: { health: 15, happiness: 10, money: -10 } },
+            { text: "2. Try it out but don’t commit.", impact: { health: 5, happiness: 5, money: -5 } },
+            { text: "3. Decline and stick to your own routine.", impact: { health: 0, happiness: 0, money: 0 } },
+        ],
+    },
+    {
+        image: `
+         ______
+        |      |
+        | Game |
+        | Night|
+        |______|
+        `,
+        question: "Your friends are hosting a game night. How do you participate?",
+        options: [
+            { text: "1. Go all in and try to win!", impact: { health: 0, happiness: 15, money: 0 } },
+            { text: "2. Play casually and have fun.", impact: { health: 0, happiness: 10, money: 0 } },
+            { text: "3. Skip it to focus on personal tasks.", impact: { health: 0, happiness: -5, money: 0 } },
+        ],
+    },
+    {
+        image: `
+       AAAAA   RRRR   TTTTT
+       A   A   R   R    T
+       AAAAA   RRRR     T
+       A   A   R  R     T
+       A   A   R   R    T
+
+        `,
+        question: "You discover a local art workshop. How do you engage?",
+        options: [
+            { text: "1. Sign up and explore your creativity.", impact: { health: 5, happiness: 20, money: -15 } },
+            { text: "2. Attend as an observer.", impact: { health: 0, happiness: 10, money: -5 } },
+            { text: "3. Skip it and pursue other interests.", impact: { health: 0, happiness: 0, money: 0 } },
+        ],
+    },
+    {
+        image: `
+     _____
+    /_/|\_\
+   |_|_|_|_|
+   |_|_|_|_|
+   |_|_|_|_|
+   |_|_|_|_|     MIC DROP!
+    \_\|/_/
+      |||
+      |||
+      |||
+      |||
+      |||
+    __|||__
+   |_______|
+
+        `,
+        question: "You’re invited to karaoke. How do you respond?",
+        options: [
+            { text: "1. Sing your heart out.", impact: { health: 0, happiness: 15, money: 0 } },
+            { text: "2. Cheer for others and enjoy the event.", impact: { health: 0, happiness: 10, money: 0 } },
+            { text: "3. Avoid it and focus on your hobbies.", impact: { health: 0, happiness: -5, money: 0 } },
+        ],
     }
 ];
+
+
