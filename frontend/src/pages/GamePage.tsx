@@ -11,6 +11,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { Question } from "@/common-types";
 import { FormatImageToAscii, renderStats } from "@/utils";
 import TerminalLoading from "@/components/terminal-loader";
+import { scrollToBottom } from "@/utils/scroll-to-bottom";
 
 const GamePage = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -270,6 +271,10 @@ const GamePage = () => {
       setIsLoading(false);
     });
   }, [])
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [setTerminalLineData]);
 
   useEffect(() => {
     if (error) {
