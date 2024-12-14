@@ -7,12 +7,13 @@ type ILogout = {
 };
 
 export interface AuthContextType {
-    token: string | null;
-    setToken: React.Dispatch<React.SetStateAction<string | null>>;
+    isLoggedIn: boolean;
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
     loading: boolean;
     logout: () => Promise<ILogout>;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 interface AuthProviderProps {
@@ -20,14 +21,13 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-    const [token, setToken] = useState<string | null>(null);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
 
     async function logout(): Promise<ILogout> {
         try {
             await PanicApi.get("/logout");
-            localStorage.removeItem("token");
-            setToken(null);
+            setIsLoggedIn(false);
             return { success: true, message: "Logged out successfully" };
         } catch (error) {
             console.error(error);
@@ -39,33 +39,31 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         await PanicApi.get("/token-is-valid")
         .then((result) => {
             if (result.data.validToken) {
+                setIsLoggedIn(true);
+                setLoading(false);
                 return;
             }
+            setIsLoggedIn(false);
+            setLoading(false);
             logout();
             return;
         })
         .catch((error) => {
             console.log(error);
+            setIsLoggedIn(false);
+            setLoading(false);
             logout();
             return;
         });
     }
 
     useEffect(() => {
-        const storedToken = localStorage.getItem("token");
-        setToken(storedToken);
-        setLoading(false);
+        checkTokenValidity();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useEffect(() => {
-        if (token) {
-            checkTokenValidity();
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [token]);
-
     return (
-        <AuthContext.Provider value={{ token, setToken, loading, logout }}>
+        <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, loading, logout }}>
             {children}
         </AuthContext.Provider>
     );

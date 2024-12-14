@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import ProtectedLayout from '@/layouts/protected';
 import BaseLayout from '@/layouts/base-layout';
 import ScrollToTop from '@/utils/scroll-to-top';
+import { config } from '@/config';
 
 const router = createBrowserRouter([
     {
@@ -17,11 +18,11 @@ const router = createBrowserRouter([
                 element: <LandingPage />,
             },
             {
-                path: "/leaderboard",
+                path: config.routes.leaderboardPageRoute,
                 element: <LeaderboardPage />,
             },
             {
-                path: "/panic",
+                path: config.routes.gamePageRoute,
                 element:
                     <ProtectedLayout>
                         <GamePage />

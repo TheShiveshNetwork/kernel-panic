@@ -29,7 +29,8 @@ export async function loginUser(this: ControllerClass, request:Request, response
             sameSite: "none" as const,
         };
         response.cookie("token", token, options);
-        return response.status(200).json({ status: "success", message: "Logged in user successfully", token });
+        console.log("User has been assigned a token");
+        return response.status(200).json({ status: "success", message: "Logged in user successfully" });
     } catch (error) {
         console.error("An unhandled error occurred while logging in user: ", error);
         return response.status(500).json({ message: "Internal Server Error" });

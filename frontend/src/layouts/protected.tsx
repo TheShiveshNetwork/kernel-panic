@@ -3,13 +3,13 @@ import { useAuth } from "@/hooks/use-auth";
 import { Navigate } from "react-router-dom";
 
 export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
-    const { token, loading } = useAuth();
+    const { isLoggedIn, loading } = useAuth();
 
     if (loading) {
         return <Loading/>;
     }
 
-    if (!token) {
+    if (!isLoggedIn) {
         return <Navigate to="/" replace />;
     }
 

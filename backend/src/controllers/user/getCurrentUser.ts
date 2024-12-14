@@ -4,7 +4,7 @@ import { userCollection } from "@/storage";
 import { ObjectId } from "mongodb";
 
 export async function getCurrentUser(this: ControllerClass, request:Request, response:Response) {
-    const userId:string = request.params.userId;
+    const userId:string = request.body.userId;
     try {
         const user = await userCollection.findOne({ _id: new ObjectId(userId) });
 

@@ -13,9 +13,9 @@ export class MongoDBClient {
         console.log("[database]: connecting to mongodb...");
         try {
             await this.client.connect();
-            console.log('connected to db');
+            console.log('[database]: connected to db');
         } catch (error) {
-            console.log(`Error: Could not connect to db ${error}`);
+            console.log(`[database Error]: Could not connect to db ${error}`);
         }
     }
     getDb() {

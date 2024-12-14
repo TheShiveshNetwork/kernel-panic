@@ -4,6 +4,7 @@ import { TerminalColorText } from "@/components/commons/TerminalColorText";
 import { TerminalError } from "@/components/commons/TerminalError";
 import { config } from "@/config";
 import { FormatImageToAscii } from "@/utils";
+import TerminalLoading from "@/components/terminal-loader";
 
 export type ISetTerminalData = React.Dispatch<React.SetStateAction<ITerminalLineData>>;
 
@@ -48,11 +49,11 @@ export function continueGameCommandHandler(setTerminalLineData: ISetTerminalData
         ...prevData,
         <br />,
         <TerminalColorText color="blue">
-        You are continuing from Question {currentIndex + 1}
+            You are continuing from Question {currentIndex + 1}
         </TerminalColorText>,
         <br />,
         <div className="whitespace-pre-wrap">{FormatImageToAscii(currentQuestion.image)}</div>,
-        `\nQuestion ${(currentIndex) +1}: ${currentQuestion.question}\n`,
+        `\nQuestion ${(currentIndex) + 1}: ${currentQuestion.question}\n`,
         <br />,
         optionsText,
     ]);
@@ -77,19 +78,25 @@ export function describeCommandHandler(setTerminalLineData: ISetTerminalData) {
 };
 
 export async function whoamiCommandHandler(setTerminalLineData: ISetTerminalData) {
+    setTerminalLineData((prevData) => [
+        ...prevData,
+        <TerminalLoading />,
+        <br />,
+    ]);
     await PanicApi.get("/getCurrentUser")
         .then((response) => {
             setTerminalLineData((prevData) => [
-                ...prevData,
-                <TerminalColorText color="blue">You are currently logged in as: {response.data.data.name}</TerminalColorText>,
-                <br />
+                ...prevData.slice(0, -2), // Remove the loading indicator
+                <TerminalColorText color="blue">
+                    You are currently logged in as: {response.data.data.name}
+                </TerminalColorText>,
+                <br />,
             ]);
-        })
-        .catch((error) => {
+        }).catch((error) => {
             setTerminalLineData((prevData) => [
-                ...prevData,
+                ...prevData.slice(0, -2), // Remove the loading indicator
                 <TerminalError>Error: {error.message}</TerminalError>,
-                <br />
+                <br />,
             ]);
         });
     return;
