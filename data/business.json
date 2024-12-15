@@ -2,7 +2,7 @@
     "name": "business",
     "data": [
       {
-          "index": 6,
+          "index": 5,
           "image": "  _________\n |  STARTUP |\n |   🚀 🌍   |\n |_________|\n    |   |\n   /_____|",
           "question": "You’ve spotted a market gap and are ready to start your business. What do you choose?",
           "options": [
@@ -12,7 +12,7 @@
           ]
       },
       {
-          "index": 7,
+          "index": 6,
           "image": "  _________\n | COMPETE |\n |  🎯⚖️   |\n |_________|\n    /   \\",
           "question": "A competitor launches a cheaper version of your product. How do you respond?",
           "options": [
@@ -22,7 +22,7 @@
           ]
       },
       {
-          "index": 8,
+          "index": 7,
           "image": "  __________\n | CONTRACT |\n | 💼 📜 🖋 |\n |__________|",
           "question": "A lucrative contract is on the table, but negotiations are tough. What’s your strategy?",
           "options": [
@@ -32,7 +32,7 @@
           ]
       },
       {
-          "index": 9,
+          "index": 8,
           "image": "  ___________\n | EXPANSION  |\n | 🌍 ➡️ 🏢   |\n |___________|",
           "question": "Your business is growing, and it’s time to expand. What’s your plan?",
           "options": [
@@ -42,7 +42,7 @@
           ]
       },
       {
-          "index": 10,
+          "index": 9,
           "image": "  ___________\n | TECH TREND |\n |  💻⚙️📱   |\n |___________|",
           "question": "Your competitors are adopting cutting-edge technology. How do you stay relevant?",
           "options": [
@@ -52,7 +52,7 @@
           ]
       },
       {
-          "index": 11,
+          "index": 10,
           "image": "  __________\n | CRISIS ⚠️|\n | 📣🛑 💬 |\n |__________|",
           "question": "A public relations crisis threatens your brand image. What’s your move?",
           "options": [
@@ -62,7 +62,7 @@
           ]
       },
       {
-          "index": 12,
+          "index": 11,
           "image": "  ___________\n | TIME CRUNCH |\n | ⏰ 🏃💻  |\n |___________|",
           "question": "The growing demands of your business are eating into your personal time. What’s your approach?",
           "options": [
@@ -72,7 +72,7 @@
           ]
       },
       {
-          "index": 13,
+          "index": 12,
           "image": "  __________\n | GO GREEN |\n | ♻️🌱🏢 |\n |__________|",
           "question": "Sustainability is trending. How do you integrate it into your business?",
           "options": [
@@ -82,7 +82,7 @@
           ]
       },
       {
-          "index": 14,
+          "index": 13,
           "image": "  ___________\n | RECESSION  |\n | 💸📉💡 |\n |___________|",
           "question": "Experts predict an economic downturn. How do you prepare?",
           "options": [
@@ -92,7 +92,7 @@
           ]
       },
       {
-          "index": 15,
+          "index": 14,
           "image": "  ___________\n | LONG VISION|\n | 🌟🏢📈 |\n |___________|",
           "question": "What’s your long-term vision for the business?",
           "options": [
@@ -102,7 +102,7 @@
           ]
       },
       {
-          "index": 16,
+          "index": 15,
           "image": "  __________\n | DIVERSIFY |\n | 🏢📊📈 |\n |__________|",
           "question": "With profits rising, you decide to diversify. Where do you invest?",
           "options": [
@@ -112,7 +112,7 @@
           ]
       },
       {
-          "index": 17,
+          "index": 16,
           "image": "  ___________\n | GIVE BACK |\n | ❤️💰🤝  |\n |___________|",
           "question": "You’ve achieved great success. How do you give back?",
           "options": [
@@ -122,7 +122,7 @@
           ]
       },
       {
-          "index": 18,
+          "index": 17,
           "image": "  __________\n |  EVOLVE  |\n | 🔄💻📈  |\n |__________|",
           "question": "Rapid technological changes are reshaping your industry. What’s your move?",
           "options": [
@@ -132,7 +132,7 @@
           ]
       },
       {
-          "index": 19,
+          "index": 18,
           "image": "  __________\n | LEGACY 💡 |\n | 👨‍👩‍👧‍👦🏢📜 |\n |__________|",
           "question": "You’re nearing retirement and need a succession plan. What’s your choice?",
           "options": [
@@ -142,7 +142,7 @@
           ]
       },
       {
-          "index": 20,
+          "index": 19,
           "image": "  ___________\n | WRITE 📚   |\n |  📖🏢💡    |\n |___________|",
           "question": "Looking back on your career, how do you secure your legacy?",
           "options": [
