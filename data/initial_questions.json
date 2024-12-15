@@ -1,0 +1,55 @@
+{
+  "name": "initial_questions",
+  "data": [
+    {
+      "index": 0,
+      "image": "  _____     \n /     \\    \n|  O  O |   \n|   |   |   \n|   _   |   \n \\_____/    \n     |      \n     |      \n  ____|____ \n |         | \n |         | \n  ___________",
+      "question": "The alarm rings at 6 AM. What’s your reaction?",
+      "options": [
+        { "text": "Snooze it for “just 5 more minutes.”", "points": { "money": 0, "health": -5, "happiness": 0 } },
+        { "text": "Jump out of bed, ready to conquer the world.", "points": { "money": 0, "health": 5, "happiness": 5 } },
+        { "text": "Turn it off, roll over, and go back to sleep.", "points": { "money": 0, "health": -5, "happiness": 10 } }
+      ]
+    },
+    {
+      "index": 1,
+      "image": "    _____        \n   /     \\      \n  |  O O  |     \n  |   |   |     \n  |  ___  |     \n   \\_____/      \n     |         \n     |         \n   ___|___     \n  |       |    \n  |       |    \n  _____________",
+      "question": "You’ve just started your first semester in engineering. How do you handle this new chapter?",
+      "options": [
+        { "text": "Devote your evenings to perfecting your notes and acing every assignment, even skipping the occasional hangout.", "points": { "money": 5, "health": -5, "happiness": 5 } },
+        { "text": "Try to juggle your academics while going to karaoke nights and campus cricket matches—you deserve both.", "points": { "money": 0, "health": 0, "happiness": 10 } },
+        { "text": "Spend your time hitting all the food trucks and festivals on campus, letting deadlines remind you they exist.", "points": { "money": 0, "health": -5, "happiness": 20 } }
+      ]
+    },
+    {
+      "index": 2,
+      "image": "  ________       \n /   ___   \\     \n|   |   |   |    \n|   |   |   |    \n|   |   |   |    \n \\_________/     \n   ______|___   \n  |    |     |   \n  |    |     |   \n  |    |     |   \n  _____________  ",
+      "question": "Midterms are around the corner, and the pressure is real. What’s your game plan?",
+      "options": [
+        { "text": "Color-code your study materials, make flashcards, and pull a couple of all-nighters. Success is worth it, right?", "points": { "money": 0, "health": -10, "happiness": 5 } },
+        { "text": "Form a study group where “studying” involves discussions that sometimes lead to a chai break.", "points": { "money": 0, "health": 5, "happiness": 5 } },
+        { "text": "Stick to your usual pace, telling yourself that consistency wins the race (and that’s good enough).", "points": { "money": 0, "health": 5, "happiness": 0 } }
+      ]
+    },
+    {
+      "index": 3,
+      "image": "   ____         \n  /    \\        \n |  T  |        \n |  C  |        \n |  |  |        \n  \\___/        \n    |          \n   _|_         \n  |   |        \n  |___|        \n  _____________",
+      "question": "As you settle into your second year, you consider joining extracurricular activities to broaden your interests.",
+      "options": [
+        { "text": "Join the Technical or Nontechnical club.", "points": { "money": 0, "health": -5, "happiness": 5 } },
+        { "text": "Volunteer for community service.", "points": { "money": 0, "health": 5, "happiness": 5 } },
+        { "text": "Focus on academics for a scholarship.", "points": { "money": 0, "health": 0, "happiness": -5 } }
+      ]
+    },
+    {
+      "index": 4,
+      "image": "    _____       \n   /     \\      \n  |  MNC  |     \n  |  _   |     \n  |     | |     \n   \\_____/      \n     |         \n     |         \n  ___|___      \n |       |     \n |       |     \n  _____________",
+      "question": "You're at a crossroads in your life where you need to choose a career path. Each path offers unique challenges and rewards.",
+      "options": [
+        { "text": "Work in an MNC- you like to solve problems and envision building solutions that impact the world.", "points": { "money": 15, "health": -10, "happiness": 5 } },
+        { "text": "Business - you have a knack for leadership and risk-taking.", "points": { "money": 0, "health": -10, "happiness": 5 } },
+        { "text": "Study Abroad - Move overseas for higher education and broaden your academic and cultural horizons.", "points": { "money": -15, "health": 0, "happiness": 20 } }
+      ]
+    }
+  ]
+}

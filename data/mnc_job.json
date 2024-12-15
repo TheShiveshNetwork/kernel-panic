@@ -1,0 +1,157 @@
+{
+    "name": "mnc_job",
+    "data": [
+      {
+        "index": 5,
+        "image": "   _______      \n  /       \\     \n |         |    \n |  __ __  |    \n |  |  |  |    \n |  |__|__|    \n  \\_______/    \n      |        \n      |        \n      |        \n     | |       \n    |___|      ",
+        "question": "You’ve received your first job offer, but the commute is two hours each way. What do you do?",
+        "options": [
+          { "text": "Accept the offer and endure the commute for experience.", "points": { "money": 15, "health": -5, "happiness": -10 } },
+          { "text": "Politely decline and look for a closer opportunity.", "points": { "money": -10, "health": 10, "happiness": 10 } },
+          { "text": "Ask your employer for flexible work hours.", "points": { "money": 5, "health": 0, "happiness": 5 } }
+        ]
+      },
+      {
+        "index": 6,
+        "image": "    _________  \n   |         |  \n   |   $$$$  |  \n   |   $$$$  |  \n   |   $$$$  |  \n   |   $$$$  |  \n   |_________|  \n   ___| |___    \n  |   | |   |   \n  |___|_|___|   \n",
+        "question": "Your manager gives you an urgent project due tomorrow. What’s your move?",
+        "options": [
+          { "text": "Stay late and finish it, even if it ruins your evening.", "points": { "money": 10, "health": -10, "happiness": -15 } },
+          { "text": "Request an extension to deliver higher quality.", "points": { "money": 0, "health": 0, "happiness": 5 } },
+          { "text": "Delegate parts of it to your team.", "points": { "money": 5, "health": -5, "happiness": 10 } }
+        ]
+      },
+      {
+        "index": 7,
+        "image": "   _________    \n  /         \\   \n |   O   O   |  \n |    ___    |  \n |   |   |   |  \n |___|___|___|  \n     | |       \n     | |       \n     |_|       \n     / \\       \n    /   \\      ",
+        "question": "It’s time for your first performance review. How do you prepare?",
+        "options": [
+          { "text": "Build a presentation showcasing your achievements.", "points": { "money": 10, "health": -5, "happiness": 5 } },
+          { "text": "Keep it casual and trust your manager knows your worth.", "points": { "money": 0, "health": 5, "happiness": 0 } },
+          { "text": "Ask colleagues for feedback to strengthen your case.", "points": { "money": 5, "happiness": 10, "health": 0 } }
+        ]
+      },
+      {
+        "index": 8,
+        "image": "  ________      \n /        \\     \n|   _____  |    \n|  |     | |    \n|  |_____| |    \n|_____|_____|    \n      | |       \n     _|_|_      \n   ___| |___    \n  |       |     \n  |_______|     ",
+        "question": "Your team’s project deadline is at risk due to poor planning. What do you do?",
+        "options": [
+          { "text": "Take charge and pull a few all-nighters to meet the deadline.", "points": { "money": 10, "health": -10, "happiness": -10 } },
+          { "text": "Communicate the risks to the client and request an extension.", "points": { "money": 0, "health": 5, "happiness": 5 } },
+          { "text": "Redistribute the workload and focus on key deliverables.", "points": { "money": 5, "health": 0, "happiness": 10 } }
+        ]
+      },
+      {
+        "index": 9,
+        "image": "   _______     \n  /       \\    \n |   ____  |   \n |   |    | |   \n |   |    | |   \n |   |    | |   \n  \\_______/     \n      | |       \n     _|_|_      \n    /     \\     \n   /       \\    ",
+        "question": "Your company is hosting a weekend team-building retreat. Do you attend?",
+        "options": [
+          { "text": "Go enthusiastically to network and bond with colleagues.", "points": { "money": 0, "health": -5, "happiness": 10 } },
+          { "text": "Skip it for some much-needed personal time.", "points": { "money": 0, "health": 5, "happiness": 5 } },
+          { "text": "Attend only the key sessions to show your presence.", "points": { "money": 0, "health": 0, "happiness": 5 } }
+        ]
+      },
+      {
+        "index": 10,
+        "image": "   ________      \n  /        \\     \n |    MNC   |    \n |    ___   |    \n |   /   \\  |    \n |  |     | |    \n  \\_________/     \n      | |        \n     _|_|_       \n    /     \\      \n   /       \\     ",
+        "question": "A promotion opportunity arises, but it requires frequent travel. What’s your choice?",
+        "options": [
+          { "text": "Accept the role, excited about new challenges.", "points": { "money": 15, "health": -5, "happiness": -10 } },
+          { "text": "Decline and wait for a better-suited promotion.", "points": { "money": 0, "health": 5, "happiness": 5 } },
+          { "text": "Negotiate for limited travel to balance work-life.", "points": { "money": 10, "health": -5, "happiness": 10 } }
+        ]
+      },
+      {
+        "index": 11,
+        "image": "    ________     \n   /        \\    \n  |   O O   |    \n  |    __    |   \n  |   /  \\   |   \n   \\_________/    \n      | |        \n      | |        \n      |_|        \n    ___|_|___    \n   /        \\   ",
+        "question": "Your boss offers you a chance to lead a high-stakes project. How do you react?",
+        "options": [
+          { "text": "Take the opportunity and work overtime to succeed.", "points": { "money": 15, "health": -10, "happiness": -10 } },
+          { "text": "Suggest someone more experienced for the role.", "points": { "money": 0, "health": 10, "happiness": 10 } },
+          { "text": "Offer to co-lead with a colleague to share the load.", "points": { "money": 10, "health": -5, "happiness": 5 } }
+        ]
+      },
+            {
+                "index": 12,
+                "image": "    ____       ____       ____\n   /    \\     /    \\     /    \\\n  |      |   |      |   |      |\n  |______|   |______|   |______|\n   |    |     |    |     |    |\n   |    |     |    |     |    |\n  __|____|____|____|____|____|__\n | | |  | | |  | | |  | |  | |",
+                "question": "Your team is underperforming. How do you address it?",
+                "options": [
+                    { "text": "Set up one-on-one meetings to understand issues.", "points": { "health": 0, "happiness": 15, "wealth": 0 } },
+                    { "text": "Give a motivational speech to boost morale.", "points": { "health": 0, "happiness": 10, "wealth": 5 } },
+                    { "text": "Assign additional responsibilities to challenge them.", "points": { "health": -5, "happiness": 5, "wealth": 10 } }
+                ]
+            },
+            {
+                "index": 13,
+                "image": "        _______   _______\n       /       \\ /       \\\n      |         | |         |\n      |   Job   | |  City   |\n      | Offer   | | Change  |\n       \\_______/  \\_______/\n         |           |\n         |           |\n     __/|__      __/|__",
+                "question": "You receive a job offer with a higher salary but in a different city. What’s your decision?",
+                "options": [
+                    { "text": "Move to the new city for the opportunity.", "points": { "health": -5, "happiness": -10, "wealth": 20 } },
+                    { "text": "Stay in your current role for stability.", "points": { "health": 10, "happiness": 10, "wealth": 0 } },
+                    { "text": "Accept the offer and negotiate for remote work.", "points": { "health": 0, "happiness": 5, "wealth": 15 } }
+                ]
+            },
+            {
+                "index": 14,
+                "image": "    _______        _______        _______\n   |       |      |       |      |       |\n   | Colleague|     | Issue  |     | Conflict |\n   |       |      |       |      |       |\n    -------        -------        -------",
+                "question": "A workplace conflict arises with a colleague. What’s your approach?",
+                "options": [
+                    { "text": "Confront them directly to clear the air.", "points": { "health": 0, "happiness": 10, "wealth": 0 } },
+                    { "text": "Escalate the issue to your manager.", "points": { "health": 5, "happiness": -5, "wealth": 0 } },
+                    { "text": "Try to resolve it calmly over coffee.", "points": { "health": 0, "happiness": 15, "wealth": 0 } }
+                ]
+            },
+            {
+                "index": 15,
+                "image": "  ________    _________    ________\n /        \\  /         \\  /        \\\n|  Growth  | |  Courses  | |  Future  |\n|  Invest   | |  Workshops | |  Savings |\n \\________/   \\_________/  \\________/",
+                "question": "You’ve saved enough to invest in personal growth. What do you prioritize?",
+                "options": [
+                    { "text": "Enroll in a professional certification course.", "points": { "health": 5, "happiness": 10, "wealth": -15 } },
+                    { "text": "Attend workshops for your hobbies.", "points": { "health": 10, "happiness": 15, "wealth": -10 } },
+                    { "text": "Save the money for future needs.", "points": { "health": 0, "happiness": 0, "wealth": 10 } }
+                ]
+            },
+            {
+                "index": 16,
+                "image": "     ________   ________  ________\n    /        \\ /        \\/        \\\n   |  Health | | Workload | | Recharge |\n   |    Out  | | Stress   | | Time Off |\n    \\_______/  \\_________/  \\________/",
+                "question": "Your workload is affecting your health. How do you handle it?",
+                "options": [
+                    { "text": "Take a week off to recharge.", "points": { "health": 15, "happiness": 20, "wealth": 0 } },
+                    { "text": "Continue working but start exercising regularly.", "points": { "health": 10, "happiness": 15, "wealth": -5 } },
+                    { "text": "Ignore the signs and power through.", "points": { "health": -20, "happiness": -10, "wealth": 10 } }
+                ]
+            },
+            {
+                "index": 17,
+                "image": "   _________       ________     ________\n  /         \\    /          \\   /        \\\n | Incentive |   | Quality   |  | Workload |\n | Program   |   | Consistency|  | Concerns |\n  \\_________/    \\__________/    \\________/",
+                "question": "Your company introduces a new performance-based incentive program. How do you respond?",
+                "options": [
+                    { "text": "Work harder to maximize your earnings.", "points": { "health": -5, "happiness": -5, "wealth": 15 } },
+                    { "text": "Focus on consistent, quality work at your own pace.", "points": { "health": 0, "happiness": 10, "wealth": 5 } },
+                    { "text": "Discuss concerns about overburdening employees.", "points": { "health": 0, "happiness": 15, "wealth": 0 } }
+                ]
+            },
+            {
+                "index": 18,
+                "image": "    _______    _______   _______\n   /       \\  /       \\ |       |\n  | Mentor  | | New Hire| | Guidance|\n   \\_______/  \\_______/  \\_______/",
+                "question": "You’re asked to mentor a new hire. How do you approach it?",
+                "options": [
+                    { "text": "Invest time to guide them properly.", "points": { "health": 5, "happiness": 15, "wealth": 0 } },
+                    { "text": "Share resources and let them learn independently.", "points": { "health": 0, "happiness": 5, "wealth": 5 } },
+                    { "text": "Politely decline due to lack of time.", "points": { "health": 0, "happiness": -5, "wealth": 10 } }
+                ]
+            },
+            {
+                "index": 19,
+                "image": "   _______    ________    ________\n  |       |   |        |   |        |\n  | Work-  |   | Weekends |   | Boundaries |\n  | Project|   | Availability|   | Rest & Balance |\n  |________|   |__________|   |___________|",
+                "question": "Your manager asks for weekend availability during a major project. How do you respond?",
+                "options": [
+                    { "text": "Agree to work the weekends without hesitation.", "points": { "health": -10, "happiness": -15, "wealth": 10 } },
+                    { "text": "Negotiate compensation or time off later.", "points": { "health": 0, "happiness": 5, "wealth": 5 } },
+                    { "text": "Set boundaries, explaining the importance of rest.", "points": { "health": 10, "happiness": 15, "wealth": 0 } }
+                ]
+            }
+        ]
+    }
+    
+  
