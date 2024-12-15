@@ -2,7 +2,7 @@
     "name": "studyabroad",
     "data": [
       {
-          "index": 6,
+          "index": 5,
           "image": "   ________   \n  /        \\  \n /  CHOOSE   \\ \n|   YOUR     |\n \\ COUNTRY / \n  \\________/  ",
           "question": "You’re deciding which country to study in. What’s your top priority?",
           "options": [
@@ -12,7 +12,7 @@
           ]
       },
       {
-          "index": 7,
+          "index": 6,
           "image": "     _______\n    /       \\\n   / LETTER! \\\n  |   🎓📜    |\n   \\_______ / ",
           "question": "You’ve received your university acceptance letter! How do you prepare?",
           "options": [
@@ -22,7 +22,7 @@
           ]
       },
       {
-          "index": 8,
+          "index": 7,
           "image": "   ________   \n  /  🏠🏢    \\ \n / Shared Apt \\ \n| Dorm Room   |\n \\ Studio Apt / \n  \\__________/ ",
           "question": "You need to decide on housing. What’s your pick?",
           "options": [
@@ -32,7 +32,7 @@
           ]
       },
       {
-          "index": 9,
+          "index": 8,
           "image": "    _______\n   | WELCOME|\n  /   🎒✈️    \\\n | Explore!  |\n \\ Work First/\n  \\_________/ ",
           "question": "You’ve landed in your new country! What’s your first priority?",
           "options": [
@@ -42,7 +42,7 @@
           ]
       },
       {
-          "index": 10,
+          "index": 9,
           "image": "   ______   \n  / 📚 📖 \\  \n / COURSES  \\\n|  Elective |\n \\_________/ ",
           "question": "It’s time to select your electives. What do you prioritize?",
           "options": [
@@ -52,7 +52,7 @@
           ]
       },
       {
-          "index": 11,
+          "index": 10,
           "image": "   _______  \n  | 📅📚📜 |\n /  STRESSED?\\ \n|ASK FOR HELP |\n \\___________/ ",
           "question": "Your first semester feels overwhelming. How do you manage?",
           "options": [
@@ -62,7 +62,7 @@
           ]
       },
       {
-          "index": 12,
+          "index": 11,
           "image": "   _______ \n  | 🔧📄📜 |\n / TEAMWORK! \\\n|CONFLICT FIX|\n \\_________/ ",
           "question": "A group project hits a major snag due to miscommunication. What’s your response?",
           "options": [
@@ -72,7 +72,7 @@
           ]
       },
       {
-          "index": 13,
+          "index": 12,
           "image": "     ______ \n    | 🎓📜  |\n  /  WORKLOAD?\\\n |Research 📄 |\n  \\________/  ",
           "question": "A professor offers you a research assistantship, but it means extra work. What do you do?",
           "options": [
@@ -82,7 +82,7 @@
           ]
       },
       {
-          "index": 14,
+          "index": 13,
           "image": "     _______  \n    | 📈📉🏢 |\n  / OPPORTUNITY \\\n |Internship  | \n  \\_________/ ",
           "question": "An enticing internship conflicts with your semester schedule. How do you handle it?",
           "options": [
@@ -92,7 +92,7 @@
           ]
       },
       {
-          "index": 15,
+          "index": 14,
           "image": "   _______\n  /CERTIFICATION?\n | 💼📜🎓 |\n \\________/ ",
           "question": "You’re debating whether to pursue an expensive certification. What’s your choice?",
           "options": [
@@ -102,7 +102,7 @@
           ]
       },
       {
-          "index": 16,
+          "index": 15,
           "image": "     ______\n    /TRIP 🎒 \\\n   | RELAXATION|\n   \\ BALANCE__/ ",
           "question": "Your friends invite you on a short trip during your final year. How do you respond?",
           "options": [
@@ -112,7 +112,7 @@
           ]
       },
       {
-          "index": 17,
+          "index": 16,
           "image": "    _______\n   / 🎓📚  \\\n  | SPECIALIZE? |\n   \\________/ ",
           "question": "You’re considering extending your studies for a specialization. What’s your call?",
           "options": [
@@ -122,7 +122,7 @@
           ]
       },
       {
-          "index": 18,
+          "index": 17,
           "image": "     ________\n    | Startup📈 |\n   / RISK? 📜 \\ \n | NEGOTIATE |\n \\_________/ ",
           "question": "A start-up offers you a low-paying job with high growth potential. What do you do?",
           "options": [
@@ -132,7 +132,7 @@
           ]
       },
       {
-          "index": 19,
+          "index": 18,
           "image": "     _______\n    / VISA 📜 \\ \n   | Residency?|\n    \\________/ ",
           "question": "Your visa is expiring, but you’re eligible for permanent residency. What’s your move?",
           "options": [
@@ -142,7 +142,7 @@
           ]
       },
       {
-          "index": 20,
+          "index": 19,
           "image": "    _______\n   |OFFERS? |\n  / CORPORATE \\ \n |BALANCED?    |\n \\ ENTREPRENEUR/ ",
           "question": "You’ve graduated and received several exciting offers. What do you choose?",
           "options": [
