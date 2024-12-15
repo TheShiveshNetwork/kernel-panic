@@ -1,0 +1,156 @@
+{
+    "name": "studyabroad",
+    "data": [
+      {
+          "index": 6,
+          "image": "   ________   \n  /        \\  \n /  CHOOSE   \\ \n|   YOUR     |\n \\ COUNTRY / \n  \\________/  ",
+          "question": "You’re deciding which country to study in. What’s your top priority?",
+          "options": [
+              { "text": "A place where you can network and find a job easily after graduation.", "points": { "health": 0, "happiness": -5, "wealth": 15 } },
+              { "text": "A country with affordable tuition and a laid-back lifestyle.", "points": { "health": 10, "happiness": 5, "wealth": -10 } },
+              { "text": "Somewhere that invests heavily in research and innovation.", "points": { "health": -5, "happiness": 10, "wealth": 0 } }
+          ]
+      },
+      {
+          "index": 7,
+          "image": "     _______\n    /       \\\n   / LETTER! \\\n  |   🎓📜    |\n   \\_______ / ",
+          "question": "You’ve received your university acceptance letter! How do you prepare?",
+          "options": [
+              { "text": "Create a detailed checklist and attend pre-departure webinars.", "points": { "health": 0, "happiness": -10, "wealth": 10 } },
+              { "text": "Spend hours researching cultural norms and practices.", "points": { "health": 0, "happiness": 10, "wealth": 0 } },
+              { "text": "Focus on securing financial support and preparing mentally for the big move.", "points": { "health": -5, "happiness": 5, "wealth": 5 } }
+          ]
+      },
+      {
+          "index": 8,
+          "image": "   ________   \n  /  🏠🏢    \\ \n / Shared Apt \\ \n| Dorm Room   |\n \\ Studio Apt / \n  \\__________/ ",
+          "question": "You need to decide on housing. What’s your pick?",
+          "options": [
+              { "text": "Share an apartment to split the rent and save some cash.", "points": { "health": 0, "happiness": -5, "wealth": 10 } },
+              { "text": "Opt for a dorm room close to campus for convenience.", "points": { "health": 5, "happiness": 5, "wealth": -5 } },
+              { "text": "Rent a private studio for peace and comfort.", "points": { "health": 0, "happiness": 10, "wealth": -10 } }
+          ]
+      },
+      {
+          "index": 9,
+          "image": "    _______\n   | WELCOME|\n  /   🎒✈️    \\\n | Explore!  |\n \\ Work First/\n  \\_________/ ",
+          "question": "You’ve landed in your new country! What’s your first priority?",
+          "options": [
+              { "text": "Start setting up your academic schedule and routine right away.", "points": { "health": 0, "happiness": 10, "wealth": -5 } },
+              { "text": "Spend time exploring your surroundings and meeting new people.", "points": { "health": -5, "happiness": 5, "wealth": 0 } },
+              { "text": "Find part-time work to help manage your expenses.", "points": { "health": -5, "happiness": -5, "wealth": 10 } }
+          ]
+      },
+      {
+          "index": 10,
+          "image": "   ______   \n  / 📚 📖 \\  \n / COURSES  \\\n|  Elective |\n \\_________/ ",
+          "question": "It’s time to select your electives. What do you prioritize?",
+          "options": [
+              { "text": "Courses that will make you more employable after graduation.", "points": { "health": -5, "happiness": -5, "wealth": 10 } },
+              { "text": "Topics you’ve always been curious about, even if they’re unrelated to your degree.", "points": { "health": 0, "happiness": 10, "wealth": -5 } },
+              { "text": "A mix of practical and interesting subjects to keep things balanced.", "points": { "health": 0, "happiness": 5, "wealth": 5 } }
+          ]
+      },
+      {
+          "index": 11,
+          "image": "   _______  \n  | 📅📚📜 |\n /  STRESSED?\\ \n|ASK FOR HELP |\n \\___________/ ",
+          "question": "Your first semester feels overwhelming. How do you manage?",
+          "options": [
+              { "text": "Ask classmates and professors for help whenever you feel stuck.", "points": { "health": 5, "happiness": 5, "wealth": 0 } },
+              { "text": "Push yourself harder to stay on top of deadlines and expectations.", "points": { "health": -10, "happiness": -5, "wealth": 10 } },
+              { "text": "Take breaks and prioritize your mental well-being.", "points": { "health": 10, "happiness": -10, "wealth": 0 } }
+          ]
+      },
+      {
+          "index": 12,
+          "image": "   _______ \n  | 🔧📄📜 |\n / TEAMWORK! \\\n|CONFLICT FIX|\n \\_________/ ",
+          "question": "A group project hits a major snag due to miscommunication. What’s your response?",
+          "options": [
+              { "text": "Step up and take charge to ensure the project’s success.", "points": { "health": -10, "happiness": -5, "wealth": 10 } },
+              { "text": "Act as a mediator to resolve conflicts and restore teamwork.", "points": { "health": 5, "happiness": 5, "wealth": 0 } },
+              { "text": "Focus on completing your part to avoid unnecessary stress.", "points": { "health": 5, "happiness": -5, "wealth": 0 } }
+          ]
+      },
+      {
+          "index": 13,
+          "image": "     ______ \n    | 🎓📜  |\n  /  WORKLOAD?\\\n |Research 📄 |\n  \\________/  ",
+          "question": "A professor offers you a research assistantship, but it means extra work. What do you do?",
+          "options": [
+              { "text": "Accept it for the boost it’ll give your résumé.", "points": { "health": -5, "happiness": 0, "wealth": 10 } },
+              { "text": "Politely decline to concentrate on your coursework.", "points": { "health": 5, "happiness": 5, "wealth": 0 } },
+              { "text": "Try to balance the assistantship with your studies.", "points": { "health": -10, "happiness": 5, "wealth": 5 } }
+          ]
+      },
+      {
+          "index": 14,
+          "image": "     _______  \n    | 📈📉🏢 |\n  / OPPORTUNITY \\\n |Internship  | \n  \\_________/ ",
+          "question": "An enticing internship conflicts with your semester schedule. How do you handle it?",
+          "options": [
+              { "text": "Rearrange your classes and seize the opportunity.", "points": { "health": -5, "happiness": -5, "wealth": 10 } },
+              { "text": "Turn it down and stay focused on academics.", "points": { "health": 5, "happiness": 5, "wealth": -10 } },
+              { "text": "Negotiate flexible hours to do both.", "points": { "health": 0, "happiness": 5, "wealth": 5 } }
+          ]
+      },
+      {
+          "index": 15,
+          "image": "   _______\n  /CERTIFICATION?\n | 💼📜🎓 |\n \\________/ ",
+          "question": "You’re debating whether to pursue an expensive certification. What’s your choice?",
+          "options": [
+              { "text": "Go for it—it’s a long-term investment in your career.", "points": { "health": 0, "happiness": -10, "wealth": 15 } },
+              { "text": "Skip it and stick with your current skill set.", "points": { "health": 0, "happiness": 5, "wealth": -5 } },
+              { "text": "Postpone it until after you graduate.", "points": { "health": 5, "happiness": 0, "wealth": -5 } }
+          ]
+      },
+      {
+          "index": 16,
+          "image": "     ______\n    /TRIP 🎒 \\\n   | RELAXATION|\n   \\ BALANCE__/ ",
+          "question": "Your friends invite you on a short trip during your final year. How do you respond?",
+          "options": [
+              { "text": "Pack your bags and enjoy a well-deserved break.", "points": { "health": 0, "happiness": 10, "wealth": -5 } },
+              { "text": "Skip the trip to focus on perfecting your portfolio.", "points": { "health": 0, "happiness": -5, "wealth": 10 } },
+              { "text": "Join halfway to balance work and relaxation.", "points": { "health": -5, "happiness": 5, "wealth": 5 } }
+          ]
+      },
+      {
+          "index": 17,
+          "image": "    _______\n   / 🎓📚  \\\n  | SPECIALIZE? |\n   \\________/ ",
+          "question": "You’re considering extending your studies for a specialization. What’s your call?",
+          "options": [
+              { "text": "Enroll in a niche certification program to stand out.", "points": { "health": 0, "happiness": 10, "wealth": 5 } },
+              { "text": "Graduate on time and enter the workforce immediately.", "points": { "health": 5, "happiness": -5, "wealth": 10 } },
+              { "text": "Wait and decide based on how your career progresses.", "points": { "health": 0, "happiness": 5, "wealth": 0 } }
+          ]
+      },
+      {
+          "index": 18,
+          "image": "     ________\n    | Startup📈 |\n   / RISK? 📜 \\ \n | NEGOTIATE |\n \\_________/ ",
+          "question": "A start-up offers you a low-paying job with high growth potential. What do you do?",
+          "options": [
+              { "text": "Accept it for the experience and future opportunities.", "points": { "health": -5, "happiness": 10, "wealth": -10 } },
+              { "text": "Decline and opt for a stable job instead.", "points": { "health": 5, "happiness": -5, "wealth": 10 } },
+              { "text": "Try negotiating better terms while keeping your options open.", "points": { "health": 0, "happiness": 5, "wealth": 5 } }
+          ]
+      },
+      {
+          "index": 19,
+          "image": "     _______\n    / VISA 📜 \\ \n   | Residency?|\n    \\________/ ",
+          "question": "Your visa is expiring, but you’re eligible for permanent residency. What’s your move?",
+          "options": [
+              { "text": "Apply for residency and settle abroad.", "points": { "health": -5, "happiness": -5, "wealth": 15 } },
+              { "text": "Return home and start fresh in familiar surroundings.", "points": { "health": 5, "happiness": 10, "wealth": -10 } },
+              { "text": "Take a gap year to figure things out.", "points": { "health": 10, "happiness": -5, "wealth": 0 } }
+          ]
+      },
+      {
+          "index": 20,
+          "image": "    _______\n   |OFFERS? |\n  / CORPORATE \\ \n |BALANCED?    |\n \\ ENTREPRENEUR/ ",
+          "question": "You’ve graduated and received several exciting offers. What do you choose?",
+          "options": [
+              { "text": "A high-paying corporate job with demanding hours.", "points": { "health": -10, "happiness": -10, "wealth": 20 } },
+              { "text": "A balanced job with decent pay in your dream field.", "points": { "health": 5, "happiness": 10, "wealth": 10 } },
+              { "text": "Start your own business despite financial risks.", "points": { "health": -5, "happiness": 15, "wealth": -10 } }
+          ]
+      }
+  ]
+}
+
