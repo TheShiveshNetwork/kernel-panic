@@ -113,15 +113,25 @@ const LeaderboardPage: React.FC = () => {
                 </Terminal>
             </div>
 
-            <div className="bg-black text-white text-sm p-2 mt-4 border-t border-gray-500">
-                <h2 className="text-xs font-semibold mb-2">Shortcut Keys:</h2>
-                <ul className="list-none">
-                    <li><strong>Arrow Up</strong>: Scroll up through the leaderboard.</li>
-                    <li><strong>Arrow Down</strong>: Scroll down through the leaderboard.</li>
-                    <li><strong>Ctrl + R</strong>: Refresh the leaderboard.</li>
-                    <li><strong>Ctrl + X</strong>: Go back to the game page.</li>
-                </ul>
-            </div>
+            {/* Shortcut Bar */}
+<div className="fixed bottom-0 left-0 w-full bg-black text-white text-lg border-t border-gray-500 p-2">
+    <div className="flex justify-between font-mono">
+        <div>
+            <span className="font-bold ">^R</span> Refresh
+        </div>
+        <div>
+            <span className="font-bold">^X</span> Back to Game
+        </div>
+        <div>
+            <span className="font-bold">↑</span> Scroll Up
+        </div>
+        <div>
+            <span className="font-bold">↓</span> Scroll Down
+        </div>
+        
+    </div>
+</div>
+
         </div>
     );
 };
