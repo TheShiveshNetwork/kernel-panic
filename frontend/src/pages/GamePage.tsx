@@ -30,11 +30,6 @@ const GamePage = () => {
     `Type '${config.commonCommands.startCommand.name}' to start the game.\n\n`,
   ]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number | null>(null);
-  // const [stats, setStats] = useState<IPointsSchema>({
-  //   health: 0,
-  //   wealth: 0,
-  //   happiness: 0,
-  // });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -272,7 +267,7 @@ const GamePage = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [setTerminalLineData]);
+  }, [setTerminalLineData, terminalLineData]);
 
   useEffect(() => {
     if (error) {
