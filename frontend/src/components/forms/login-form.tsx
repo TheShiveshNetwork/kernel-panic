@@ -1,12 +1,14 @@
 import { userSchema } from "@/validators/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues, useForm } from "react-hook-form";
+import { Spinner } from "../spinner";
 
 type LoginFormProps = {
     handleLogin: (data: FieldValues) => void;
+    loading: boolean;
 };
 
-export function LoginForm({ handleLogin }: LoginFormProps) {
+export function LoginForm({ handleLogin, loading }: LoginFormProps) {
     const {
         register,
         handleSubmit,
@@ -47,10 +49,11 @@ export function LoginForm({ handleLogin }: LoginFormProps) {
             )}
             <button
                 type="submit"
-                className="bg-gray-800 text-green-400 border border-gray-700 hover:border-green-500 hover:bg-gray-700 py-2 px-6 sm:px-8 rounded-full shadow-md transform hover:scale-105 transition duration-300 font-mono w-full sm:w-auto"
+                className="bg-gray-800 text-green-400 border border-gray-700 hover:border-green-500 hover:bg-gray-700 py-2 px-6 sm:px-8 rounded-full shadow-md transform hover:scale-105 transition duration-300 font-mono w-full sm:w-auto flex items-center justify-center"
                 aria-label="Start the game"
+                disabled={loading}
             >
-                Enter the Game
+                {!loading ? "Enter the Game" : <Spinner />}
             </button>
         </form>
     );

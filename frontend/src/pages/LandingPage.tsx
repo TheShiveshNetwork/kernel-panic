@@ -5,16 +5,19 @@ import { FieldValues } from 'react-hook-form';
 import { PanicApi } from '@/api';
 import { toast } from 'react-toastify';
 // import Loading from '@/components/loading';
-import Spinner from '@/components/spinner';
+import Loader from '@/components/loader';
 import { useAuth } from '@/hooks/use-auth';
 import { config } from '@/config';
 import { LoginForm } from '@/components/forms/login-form';
+import { useState } from 'react';
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
   const { isLoggedIn, setIsLoggedIn, loading: authLoading } = useAuth();
 
   async function handleLogin(data: FieldValues) {
+    setLoading(true);
     await PanicApi.post('/user/login', data)
       .then((response) => {
         if (response.status === 200) {
@@ -28,11 +31,14 @@ const LandingPage: React.FC = () => {
       .catch((error) => {
         console.log(error);
         toast.error("An error occurred. Please try again later.");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }
 
   if (authLoading) {
-    return <Spinner />;
+    return <Loader />;
   }
 
   if (isLoggedIn) {
@@ -76,7 +82,7 @@ const LandingPage: React.FC = () => {
         <div className="login-form-container w-full sm:w-4/5 md:w-3/4 lg:w-1/3 bg-black bg-opacity-80 p-6 sm:p-8 rounded-lg shadow-2xl my-6 lg:my-0">
           <h2 className="text-lg sm:text-xl md:text-2xl font-mono text-green-400 mb-4 sm:mb-6">Login</h2>
           <div className="flex flex-col space-y-4">
-            <LoginForm handleLogin={handleLogin} />
+            <LoginForm handleLogin={handleLogin} loading={loading} />
           </div>
         </div>
       </div>

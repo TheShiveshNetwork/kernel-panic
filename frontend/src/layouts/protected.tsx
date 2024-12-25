@@ -1,4 +1,4 @@
-import Spinner from "@/components/spinner";
+import Loader from "@/components/loader";
 import { useAuth } from "@/hooks/use-auth";
 import { Navigate } from "react-router-dom";
 
@@ -6,7 +6,7 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
     const { isLoggedIn, loading } = useAuth();
 
     if (loading) {
-        return <Spinner/>;
+        return <Loader/>;
     }
 
     if (!isLoggedIn) {
