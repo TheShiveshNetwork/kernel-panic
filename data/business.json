@@ -1,0 +1,155 @@
+{
+    "name": "business",
+    "data": [
+      {
+          "index": 5,
+          "image": "  _________\n |  STARTUP |\n |   🚀 🌍   |\n |_________|\n    |   |\n   /_____|",
+          "question": "You’ve spotted a market gap and are ready to start your business. What do you choose?",
+          "options": [
+              { "text": "Launch a tech start-up specializing in sustainable energy.", "points": { "health": -10, "happiness": -5, "wealth": 10 } },
+              { "text": "Open a cozy chain of eco-friendly coffee shops.", "points": { "health": -10, "happiness": 5, "wealth": 5 } },
+              { "text": "Build an online community for freelance artists to showcase their talent.", "points": { "health": 5, "happiness": 0, "wealth": 5 } }
+          ]
+      },
+      {
+          "index": 6,
+          "image": "  _________\n | COMPETE |\n |  🎯⚖️   |\n |_________|\n    /   \\",
+          "question": "A competitor launches a cheaper version of your product. How do you respond?",
+          "options": [
+              { "text": "Upgrade your product with premium features to justify the price.", "points": { "health": -5, "happiness": 5, "wealth": -5 } },
+              { "text": "Cut your prices to compete directly.", "points": { "health": -10, "happiness": 0, "wealth": -10 } },
+              { "text": "Focus on building stronger relationships with loyal customers.", "points": { "health": -5, "happiness": 5, "wealth": 10 } }
+          ]
+      },
+      {
+          "index": 7,
+          "image": "  __________\n | CONTRACT |\n | 💼 📜 🖋 |\n |__________|",
+          "question": "A lucrative contract is on the table, but negotiations are tough. What’s your strategy?",
+          "options": [
+              { "text": "Push hard for the best deal, even if it’s a gamble.", "points": { "health": -5, "happiness": -10, "wealth": 15 } },
+              { "text": "Accept slightly less favorable terms to secure the contract.", "points": { "health": 0, "happiness": 5, "wealth": 10 } },
+              { "text": "Walk away, trusting better opportunities will come.", "points": { "health": 10, "happiness": 5, "wealth": 5 } }
+          ]
+      },
+      {
+          "index": 8,
+          "image": "  ___________\n | EXPANSION  |\n | 🌍 ➡️ 🏢   |\n |___________|",
+          "question": "Your business is growing, and it’s time to expand. What’s your plan?",
+          "options": [
+              { "text": "Enter international markets to scale up quickly.", "points": { "health": -10, "happiness": 10, "wealth": 10 } },
+              { "text": "Strengthen your local presence and build community connections.", "points": { "health": -5, "happiness": 10, "wealth": 5 } },
+              { "text": "Focus on optimizing current operations for efficiency.", "points": { "health": -10, "happiness": 0, "wealth": 10 } }
+          ]
+      },
+      {
+          "index": 9,
+          "image": "  ___________\n | TECH TREND |\n |  💻⚙️📱   |\n |___________|",
+          "question": "Your competitors are adopting cutting-edge technology. How do you stay relevant?",
+          "options": [
+              { "text": "Invest heavily in the latest tools to stay ahead.", "points": { "health": -10, "happiness": 15, "wealth": -10 } },
+              { "text": "Introduce gradual updates to reduce risk and costs.", "points": { "health": -5, "happiness": 5, "wealth": 5 } },
+              { "text": "Stick with your current systems to maintain stability.", "points": { "health": 10, "happiness": 0, "wealth": 0 } }
+          ]
+      },
+      {
+          "index": 10,
+          "image": "  __________\n | CRISIS ⚠️|\n | 📣🛑 💬 |\n |__________|",
+          "question": "A public relations crisis threatens your brand image. What’s your move?",
+          "options": [
+              { "text": "Launch a transparent campaign addressing the issue head-on.", "points": { "health": 0, "happiness": 10, "wealth": -10 } },
+              { "text": "Distract with positive marketing about your achievements.", "points": { "health": -5, "happiness": 5, "wealth": -10 } },
+              { "text": "Remain silent and hope it blows over quickly.", "points": { "health": 5, "happiness": -15, "wealth": 0 } }
+          ]
+      },
+      {
+          "index": 11,
+          "image": "  ___________\n | TIME CRUNCH |\n | ⏰ 🏃💻  |\n |___________|",
+          "question": "The growing demands of your business are eating into your personal time. What’s your approach?",
+          "options": [
+              { "text": "Delegate responsibilities to free up time for yourself.", "points": { "health": 5, "happiness": 15, "wealth": -5 } },
+              { "text": "Shoulder everything to ensure every detail is perfect.", "points": { "health": -10, "happiness": -10, "wealth": 15 } },
+              { "text": "Hire a COO to share the operational load.", "points": { "health": 5, "happiness": 10, "wealth": -5 } }
+          ]
+      },
+      {
+          "index": 12,
+          "image": "  __________\n | GO GREEN |\n | ♻️🌱🏢 |\n |__________|",
+          "question": "Sustainability is trending. How do you integrate it into your business?",
+          "options": [
+              { "text": "Launch a bold green initiative to make a difference.", "points": { "health": 5, "happiness": 10, "wealth": -15 } },
+              { "text": "Make small changes that balance sustainability and profits.", "points": { "health": 5, "happiness": 5, "wealth": 5 } },
+              { "text": "Prioritize profitability now, promising to revisit sustainability later.", "points": { "health": 0, "happiness": -5, "wealth": 10 } }
+          ]
+      },
+      {
+          "index": 13,
+          "image": "  ___________\n | RECESSION  |\n | 💸📉💡 |\n |___________|",
+          "question": "Experts predict an economic downturn. How do you prepare?",
+          "options": [
+              { "text": "Build up savings and cut unnecessary expenses.", "points": { "health": 5, "happiness": 0, "wealth": 5 } },
+              { "text": "Spend on marketing to capture market share during tough times.", "points": { "health": -5, "happiness": 15, "wealth": -15 } },
+              { "text": "Stick to your current strategy and hope for the best.", "points": { "health": 10, "happiness": -5, "wealth": -5 } }
+          ]
+      },
+      {
+          "index": 14,
+          "image": "  ___________\n | LONG VISION|\n | 🌟🏢📈 |\n |___________|",
+          "question": "What’s your long-term vision for the business?",
+          "options": [
+              { "text": "Prepare for a public offering to take the business global.", "points": { "health": -10, "happiness": -5, "wealth": 15 } },
+              { "text": "Sell the company and enjoy early retirement.", "points": { "health": 5, "happiness": 10, "wealth": 10 } },
+              { "text": "Keep growing the business to pass it on to your family.", "points": { "health": -5, "happiness": 10, "wealth": 5 } }
+          ]
+      },
+      {
+          "index": 15,
+          "image": "  __________\n | DIVERSIFY |\n | 🏢📊📈 |\n |__________|",
+          "question": "With profits rising, you decide to diversify. Where do you invest?",
+          "options": [
+              { "text": "Buy commercial real estate for stable returns.", "points": { "health": 5, "happiness": 10, "wealth": -10 } },
+              { "text": "Purchase stocks and bonds for easy liquidity.", "points": { "health": 5, "happiness": 0, "wealth": -5 } },
+              { "text": "Start a completely new business in an unrelated field.", "points": { "health": -5, "happiness": 5, "wealth": -10 } }
+          ]
+      },
+      {
+          "index": 16,
+          "image": "  ___________\n | GIVE BACK |\n | ❤️💰🤝  |\n |___________|",
+          "question": "You’ve achieved great success. How do you give back?",
+          "options": [
+              { "text": "Start a charity in a field you’re passionate about.", "points": { "health": 5, "happiness": 15, "wealth": -30 } },
+              { "text": "Donate a percentage of profits regularly.", "points": { "health": 5, "happiness": 10, "wealth": -20 } },
+              { "text": "Focus on growing your business and consider philanthropy later.", "points": { "health": 5, "happiness": -5, "wealth": 5 } }
+          ]
+      },
+      {
+          "index": 17,
+          "image": "  __________\n |  EVOLVE  |\n | 🔄💻📈  |\n |__________|",
+          "question": "Rapid technological changes are reshaping your industry. What’s your move?",
+          "options": [
+              { "text": "Adapt your business model to incorporate new technology.", "points": { "health": 5, "happiness": 10, "wealth": -5 } },
+              { "text": "Double down on your proven methods to minimize disruption.", "points": { "health": 5, "happiness": -5, "wealth": 5 } },
+              { "text": "Partner with a tech firm to co-innovate.", "points": { "health": 0, "happiness": 10, "wealth": -10 } }
+          ]
+      },
+      {
+          "index": 18,
+          "image": "  __________\n | LEGACY 💡 |\n | 👨‍👩‍👧‍👦🏢📜 |\n |__________|",
+          "question": "You’re nearing retirement and need a succession plan. What’s your choice?",
+          "options": [
+              { "text": "Mentor a trusted employee to take over.", "points": { "health": 10, "happiness": 25, "wealth": -5 } },
+              { "text": "Sell the business to a larger company.", "points": { "health": -5, "happiness": 0, "wealth": 30 } },
+              { "text": "Keep the business in the family, no matter the challenges.", "points": { "health": -10, "happiness": 20, "wealth": 5 } }
+          ]
+      },
+      {
+          "index": 19,
+          "image": "  ___________\n | WRITE 📚   |\n |  📖🏢💡    |\n |___________|",
+          "question": "Looking back on your career, how do you secure your legacy?",
+          "options": [
+              { "text": "Write a book sharing the highs and lows of your journey.", "points": { "health": 5, "happiness": 15, "wealth": 0 } },
+              { "text": "Establish a business school to teach future entrepreneurs.", "points": { "health": 0, "happiness": 15, "wealth": -15 } },
+              { "text": "Invest in mentoring and funding new start-ups.", "points": { "health": 5, "happiness": 10, "wealth": -10 } }
+          ]
+      }
+  ]
+}
