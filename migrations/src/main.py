@@ -16,7 +16,7 @@ def main():
 
     client = AtlasClient(MONGODB_URL, DB_NAME)
 
-    with open(json_file_path) as f:
+    with open(json_file_path, encoding="utf-8") as f:
         data = json.load(f)
         # for single_data in data["data"]:
         #     print(single_data)
