@@ -7,29 +7,33 @@ export async function tokenIsValid(this: ControllerClass, request: Request, resp
     if (!authHeader) {
         return response.status(401).json({ validToken: false, message: "Token is missing" });
     }
-    const cookie = authHeader.split("=")[1];
+    const cookies = Object.fromEntries(
+        authHeader.split("; ").map(cookie => cookie.split("="))
+    );
 
-    if (!cookie) {
-        return response.status(401).json({ validToken: false, message: "Access token is missing" });
+    if (!cookies) {
+        return response.status(401).json({ validToken: false, message: "Cookies are missing" });
     }
 
     try {
+        const token = cookies["token"];
         const secretKey = process.env.SECRET_KEY || "";
 
-        const decoded = jwt.verify(cookie, secretKey) as JwtPayload;
+        const decoded = jwt.verify(token, secretKey) as JwtPayload;
 
-        if (typeof decoded !== "object") {
+        if (typeof decoded != "object") {
             return response.status(403).json({ validToken: false, message: "Invalid token" });
         }
 
-        if (!decoded || !decoded.userId) {
+        if (!decoded.userId || !decoded.email) {
             return response.status(403).json({ validToken: false, message: "Invalid token" });
         }
 
-        if (decoded.exp && decoded.exp < Date.now())
-            return response.status(200).json({ validToken: true, message: "Token is valid" });
+        if (decoded.exp && decoded.exp * 1000 < Date.now()) {
+            return response.status(403).json({ validToken: false, message: "Invalid or expired token" });
+        }
         
-        return response.status(403).json({ validToken: false, message: "Invalid or expired token" });
+        return response.status(200).json({ validToken: true, message: "Token is valid" });
     } catch (error) {
         console.log("Invalid or expired token passed at authentication middleware");
         return response.status(403).json({ validToken: false, message: "Invalid or expired token" });

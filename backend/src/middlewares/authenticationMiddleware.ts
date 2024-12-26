@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { type JwtPayload } from "jsonwebtoken";
 
 export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers["cookie"];
@@ -7,24 +7,34 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
         res.status(401).json({ message: "Token is missing" });
         return;
     }
-    const cookie = authHeader.split("=")[1];
+    const cookies = Object.fromEntries(
+        authHeader.split("; ").map(cookie => cookie.split("="))
+    );
 
-    if (!cookie) {
+    if (!cookies) {
         res.status(401).json({ message: "Access token is missing" });
         return;
     }
 
     try {
+        const token = cookies["token"];
         const secretKey = process.env.SECRET_KEY || "";
 
-        const decoded = jwt.verify(cookie, secretKey);
+        const decoded = jwt.verify(token, secretKey) as JwtPayload;
         if (typeof decoded !== "object") {
             res.status(403).json({ message: "Invalid token" });
             return;
         }
 
-        if (!decoded || !decoded.userId) {
+        if (!decoded.userId || !decoded.email) {
             res.status(403).json({ message: "Invalid token" });
+            return;
+        }
+
+        if (decoded.exp && decoded.exp * 1000 < Date.now()) {
+            console.log("exp: ", decoded.exp * 1000);
+            console.log("now: ", Date.now());
+            console.log("Token is expired");
             return;
         }
 
