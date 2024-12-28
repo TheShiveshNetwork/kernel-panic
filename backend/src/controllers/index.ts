@@ -11,6 +11,9 @@ import { getQuestionStatusByUserId } from "./questionStatus/getQuestionStatusByU
 import { getCurrentUser } from "./user/getCurrentUser";
 import { logoutUser } from "./user/logout";
 import { tokenIsValid } from "./user/validateToken";
+import { getInitialQuestions } from "./question/getInitialQuestions";
+import { getQuestions } from "./question/getQuestions";
+import { getUserSelectedPath } from "./questionStatus/getUserSelectedPath";
 
 export class ControllerClass {
     private mongoClient = new MongoDBClient;
@@ -24,17 +27,20 @@ export class ControllerClass {
         return response.status(201).json({ message: "Server running" });
     }
 
-    createUser = createUser;
     loginUser = loginUser;
+    logoutUser = logoutUser;
+    createUser = createUser;
     getUserById = getUserById;
+    tokenIsValid = tokenIsValid;
+    getCurrentUser = getCurrentUser;
     createQuestion = createQuestion;
     getQuestionById = getQuestionById;
     getAllQuestions = getAllQuestions;
-    submitAnswer = submitAnswer;
+    getQuestions = getQuestions;
+    getInitialQuestions = getInitialQuestions;
+    getUserSelectedPath = getUserSelectedPath;
     getQuestionStatusByUserId = getQuestionStatusByUserId;
-    getCurrentUser = getCurrentUser;
-    logoutUser = logoutUser;
-    tokenIsValid = tokenIsValid;
+    submitAnswer = submitAnswer;
 }
 
 let Controllers = new ControllerClass();

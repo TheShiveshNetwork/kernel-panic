@@ -21,4 +21,5 @@ export type Question = {
     image: string;
     question: string;
     options: Option[];
+    type: string,
 }

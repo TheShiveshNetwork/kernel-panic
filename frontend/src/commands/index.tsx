@@ -36,11 +36,15 @@ export function continueGameCommandHandler(setTerminalLineData: ISetTerminalData
     if (currentIndex === null) {
         setTerminalLineData((prevData) => [
             ...prevData,
-            "Game hasn't started yet. Type 'start' to begin the game.",
+            <TerminalColorText color="blue">Game hasn't started yet. Type `{config.commonCommands.startCommand.name}` to begin the game.</TerminalColorText>,
         ]);
         return;
     }
-    const currentQuestion = questions[currentIndex];
+    const currentQuestion = questions.find((question) => question.index === currentIndex);
+    if (!currentQuestion) {
+        console.log("Index passed does not exist in the questions array");
+        return;
+    }
     const optionsText = currentQuestion.options
         .map((option, index) => `${index + 1}. ${option.text}`)
         .join("\n");

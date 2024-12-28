@@ -13,8 +13,8 @@ import { FormatImageToAscii, renderStats } from "@/utils";
 import TerminalLoading from "@/components/terminal-loader";
 import { scrollToBottom } from "@/utils/scroll-to-bottom";
 
-type ISubmitAnswerResponse = { 
-  success: true; 
+type ISubmitAnswerResponse = {
+  success: true;
   stats: IPointsSchema;
 } | {
   success: false;
@@ -179,7 +179,14 @@ const GamePage = () => {
       return;
     }
 
-    const currentQuestion = questions[currentQuestionIndex];
+    const currentQuestion = questions.find((question) => question.index === currentQuestionIndex);
+    if (!currentQuestion) {
+      setTerminalLineData((prevData) => [
+        ...prevData,
+        <TerminalError>Invalid question index</TerminalError>
+      ]);
+      return;
+    }
     const selectedOptionIndex = parseInt(input) - 1;
 
     if (isNaN(selectedOptionIndex) || selectedOptionIndex < 0 || selectedOptionIndex >= currentQuestion.options.length) {
@@ -196,6 +203,9 @@ const GamePage = () => {
 
     if (submitAnswerResponse.success) {
       const nextQuestionIndex = currentQuestionIndex + 1;
+      if (currentQuestionIndex === 4) {
+        await fetchNewQuestions();
+      }
       if (nextQuestionIndex < questions.length) {
         setCurrentQuestionIndex(nextQuestionIndex);
         const nextQuestion = questions[nextQuestionIndex];
@@ -230,27 +240,64 @@ const GamePage = () => {
   };
 
   async function fetchAllQuestions() {
+    setIsLoading(true);
     await PanicApi.get("/getAllQuestions")
       .then((result) => {
         if (result.status === 200) {
           setQuestions(result.data);
-          return;
         }
       }).catch((error) => {
         console.log(`Error: ${error}`);
         setError(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
+  async function fetchNewQuestions() {
+    setIsLoading(true);
+    try {
+      const result = await PanicApi.get("/getUserSelectedPath")
+      if (result.data.selectedPath) {
+        await updateQuestionsBasedOnPath(result.data.selectedPath);
+      }
+    } catch (error) {
+      console.log(`Error: ${error}`);
+      setIsLoading(false);
+    }
+  }
+
   async function fetchUserQuestionStatus() {
-    await PanicApi.get("/getQuestionStatusByUserId")
-      .then((result) => {
-        if (result.status === 200) {
-          setCurrentQuestionIndex(result.data.currentQuestion);
-          return;
+    setIsLoading(true);
+    try {
+      const result = await PanicApi.get("/getQuestionStatusByUserId")
+      if (result.status === 200) {
+        if (result.data.selectedPath) {
+          await updateQuestionsBasedOnPath(result.data.selectedPath);
         }
-      });
-    return;
+        setCurrentQuestionIndex(result.data.currentQuestion);
+      }
+    } catch (error) {
+      console.log(`Error: ${error}`);
+      setIsLoading(false);
+    }
+  }
+
+  async function updateQuestionsBasedOnPath(selectedPath: string) {
+    setIsLoading(true);
+    try {
+      const initialQuestions = questions.filter((question) => question.type === "initial");
+      const pathQuestions = questions.filter((question) => question.type === selectedPath);
+      console.log(initialQuestions);
+      console.log(pathQuestions);
+      setQuestions([...initialQuestions, ...pathQuestions]);
+    } catch (error) {
+      console.error("Error updating questions based on selected path:", error);
+      toast.error("Failed to update questions based on path.");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -258,12 +305,14 @@ const GamePage = () => {
     const initialFunctions: Promise<void>[] = [];
     initialFunctions.push(fetchAllQuestions());
     initialFunctions.push(fetchUserQuestionStatus());
-    Promise.all(initialFunctions).then(() => {
-      setIsLoading(false);
-    }).catch(() => {
-      setIsLoading(false);
-    });
-  }, [])
+    Promise.all(initialFunctions)
+      .then(() => {
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setIsLoading(false);
+      });
+  }, []);
 
   useEffect(() => {
     scrollToBottom();
@@ -276,7 +325,7 @@ const GamePage = () => {
   }, [error]);
 
   return (
-    <div className="h-screen w-screen bg-[var(--primary-bg)]">
+    <div className="h-screen w-screen bg-[var(--primary-bg)] fixed top-0 left-0">
       <Terminal name={config.name} colorMode={ColorMode.Dark} onInput={handleInput}>
         {isLoading ? <TerminalLoading />
           : terminalLineData.map((line, index) => (

@@ -3,6 +3,7 @@ import { questionStatusCollection, questionsCollection, userCollection } from "@
 import type { ControllerClass } from "@/controllers";
 import { ObjectId } from "mongodb";
 import type { IAnswerSchema } from "@/schemas/questionStatus.schema";
+import { config } from "@/config";
 
 export async function submitAnswer(
   this: ControllerClass,
@@ -11,6 +12,11 @@ export async function submitAnswer(
 ) {
   const requestBody = request.body;
   const { userId, answeredQuestion } = requestBody;
+
+  const questionStatus = await questionStatusCollection.findOne({ userId });
+  if (questionStatus && questionStatus.answeredQuestions.some((question: any) => question.questionId === answeredQuestion.questionId)) {
+    return response.status(400).json({ message: "Question already answered" });
+  }
 
   const question = await questionsCollection.findOne({
     _id: new ObjectId(`${answeredQuestion.questionId}`),
@@ -21,6 +27,22 @@ export async function submitAnswer(
   }
 
   const selectedOptionData = question.options[parseInt(answeredQuestion.selectedOption)];
+
+  const isPathOption = config.pathOptions.find((option) => selectedOptionData.text === option);
+  let selectedPath: string | null = null;
+  if (isPathOption) {
+    switch (selectedOptionData.text) {
+      case config.pathOptions[0]:
+        selectedPath = "mnc";
+        break;
+      case config.pathOptions[1]:
+        selectedPath = "business";
+        break;
+      default:
+        selectedPath = "studyabroad";
+        break;
+    }
+  }
 
   const points = selectedOptionData.points;
 
@@ -37,10 +59,18 @@ export async function submitAnswer(
     }
     const existingQuestionStatus = await questionStatusCollection.findOne({ userId });
     if (
-      existingQuestionStatus && 
+      existingQuestionStatus &&
       existingQuestionStatus.answeredQuestions.some((question: any) => question.questionId === answeredQuestion.questionId)
     ) {
       return response.status(400).json({ error: "Question already answered" });
+    }
+    // Not the best way to do this, but it works for now
+    let updateSet:any = {
+      name: existingUser.name,
+      timestamp
+    };
+    if (selectedPath) {
+      updateSet = { ...updateSet, selectedPath };
     }
     const result = await questionStatusCollection.updateOne(
       {
@@ -55,10 +85,7 @@ export async function submitAnswer(
           "totalPoints.happiness": totalHappinessPoints,
           accumulatedPoints: totalHappinessPoints + totalHealthPoints + totalWealthPoints,
         },
-        $set: {
-          name: existingUser.name,
-          timestamp,
-        },
+        $set: updateSet,
         $push: {
           answeredQuestions: {
             ...answeredQuestion,
@@ -86,7 +113,7 @@ export async function submitAnswer(
           totalHealthPoints,
           totalWealthPoints,
         },
-        questionPoints: {...points}
+        questionPoints: { ...points }
       });
     } else if (result.modifiedCount > 0) {
       return response.status(200).json({
@@ -96,7 +123,7 @@ export async function submitAnswer(
           totalHealthPoints,
           totalWealthPoints,
         },
-        questionPoints: {...points}
+        questionPoints: { ...points }
       });
     }
     return response.status(400).json({ message: "An unhandled error occurred" });

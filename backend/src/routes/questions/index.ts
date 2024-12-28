@@ -15,3 +15,9 @@ questionRoutes.get('/question/:id', authenticateToken, validateData(getQuestionB
 questionRoutes.get('/getAllQuestions', authenticateToken, async (req: Request, res: Response) => {
     await Controllers.getAllQuestions(req, res);
 });
+questionRoutes.get('/getInitialQuestions', authenticateToken, async (req: Request, res: Response) => {
+    await Controllers.getInitialQuestions(req, res);
+});
+questionRoutes.get('/getQuestions', authenticateToken, async (req: Request, res: Response) => {
+    await Controllers.getQuestions(req, res);
+});

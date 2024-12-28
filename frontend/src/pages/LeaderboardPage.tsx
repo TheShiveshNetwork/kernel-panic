@@ -80,7 +80,7 @@ const LeaderboardPage: React.FC = () => {
                     break;
                 case "r":
                 case "R":
-                    setScrollIndex(0); 
+                    setScrollIndex(0);
                     updateLeaderboard(fullLeaderboard);
                     break;
                 case "x":
@@ -101,36 +101,33 @@ const LeaderboardPage: React.FC = () => {
     }, [fullLeaderboard, updateLeaderboard, navigate]);
 
     return (
-        <div className="h-screen w-screen bg-black text-white p-4 flex flex-col">
+        <div className="h-screen w-screen fixed top-0 left-0 flex flex-col">
             {/* Terminal Area */}
-            <div className="flex-grow overflow-auto">
-                <Terminal
-                    name={`${config.name} Leaderboard`}
-                    colorMode={ColorMode.Dark}
-                    prompt=""
-                >
-                    <div className="flex flex-col gap-2 mx-auto">{terminalLineData}</div>
-                </Terminal>
-            </div>
+            <Terminal
+                name={`${config.name} Leaderboard`}
+                colorMode={ColorMode.Dark}
+            >
+                <div className="flex flex-col gap-2 mx-auto">{terminalLineData}</div>
+            </Terminal>
 
             {/* Shortcut Bar */}
-<div className="fixed bottom-0 left-0 w-full bg-black text-white text-lg border-t border-gray-500 p-2">
-    <div className="flex justify-between font-mono">
-        <div>
-            <span className="font-bold ">^R</span> Refresh
-        </div>
-        <div>
-            <span className="font-bold">^X</span> Back to Game
-        </div>
-        <div>
-            <span className="font-bold">↑</span> Scroll Up
-        </div>
-        <div>
-            <span className="font-bold">↓</span> Scroll Down
-        </div>
-        
-    </div>
-</div>
+            <div className="fixed bottom-0 left-0 w-full text-lg border-t bg-[var(--primary-bg)] text-white p-2">
+                <div className="flex justify-between font-mono">
+                    <div>
+                        <span className="font-bold ">^R</span> Refresh
+                    </div>
+                    <div>
+                        <span className="font-bold">^X</span> Back to Game
+                    </div>
+                    <div>
+                        <span className="font-bold">↑</span> Scroll Up
+                    </div>
+                    <div>
+                        <span className="font-bold">↓</span> Scroll Down
+                    </div>
+
+                </div>
+            </div>
 
         </div>
     );

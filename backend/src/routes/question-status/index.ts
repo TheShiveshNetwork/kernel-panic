@@ -12,3 +12,6 @@ questionStatusRoutes.post('/submitAnswer', authenticateToken, validateData(submi
 questionStatusRoutes.get('/getQuestionStatusByUserId', authenticateToken, async (req: Request, res: Response) => {
     await Controllers.getQuestionStatusByUserId(req, res);
 });
+questionStatusRoutes.get('/getUserSelectedPath', authenticateToken, async (req: Request, res: Response) => {
+    await Controllers.getUserSelectedPath(req, res);
+});
