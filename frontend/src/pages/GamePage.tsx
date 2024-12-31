@@ -330,7 +330,7 @@ const GamePage = () => {
   }, [error]);
 
   return (
-    <div className="h-screen w-screen bg-[var(--primary-bg)] fixed top-0 left-0">
+    <div className="h-screen w-screen bg-[var(--primary-bg)]">
       <Terminal name={config.name} colorMode={ColorMode.Dark} onInput={handleInput}>
         {isLoading ? <TerminalLoading />
           : terminalLineData.map((line, index) => (
