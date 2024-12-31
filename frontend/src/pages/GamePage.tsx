@@ -21,13 +21,15 @@ type ISubmitAnswerResponse = {
 };
 
 const GamePage = () => {
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [initialQuestions, setInitialQuestions] = useState<Question[]>([]);
+  const [pathQuestions, setPathQuestions] = useState<Question[]>([]);
+  const [allQuestions, setAllQuestions] = useState<Question[]>([]);
   const [terminalLineData, setTerminalLineData] = useState<ITerminalLineData>([
     "Welcome to",
     `${config.asciiName}\n`,
-    // `${config.asciiLogo}\n`,
     `Type '${config.commonCommands.helpCommand.name}' to see all available commands.\n`,
-    `Type '${config.commonCommands.startCommand.name}' to start the game.\n\n`,
+    `Type '${config.commonCommands.startCommand.name}' to start the game.\n`,
+    `Type '${config.commonCommands.continueCommand.name}' to continue the game.\n\n`,
   ]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,19 +43,19 @@ const GamePage = () => {
       <TerminalColorText color="white">You have already completed all questions.</TerminalColorText>,
       <TerminalColorText color="white">Check out your rank on <Link to={"/leaderboard"} className="underline">Leaderboard</Link>.</TerminalColorText>,
     ]);
-    return;
-  };
+  }
 
   const startGame = () => {
-    if (questions.length === 0) {
+    if (allQuestions.length === 0) {
       toast.info("Questions are loading...");
       return;
     }
+
     let currentQuestion: Question;
     if (currentQuestionIndex === null) {
       setCurrentQuestionIndex(0);
-      currentQuestion = questions[0];
-    } else if (currentQuestionIndex < questions.length) {
+      currentQuestion = allQuestions[0];
+    } else if (currentQuestionIndex < allQuestions.length) {
       setTerminalLineData((prevData) => [
         ...prevData,
         <TerminalError>Error: The game has already started</TerminalError>,
@@ -65,9 +67,11 @@ const GamePage = () => {
       gameOver();
       return;
     }
+
     const optionsText = currentQuestion.options
       .map((option, index) => `${index + 1}. ${option.text}`)
       .join("\n");
+
     setTerminalLineData((prevData) => [
       ...prevData,
       <div className="whitespace-pre-wrap">{FormatImageToAscii(currentQuestion.image)}</div>,
@@ -75,45 +79,6 @@ const GamePage = () => {
       <br />,
       optionsText,
     ]);
-  };
-
-  async function submitAnswer(questionId: string, selectedOption: string): Promise<ISubmitAnswerResponse> {
-    try {
-      const response = await PanicApi.post("/submitAnswer", {
-        answeredQuestion: {
-          questionId,
-          selectedOption,
-        },
-      });
-
-      if (response.status === 201 || response.status === 200) {
-        const stats: IPointsSchema = {
-          health: response.data.totalPoints.totalHealthPoints,
-          wealth: response.data.totalPoints.totalWealthPoints,
-          happiness: response.data.totalPoints.totalHappinessPoints,
-        };
-        toast.success(`Congrats! You earned: 
-          health: ${response.data.questionPoints.health}, 
-          wealth: ${response.data.questionPoints.wealth}, 
-          happiness: ${response.data.questionPoints.happiness},
-        `);
-        return { success: true, stats };
-      } else {
-        toast.error(response.data.message || "Failed to submit answer.");
-        return { success: false };
-      }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      console.log("Error submitting answer:", error);
-      setTerminalLineData((prevData) => [
-        ...prevData,
-        <TerminalError>
-          Error: {error instanceof Error ? error.message : "Unknown error"}
-          <p>{error.response.data.error}</p>
-        </TerminalError>,
-      ]);
-      return { success: false };
-    }
   };
 
   const handleInput = async (input: string) => {
@@ -130,7 +95,7 @@ const GamePage = () => {
     }
 
     if (input === config.commonCommands.continueCommand.name) {
-      config.commonCommands.continueCommand.command(setTerminalLineData, currentQuestionIndex, questions);
+      config.commonCommands.continueCommand.command(setTerminalLineData, currentQuestionIndex, allQuestions);
       return;
     }
 
@@ -171,7 +136,7 @@ const GamePage = () => {
       return;
     }
 
-    if (currentQuestionIndex === null || currentQuestionIndex > questions.length) {
+    if (currentQuestionIndex === null || currentQuestionIndex >= allQuestions.length) {
       setTerminalLineData((prevData) => [
         ...prevData,
         <TerminalError>Invalid command. Type '{config.commonCommands.helpCommand.name}' to see all available commands.</TerminalError>
@@ -179,14 +144,7 @@ const GamePage = () => {
       return;
     }
 
-    const currentQuestion = questions.find((question) => question.index === currentQuestionIndex);
-    if (!currentQuestion) {
-      setTerminalLineData((prevData) => [
-        ...prevData,
-        <TerminalError>Invalid question index</TerminalError>
-      ]);
-      return;
-    }
+    const currentQuestion = allQuestions[currentQuestionIndex];
     const selectedOptionIndex = parseInt(input) - 1;
 
     if (isNaN(selectedOptionIndex) || selectedOptionIndex < 0 || selectedOptionIndex >= currentQuestion.options.length) {
@@ -198,20 +156,44 @@ const GamePage = () => {
     }
 
     const selectedOption = currentQuestion.options[selectedOptionIndex];
-
     const submitAnswerResponse = await submitAnswer(currentQuestion._id, selectedOptionIndex.toString());
 
     if (submitAnswerResponse.success) {
       const nextQuestionIndex = currentQuestionIndex + 1;
-      if (currentQuestionIndex === 4) {
-        await fetchNewQuestions();
+
+      if (nextQuestionIndex === initialQuestions.length && pathQuestions.length === 0) {
+        await fetchPathQuestions();
+        if (allQuestions.length > nextQuestionIndex) {
+          const nextQuestion = allQuestions[nextQuestionIndex];
+          setCurrentQuestionIndex(nextQuestionIndex);
+          const nextOptionsText = nextQuestion.options
+            .map((option, index) => `${index + 1}. ${option.text}`)
+            .join("\n");
+          setTerminalLineData((prevData) => [
+            ...prevData,
+            <div className="whitespace-pre-wrap">{FormatImageToAscii(nextQuestion.image)}</div>,
+            `\nQuestion ${nextQuestionIndex + 1}: ${nextQuestion.question}\n`,
+            <br />,
+            nextOptionsText,
+          ]);
+        } else if (nextQuestionIndex === initialQuestions.length) {
+          setTerminalLineData((prevData) => [
+            ...prevData,
+            <TerminalColorText color="blue">Refresh the page and Type `{config.commonCommands.continueCommand.name}` to continue your game</TerminalColorText>,
+          ]);
+        } else {
+          handleGameCompletion(submitAnswerResponse.stats);
+        }
+        return;
       }
-      if (nextQuestionIndex < questions.length) {
+
+      if (nextQuestionIndex < allQuestions.length) {
         setCurrentQuestionIndex(nextQuestionIndex);
-        const nextQuestion = questions[nextQuestionIndex];
+        const nextQuestion = allQuestions[nextQuestionIndex];
         const nextOptionsText = nextQuestion.options
           .map((option, index) => `${index + 1}. ${option.text}`)
           .join("\n");
+
         setTerminalLineData((prevData) => [
           ...prevData,
           `You chose: ${selectedOption.text}`,
@@ -225,98 +207,121 @@ const GamePage = () => {
           nextOptionsText,
         ]);
       } else {
-        setTerminalLineData((prevData) => [
-          ...prevData,
-          <TerminalColorText color="blue">{config.asciiGameOver}</TerminalColorText>,
-          <TerminalColorText color="white">Hurray! You have completed all questions.</TerminalColorText>,
-          <TerminalColorText color="blue">
-            Final stats
-            <div className="whitespace-pre-wrap">{renderStats(submitAnswerResponse.stats)}</div>
-          </TerminalColorText>,
-          <TerminalColorText color="white">Check out your rank on <Link to={"/leaderboard"} className="underline">Leaderboard</Link>.</TerminalColorText>,
-        ]);
+        handleGameCompletion(submitAnswerResponse.stats);
       }
     }
   };
 
-  async function fetchAllQuestions() {
-    setIsLoading(true);
-    await PanicApi.get("/getAllQuestions")
-      .then((result) => {
-        if (result.status === 200) {
-          setQuestions(result.data);
-        }
-      }).catch((error) => {
-        console.log(`Error: ${error}`);
-        setError(error.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
+  const handleGameCompletion = (stats: IPointsSchema) => {
+    setTerminalLineData((prevData) => [
+      ...prevData,
+      <TerminalColorText color="blue">{config.asciiGameOver}</TerminalColorText>,
+      <TerminalColorText color="white">Hurray! You have completed all questions.</TerminalColorText>,
+      <TerminalColorText color="blue">
+        Final stats
+        <div className="whitespace-pre-wrap">{renderStats(stats)}</div>
+      </TerminalColorText>,
+      <TerminalColorText color="white">Check out your rank on <Link to={"/leaderboard"} className="underline">Leaderboard</Link>.</TerminalColorText>,
+    ]);
+  };
+
+  async function submitAnswer(questionId: string, selectedOption: string): Promise<ISubmitAnswerResponse> {
+    try {
+      const response = await PanicApi.post("/submitAnswer", {
+        answeredQuestion: {
+          questionId,
+          selectedOption,
+        },
       });
-  }
 
-  async function fetchNewQuestions() {
-    setIsLoading(true);
-    try {
-      const result = await PanicApi.get("/getUserSelectedPath")
-      if (result.data.selectedPath) {
-        await updateQuestionsBasedOnPath(result.data.selectedPath);
+      if (response.status === 201 || response.status === 200) {
+        const stats: IPointsSchema = {
+          health: response.data.totalPoints.totalHealthPoints,
+          wealth: response.data.totalPoints.totalWealthPoints,
+          happiness: response.data.totalPoints.totalHappinessPoints,
+        };
+        toast.success(`Congrats! You earned: 
+          health: ${response.data.questionPoints.health}, 
+          wealth: ${response.data.questionPoints.wealth}, 
+          happiness: ${response.data.questionPoints.happiness},
+        `);
+        return { success: true, stats };
       }
-    } catch (error) {
-      console.log(`Error: ${error}`);
-      setIsLoading(false);
+      toast.error(response.data.message || "Failed to submit answer.");
+      return { success: false };
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.log("Error submitting answer:", error);
+      setTerminalLineData((prevData) => [
+        ...prevData,
+        <TerminalError>
+          Error: {error instanceof Error ? error.message : "Unknown error"}
+          <p>{error.response?.data?.error}</p>
+        </TerminalError>,
+      ]);
+      return { success: false };
     }
   }
 
-  async function fetchUserQuestionStatus() {
-    setIsLoading(true);
+  async function fetchInitialQuestions() {
     try {
-      const result = await PanicApi.get("/getQuestionStatusByUserId")
+      const result = await PanicApi.get("/getQuestions", { params: { type: "initial" } });
       if (result.status === 200) {
-        if (result.data.selectedPath) {
-          await updateQuestionsBasedOnPath(result.data.selectedPath);
-        }
-        setCurrentQuestionIndex(result.data.currentQuestion);
+        setInitialQuestions(result.data);
+        setAllQuestions(result.data);
       }
     } catch (error) {
       console.log(`Error: ${error}`);
-      setIsLoading(false);
+      setError(error instanceof Error ? error.message : "Unknown error");
     }
   }
 
-  async function updateQuestionsBasedOnPath(selectedPath: string) {
+  async function fetchPathQuestions() {
     setIsLoading(true);
     try {
-      const initialQuestions = questions.filter((question) => question.type === "initial");
-      const pathQuestions = questions.filter((question) => question.type === selectedPath);
-      console.log(initialQuestions);
-      console.log(pathQuestions);
-      setQuestions([...initialQuestions, ...pathQuestions]);
+      const userPathResult = await PanicApi.get("/getUserSelectedPath");
+      if (userPathResult.data.selectedPath) {
+        const result = await PanicApi.get("/getQuestions", { params: { type: userPathResult.data.selectedPath } });
+        if (result.status === 200) {
+          const pathQs = result.data;
+          setPathQuestions(pathQs);
+          setAllQuestions(currentQuestions => {
+            return [...currentQuestions, ...pathQs];
+          });
+        }
+      }
     } catch (error) {
-      console.error("Error updating questions based on selected path:", error);
-      toast.error("Failed to update questions based on path.");
+      console.log(`Error: ${error}`);
+      setError(error instanceof Error ? error.message : "Unknown error");
     } finally {
       setIsLoading(false);
     }
   }
 
+  async function fetchUserQuestionStatus() {
+    try {
+      const result = await PanicApi.get("/getQuestionStatusByUserId");
+      if (result.status === 200) {
+        setCurrentQuestionIndex(result.data.currentQuestion);
+        if (result.data.selectedPath) {
+          await fetchPathQuestions();
+        }
+      }
+    } catch (error) {
+      console.log(`Error: ${error}`);
+    }
+  }
+
   useEffect(() => {
     setIsLoading(true);
-    const initialFunctions: Promise<void>[] = [];
-    initialFunctions.push(fetchAllQuestions());
-    initialFunctions.push(fetchUserQuestionStatus());
-    Promise.all(initialFunctions)
-      .then(() => {
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setIsLoading(false);
-      });
+    Promise.all([fetchInitialQuestions(), fetchUserQuestionStatus()])
+      .finally(() => setIsLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     scrollToBottom();
-  }, [setTerminalLineData, terminalLineData]);
+  }, [terminalLineData]);
 
   useEffect(() => {
     if (error) {

@@ -11,7 +11,6 @@ import { getQuestionStatusByUserId } from "./questionStatus/getQuestionStatusByU
 import { getCurrentUser } from "./user/getCurrentUser";
 import { logoutUser } from "./user/logout";
 import { tokenIsValid } from "./user/validateToken";
-import { getInitialQuestions } from "./question/getInitialQuestions";
 import { getQuestions } from "./question/getQuestions";
 import { getUserSelectedPath } from "./questionStatus/getUserSelectedPath";
 
@@ -37,7 +36,6 @@ export class ControllerClass {
     getQuestionById = getQuestionById;
     getAllQuestions = getAllQuestions;
     getQuestions = getQuestions;
-    getInitialQuestions = getInitialQuestions;
     getUserSelectedPath = getUserSelectedPath;
     getQuestionStatusByUserId = getQuestionStatusByUserId;
     submitAnswer = submitAnswer;
