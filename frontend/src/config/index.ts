@@ -20,7 +20,7 @@ export const config = {
     commonCommands: commonCommands,
     localBackendUrl: "http://localhost:8080/api",
     backendApiUrl: "http://3.108.102.18:3000/api",
-    localSocketUrl: "http://localhost:8080",
+    localSocketUrl: "http://3.108.102.18:3000",
     socketUrl: "https://kernel-panic.onrender.com",
     teamLink: "https://ieee-ritb-website.vercel.app/web_resources",
     githubLink: "https://github.com/TheShiveshNetwork/kernel-panic",
