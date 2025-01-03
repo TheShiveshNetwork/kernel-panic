@@ -19,7 +19,7 @@ export const config = {
     asciiGameOver: asciiGameOver,
     commonCommands: commonCommands,
     localBackendUrl: "http://localhost:8080/api",
-    backendApiUrl: "https://kernel-panic.onrender.com/api",
+    backendApiUrl: "http://3.108.102.18:3000/api",
     localSocketUrl: "http://localhost:8080",
     socketUrl: "https://kernel-panic.onrender.com",
     teamLink: "https://ieee-ritb-website.vercel.app/web_resources",
