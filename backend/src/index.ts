@@ -23,8 +23,17 @@ const io = new Server(server, {
   },
 });
 
+const allowedOrigins = ['http://localhost:5173'];
+
 let corsConfig = {
-  origin: process.env.FRONTEND_URL || "",
+  origin: function (origin:string|undefined, callback:Function) {
+    if (!origin) return callback(new Error('Not allowed by CORS'));
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
   credentials: true,
 };
 
