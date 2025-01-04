@@ -321,7 +321,7 @@ const GamePage = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [terminalLineData]);
+  }, [setTerminalLineData, terminalLineData]);
 
   useEffect(() => {
     if (error) {
