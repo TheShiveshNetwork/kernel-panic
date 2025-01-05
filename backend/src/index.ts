@@ -23,7 +23,12 @@ const io = new Server(server, {
   },
 });
 
-const allowedOrigins = ['http://localhost:5173'];
+const allowedOrigins = [
+  'http://localhost:5173', 
+  'https://kernel-panic.vercel.app',
+  'https://kernel-panic-instance1.vercel.app',
+  'https://kernel-panic-instance2.vercel.app',
+];
 
 let corsConfig = {
   origin: function (origin:string|undefined, callback:Function) {
